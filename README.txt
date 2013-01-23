@@ -1,13 +1,14 @@
 === Lucid Slider ===
 
 Contributors: elusiveunit
-Tags: slider, slideshow, image slider, image slideshow, simple
+Tags: slider, slideshow, image slider, image slideshow, simple, flexslider
 Requires at least: 3.5
 Tested up to: 3.5
+Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A simple, lightweight slideshow plugin.
+A simple, lightweight slideshow plugin with drag-and-drop sorting, primarily for developers.
 
 
 == Description ==
@@ -16,33 +17,40 @@ Lucid Slider is a simple, lightweight slideshow plugin, with its primary functio
 
 The slider itself is powered by the popular [Flexslider](https://github.com/woothemes/FlexSlider) jQuery plugin.
 
+Lucid Slider is available in the following languages:
+
+* English
+* Swedish
+
 
 == Installation ==
 
 A standard slider setup is pretty simple:
 
 1. Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin.
-2. As the slider page tells you, one of the added sizes must be chosen for every slider.
+2. As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.
 
 
-== Changelog ==
+== Frequently Asked Questions ==
 
-= 1.2: Jan 24, 2013 =
-* New: Can choose 'full' as a slider size, to use full-sized images.
-* Fix: Fall back to full-sized images if there isn't an image size matching the chosen one available. This is the case when an uploaded image has the exact same dimensions as an image size (i.e. the image size is 900x250 and the uploaded image is 900x250).
-* Fix: Trim whitespace from size values in slider settings.
+= How do I display my sliders? =
 
-= 1.1: Jan 13, 2013 =
-* New: Use WordPress 3.5 media uploader.
-* New: Updated WPAlchemy version to 1.5.2.
-* Tweak: Altered the slider management UI slightly.
-* Tweak: Added `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
+A slider can be displayed in two ways:
 
-= 1.0: Dec 05, 2012 =
-* Initial version.
+1. Use the shortcode provided on the slider list screen, i.e. `[lucidslider id="123"]`.
+
+2. Use the function `lucid_slider( 123 )` (or `lucid_slider_get( 123 )` for returning) to display a slider somewhere in a template.
 
 
-== Developer integration ==
+== Screenshots ==
+
+1. Slider edit screen, showing drag-and-drop sorting.
+2. Sliders overview.
+3. General settings screen.
+4. Slider settings screen, for choosing how Flexslider behaves.
+
+
+== Developer Integration ==
 
 The slider is very barebones by default, only shipping with the standard Flexslider theme and options.
 
@@ -214,3 +222,26 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 		</div>
 	<?php }
 	add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
+
+
+== Changelog ==
+
+= 1.2: Jan 24, 2013 =
+* New: Can choose 'full' as a slider size, to use full-sized images.
+* Fix: Fall back to full-sized images if there isn't an image size matching the chosen one available. This is the case when an uploaded image has the exact same dimensions as an image size (i.e. the image size is 900x250 and the uploaded image is 900x250).
+* Fix: Trim whitespace from size values in slider settings.
+
+= 1.1: Jan 13, 2013 =
+* New: Use WordPress 3.5 media uploader.
+* New: Updated WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.
+* Tweak: Altered the slider management UI slightly.
+* Tweak: Added `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
+
+= 1.0: Dec 05, 2012 =
+* Initial version.
+
+
+== Upgrade Notice ==
+
+= 1.1 =
+Updated WPAlchemy version to 1.5.2. Adding slides will not work in WordPress 3.5 with previous versions.

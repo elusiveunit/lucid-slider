@@ -59,13 +59,20 @@ pre {padding: 0.75em; font-size: 0.7777em; overflow: auto;}
 
 <p>The slider itself is powered by the popular <a href="https://github.com/woothemes/FlexSlider">Flexslider</a> jQuery plugin.</p>
 
+<p>Lucid Slider is available in the following languages:</p>
+
+<ul>
+<li>English</li>
+<li>Swedish</li>
+</ul>
+
 <h2>Basic usage</h2>
 
 <p>A standard slider setup is pretty simple:</p>
 
 <ol>
 <li>Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with <code>add_image_size</code> and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the <a href="http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/">AJAX Thumbnail Rebuild</a> plugin.</li>
-<li>As the slider page tells you, one of the added sizes must be chosen for every slider.</li>
+<li>As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.</li>
 </ol>
 
 <h2>Developer integration</h2>
@@ -264,7 +271,7 @@ add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 
 <ul>
 <li>New: Use WordPress 3.5 media uploader.</li>
-<li>New: Updated WPAlchemy version to 1.5.2.</li>
+<li>New: Updated WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.</li>
 <li>Tweak: Altered the slider management UI slightly.</li>
 <li>Tweak: Added <code>position: relative;</code> to flexslider <code>&lt;li&gt;</code>'s, so positioning within a slide works out of the box.</li>
 </ul>

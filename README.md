@@ -4,13 +4,18 @@ Lucid Slider is a simple, lightweight slideshow plugin, with its primary functio
 
 The slider itself is powered by the popular [Flexslider](https://github.com/woothemes/FlexSlider) jQuery plugin.
 
+Lucid Slider is available in the following languages:
+
+* English
+* Swedish
+
 
 ## Basic usage
 
 A standard slider setup is pretty simple:
 
 1. Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin.
-2. As the slider page tells you, one of the added sizes must be chosen for every slider.
+2. As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.
 
 
 ## Developer integration
@@ -198,7 +203,7 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 ### 1.1: Jan 13, 2013
 
 * New: Use WordPress 3.5 media uploader.
-* New: Updated WPAlchemy version to 1.5.2.
+* New: Updated WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.
 * Tweak: Altered the slider management UI slightly.
 * Tweak: Added `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
 
