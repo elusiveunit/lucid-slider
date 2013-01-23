@@ -1,0 +1,59 @@
+<div id="lsjl-slides">
+
+<div class="lsjl-message-notice" id="lsjl-sort-message"><p><?php _e( 'Remember to save your sort order!', 'lucid-slider' ); ?></p></div>
+
+<?php while ( $mb->have_fields_and_multi( 'slide-group' ) ) : ?>
+<?php $mb->the_group_open( 'div' ); ?>
+
+	<div class="lsjl-move-handle" title="<?php _e( 'Move', 'lucid-slider' ); ?>"><i class="lsjl-move-icon"></i></div>
+
+	<?php /*---------- Slide image ID ----------*/
+	$mb->the_field( 'slide-image-id' ); ?>
+	<input type="hidden" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-thumbnail-id" value="<?php $mb->the_value(); ?>">
+
+	<?php /*---------- Slide thumbnail image ----------*/
+	$mb->the_field( 'slide-image-thumbnail' ); ?>
+	<div class="lsjl-slide-thumbnail">
+		<input type="hidden" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-thumbnail-field" value="<?php $mb->the_value(); ?>">
+
+		<?php $lsjl_slide_thumbnail_url = $mb->get_the_value();
+		if ( empty( $lsjl_slide_thumbnail_url ) ) :
+			$lsjl_slide_thumbnail_url = LSJL_URL . 'img/slide-placeholder.png';
+		endif; ?>
+		<img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt="">
+	</div>
+
+	<?php do_action_ref_array( 'lsjl_meta_fields_start', array( &$mb ) ); ?>
+
+	<?php /*---------- Slide image URL field ----------*/
+	$mb->the_field( 'slide-image-url' ); ?>
+	<div class="lsjl-slide-url lsjl-field-group">
+		<label for="<?php $mb->the_name(); ?>"><?php _e( 'Image:', 'lucid-slider' ); ?></label>
+		<input type="text" readonly="readonly" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-url-field" value="<?php $mb->the_value(); ?>">
+		
+		<a href="#" title="<?php _e( 'Add an image', 'lucid-slider' ); ?>" class="button lsjl-upload" id="<?php $mb->the_name(); ?>-upload" onclick="return false;" data-uploader-title="<?php _e( 'Choose slide image', 'lucid-slider' ); ?>" data-uploader-button-text="<?php _e( 'Choose image', 'lucid-slider' ); ?>"><?php _e( 'Add...', 'lucid-slider' ); ?></a>
+	</div>
+
+	<?php $include_alt = apply_filters( 'lsjl_include_alt_field', true ); ?>
+
+	<?php if ( $include_alt ) :
+		/*---------- Slide image alt text field ----------*/
+		$mb->the_field( 'slide-image-alt' ); ?>
+		<div class="lsjl-slide-alt lsjl-field-group">
+			<label for="<?php $mb->the_name(); ?>"><?php _e( 'Alt text:', 'lucid-slider' ); ?></label>
+			<input type="text" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-alt-field" value="<?php $mb->the_value(); ?>">
+			<span class="description"><?php _e( 'Image description for search engines and visually impaired people.', 'lucid-slider' ); ?></span>
+		</div>
+	<?php endif; ?>
+
+	<?php do_action_ref_array( 'lsjl_meta_fields_end', array( &$mb ) ); ?>
+
+	<a href="#" class="lsjl-remove-slide dodelete"><?php _e( 'Remove', 'lucid-slider' ); ?></a>
+
+<?php $mb->the_group_close(); ?>
+<?php endwhile; ?>
+
+<p><a href="#" class="docopy-slide-group button"><?php _e( 'Add slide', 'lucid-slider' ); ?></a>
+<!-- <input type="submit" class="button-primary" id="lsjl-save" name="save" value="<?php _e( 'Save', 'lucid-slider' ); ?>"> --></p>
+
+</div>
