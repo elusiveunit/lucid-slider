@@ -1,59 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html class="no-touch">
 <head>
 <meta charset="utf-8">
 <title>Lucid Slider Readme</title>
-<link href="http://fonts.googleapis.com/css?family=Kreon:400,700|Source+Sans+Pro" rel="stylesheet">
-<link href="http://fonts.googleapis.com/css?family=Neuton:400,400italic,700" rel="stylesheet">
-<style>
-html, body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, code, em, img, strong, var, b, i, dl, dt, dd, ol, ul, li, table, caption, tbody, tfoot, thead, tr, th, td {margin: 0; padding: 0; border: 0; font-size: 100%;}
-
-body {
-	max-width: 800px;
-	margin: 0 auto;
-	padding: 0 2em 5em;
-	font: 1.125em/1.5 'Source Sans Pro', sans-serif;
-	background: #fcfcfc;
-	color: #333;
-}
-
-a:link, a:visited {color: #13a0d3; text-decoration: none; border-bottom: 1px dashed;}
-a:hover, a:focus {color: #e88f00; border-bottom-style: solid;}
-
-h1, h2, h3, h4, h5, h6 {color: #444; font-family: 'Neuton', Cambria, Georgia, serif; font-weight: normal;}
-h1 {font-size: 3.3333em; line-height: 1.35; margin-top: 0.45em;}
-h2 {font-size: 2.6667em; line-height: 1.125; margin-top: 0.5625em; padding-bottom: 0.25em; border-bottom: 1px solid #ddd;}
-h3 {font-size: 2em; line-height: 1.5; margin-top: 0.75em;}
-h4 {font-size: 1.5555em; line-height: 1.125; margin-top: 0.75em; font-style: italic;}
-h5 {font-size: 1.1666em; line-height: 1.2857; margin-top: 1.2857em; padding-top: 0.25em; border-top: 1px dashed #aaa; font-weight: bold;}
-h6 {font-size: 1em; margin-top: 1.5em;}
-
-p, blockquote, dl, ol, ul, pre, table {margin-bottom: 1.5em;}
-blockquote {margin-left: 1.5em; margin-right: 1.5em;}
-ul {list-style: disc outside;}
-ul ul {margin: 0 0 0 1.5em; list-style-type: square;}
-ol {list-style: decimal outside;}
-ol ol {margin: 0 0 0 1.5em; list-style-type: upper-roman;}
-
-pre, code {
-	padding: 0 0.25em;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	background: #f2f2f2;
-	font: 0.8888em/1.25 Consolas, monospace;
-}
-pre code {padding: 0; border: 0; background: transparent;}
-pre {padding: 0.75em; font-size: 0.7777em; overflow: auto;}
-
-@media screen and (max-width: 500px) {
-	body {font-size: 1em; padding: 0 1em 3em;}
-	ol, ul {margin-left: 1.5em;}
-}
-</style>
+<link href="http://fonts.googleapis.com/css?family=Neuton:400,400italic,700|Source+Sans+Pro" rel="stylesheet">
+<link rel="stylesheet" href="doc.css">
 </head>
-<body>
+<body id="intro">
 
-<h1>Lucid Slider</h1>
+<h1 id="lucid-slider">Lucid Slider</h1>
 
 <p>Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily meant for theme developers to integrate with, and bring exactly what is needed for the individual site.</p>
 
@@ -66,7 +21,7 @@ pre {padding: 0.75em; font-size: 0.7777em; overflow: auto;}
 <li>Swedish</li>
 </ul>
 
-<h2>Basic usage</h2>
+<h2 id="basic-usage">Basic usage</h2>
 
 <p>A standard slider setup is pretty simple:</p>
 
@@ -75,7 +30,7 @@ pre {padding: 0.75em; font-size: 0.7777em; overflow: auto;}
 <li>As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.</li>
 </ol>
 
-<h2>Developer integration</h2>
+<h2 id="developer-integration">Developer integration</h2>
 
 <p>The slider is very barebones by default, only shipping with the standard Flexslider theme and options.</p>
 
@@ -87,7 +42,7 @@ pre {padding: 0.75em; font-size: 0.7777em; overflow: auto;}
 
 <h4>Frontend</h4>
 
-<h5>ljsl_before_slide_image</h5>
+<h5 id="ljsl_before_slide_image">ljsl_before_slide_image</h5>
 
 <p>Runs right after each slide opening <code>&lt;li&gt;</code>.</p>
 
@@ -108,7 +63,7 @@ function themename_before_slide( $html, $key, $slide, $slider_id ) {
 add_filter( 'ljsl_before_slide_image', 'themename_before_slide' );
 </code></pre>
 
-<h5>ljsl_after_slide_image</h5>
+<h5 id="ljsl_after_slide_image">ljsl_after_slide_image</h5>
 
 <p>Runs right before each slide closing <code>&lt;/li&gt;</code>.</p>
 
@@ -129,7 +84,7 @@ function themename_after_slide( $html, $key, $slide, $slider_id ) {
 add_filter( 'ljsl_after_slide_image', 'themename_after_slide' );
 </code></pre>
 
-<h5>lsjl_js_options</h5>
+<h5 id="lsjl_js_options">lsjl_js_options</h5>
 
 <p>Runs before adding the closing curly bracket to the JavaScript options object. Via <code>$options_added</code> one can determine if a comma is needed when adding to the object. If <code>$options_added</code> is 0 the object will not be echoed no matter the contents, so increase it if needed.</p>
 
@@ -150,7 +105,7 @@ add_filter( 'lsjl_js_options', 'themename_slide_options', 10, 2 );
 
 <h4>Backend</h4>
 
-<h5>lsjl_settings_tabs</h5>
+<h5 id="lsjl_settings_tabs">lsjl_settings_tabs</h5>
 
 <p>Filters the tabs added to the settings screen.</p>
 
@@ -168,7 +123,7 @@ function themename_lsjl_settings_tabs( $tabs ) {
 add_filter( 'lsjl_settings_tabs', 'themename_lsjl_settings_tabs' );
 </code></pre>
 
-<h5>lsjl_settings_sections</h5>
+<h5 id="lsjl_settings_sections">lsjl_settings_sections</h5>
 
 <p>Filters the sections added to the settings screen.</p>
 
@@ -189,7 +144,7 @@ function themename_lsjl_settings_sections( $sections ) {
 add_filter( 'lsjl_settings_sections', 'themename_lsjl_settings_sections' );
 </code></pre>
 
-<h5>lsjl_settings_fields</h5>
+<h5 id="lsjl_settings_fields">lsjl_settings_fields</h5>
 
 <p>Filters the fields added to the settings screen.</p>
 
@@ -210,16 +165,18 @@ function themename_lsjl_settings_fields( $fields ) {
 add_filter( 'lsjl_settings_fields', 'themename_lsjl_settings_fields' );
 </code></pre>
 
-<h5>lsjl_include_alt_field</h5>
+<h5 id="lsjl_include_alt_field">lsjl_include_alt_field</h5>
 
 <p>Determines if the field for image alt text should be shown on the slider edit screen.</p>
 
 <pre><code>add_filter( 'lsjl_include_alt_field', '__return_false' );
 </code></pre>
 
-<h5>lsjl_meta_fields_start</h5>
+<h5 id="lsjl_meta_fields_start">lsjl_meta_fields_start</h5>
 
 <p>Runs before the default meta data fields for each slide on the slider edit screen.</p>
+
+<p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout, and add <code>lsjl-textarea-group</code> for label alignment when adding a textarea.</p>
 
 <pre><code>/**
  * Add slide meta field.
@@ -236,7 +193,7 @@ function themename_lsjl_meta_before( &amp;$metabox ) {
 add_action( 'lsjl_meta_fields_start', 'themename_lsjl_meta_before' );
 </code></pre>
 
-<h5>lsjl_meta_fields_end</h5>
+<h5 id="lsjl_meta_fields_end">lsjl_meta_fields_end</h5>
 
 <p>Runs after the default meta data fields for each slide on the slider edit screen.</p>
 
@@ -257,7 +214,7 @@ function themename_lsjl_meta_after( &amp;$metabox ) {
 add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 </code></pre>
 
-<h2>Changelog</h2>
+<h2 id="changelog">Changelog</h2>
 
 <h3>1.2: Jan 24, 2013</h3>
 
@@ -282,5 +239,6 @@ add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 <li>Initial version.</li>
 </ul>
 
+<script src="doc.js"></script>
 </body>
 </html>
