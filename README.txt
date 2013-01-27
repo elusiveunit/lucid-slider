@@ -189,6 +189,8 @@ Determines if the field for image alt text should be shown on the slider edit sc
 
 Runs before the default meta data fields for each slide on the slider edit screen.
 
+Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `lsjl-textarea-group` for label alignment when adding a textarea.
+
 	/**
 	 * Add slide meta field.
 	 *
@@ -226,18 +228,32 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 
 == Changelog ==
 
+= 1.3: Jan 27, 2013 =
+
+* New: A button is now available in the visual editor, which enables an easy UI for shortcode insertion.
+* New: A widget is now available for displaying a slider in a sidebar or other widget area.
+* New: The visual editor button and the widget can be toggled in the settings. They are disabled by default.
+* New: If adding fields to the slider edit screen via hooks, the additional fields are now hidden from view, to keep a compact look for an easy overview. A toggle link is shown if there are more fields than the default two.
+* Fix: Keep track of how many sliders have been initialized and only print a single flexslider JavaScript init.
+* Fix: Prevent some notices for slides that have meta content but no image.
+* Tweak: Errors for when no slider is found are now displayed with `trigger_error` when `WP_DEBUG` is active.
+* Tweak: Separate the HTML readme as 'documentation' in its own directory and give it a little more flair.
+
 = 1.2: Jan 24, 2013 =
+
 * New: Can choose 'full' as a slider size, to use full-sized images.
 * Fix: Fall back to full-sized images if there isn't an image size matching the chosen one available. This is the case when an uploaded image has the exact same dimensions as an image size (i.e. the image size is 900x250 and the uploaded image is 900x250).
 * Fix: Trim whitespace from size values in slider settings.
 
 = 1.1: Jan 13, 2013 =
+
 * New: Use WordPress 3.5 media uploader.
-* New: Updated WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.
-* Tweak: Altered the slider management UI slightly.
-* Tweak: Added `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
+* New: Update WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.
+* Tweak: Alter the slider management UI slightly.
+* Tweak: Add `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
 
 = 1.0: Dec 05, 2012 =
+
 * Initial version.
 
 
