@@ -42,6 +42,13 @@ class Lucid_Slider {
 	public $slider_options;
 
 	/**
+	 * Whether a slider has been initialized.
+	 *
+	 * @var boolean
+	 */
+	static $slider_active = false;
+
+	/**
 	 * Constructor.
 	 *
 	 * @param int $id Slider ID.
@@ -57,15 +64,84 @@ class Lucid_Slider {
 	}
 
 	/**
-	 * Create a slider structure.
+	 * Get slide image URL.
 	 *
-	 * Size checking:
 	 * If the uploaded image is the exact same size as an added image size, that
 	 * size is not available as an 'image size' that can be grabbed with
 	 * wp_get_attachment_image_src (i.e. add_image_size with 600x200 and upload
-	 * a 600x200 image). Therefore all registered sizes are checked against the
-	 * dimensions set in the slider settings. If there is a match, there is a
-	 * crop, if not, the full image is assumed to be the correct one to get.
+	 * a 600x200 image). Therefore, if an intermediate image size is requested,
+	 * all registered sizes are checked against the dimensions set in the slider
+	 * settings. If there is a match, there is a crop, if not, the full image is
+	 * assumed to be the correct one to get.
+	 *
+	 * @param int $slide_id Image ID.
+	 * @return string Image URL.
+	 */
+	protected function _get_image_src( $slide_id ) {
+		$size = $this->slider_options['slider-size'];
+
+		if ( 'full' != $size )
+			$size = Lucid_Slider_Core::get_dimensions( trim( $size ) );
+
+		$image_sizes = wp_get_attachment_metadata( $slide_id );
+		if ( empty( $image_sizes['sizes'] ) )
+			return '';
+
+		$use_full_size = ( 'full' == $size );
+
+		if ( 'full' != $size ) :
+
+			// Assume full size and override if there is a resized image
+			// available.
+			$use_full_size = true;
+			foreach ( $image_sizes['sizes'] as $size_name => $data ) :
+
+				// If width and height matches, there is a crop available.
+				if ( $size[0] == $data['width'] && $size[1] == $data['height'] ) :
+					$use_full_size = false;
+				endif;
+			endforeach;
+		endif;
+
+		if ( $use_full_size )
+			$src = wp_get_attachment_url( $slide_id );
+		else
+			$src = wp_get_attachment_image_src( $slide_id, $size )[0];
+
+		return $src;
+	}
+
+	/**
+	 * Error messages when no slider is found for the supplied ID.
+	 *
+	 * @return string HTML content.
+	 */
+	protected function _no_slider_found() {
+		$html = '';
+		$errors = array();
+
+		if ( empty( $this->slides ) ) $errors[] = "No slides for ID {$this->id} found.";
+		if ( empty( $this->slider_options ) ) $errors[] = "Missing settings for ID {$this->id}.";
+
+		foreach ( $errors as $error ) :
+
+			// Display clear messages when developing
+			if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) :
+				trigger_error( $error, E_USER_WARNING );
+
+			// Otherwise keep errors 'developer only' in the form of comments,
+			// since a slider shouldn't be critical to the page.
+			else :
+				$html .= "\n<!-- {$error} -->";
+			endif;
+
+		endforeach;
+
+		return $html;
+	}
+
+	/**
+	 * Create a slider structure.
 	 *
 	 * @return string HTML for the slider.
 	 */
@@ -77,38 +153,13 @@ class Lucid_Slider {
 			// Low priority so footer scripts are added before
 			add_action( 'wp_footer', array( $this, 'slider_init' ), 999 );
 
-			$size = $this->slider_options['slider-size'];
-
-			if ( 'full' != $size )
-				$size = Lucid_Slider_Core::get_dimensions( trim( $size ) );
-
 			$html .= '<div class="flexslider"><ul class="slides">';
 
 			foreach ( $this->slides as $key => $slide ) :
-				
-				// Size checking until output, see DocBlock.
-				$sizes = wp_get_attachment_metadata( $slide['slide-image-id'] )['sizes'];
-				$use_full_size = ( 'full' == $size );
+				$slide_id = ( ! empty( $slide['slide-image-id'] ) ) ? $slide['slide-image-id'] : 0;
+				$alt = ( ! empty( $slide['slide-image-alt'] ) ) ? esc_attr( $slide['slide-image-alt'] ) : '';
 
-				if ( 'full' != $size ) :
-
-					// Assume full size and override if there is a resized image
-					// available.
-					$use_full_size = true;
-					foreach ( $sizes as $size_name => $data ) :
-						// If width and height matches, there is a crop.
-						if ( $size[0] == $data['width'] && $size[1] == $data['height'] ) :
-							$use_full_size = false;
-						endif;
-					endforeach;
-				endif;
-
-				if ( $use_full_size )
-					$src = wp_get_attachment_url( $slide['slide-image-id'] );
-				else
-					$src = wp_get_attachment_image_src( $slide['slide-image-id'], $size )[0];
-
-				$alt = ( ! empty( $slide['slide-image-alt'] ) ) ? $slide['slide-image-alt'] : '';
+				$src = $this->_get_image_src( $slide_id );
 				
 				// Output
 				$html .= "\n<li>";
@@ -123,10 +174,7 @@ class Lucid_Slider {
 			$html .= "\n</ul></div>";
 
 		else :
-			// Keep errors 'developer only' in the form of comments, since a
-			// slider shouldn't be critical to the page.
-			if ( empty( $this->slides ) ) $html .= "\n<!-- No slides for ID {$this->id} found. -->";
-			if ( empty( $this->slider_options ) ) $html .= "\n<!-- Missing settings for ID {$this->id}. -->";
+			$html .= $this->_no_slider_found();
 		endif;
 
 		return $html;
@@ -145,7 +193,10 @@ class Lucid_Slider {
 	 * @see http://www.woothemes.com/flexslider/
 	 */
 	public function slider_init() {
-		if ( ! empty( $this->settings['init_slider'] ) ) :
+		if ( ! self::$slider_active && ! empty( $this->settings['init_slider'] ) ) :
+
+			// Only need a single JavaScript initialization.
+			self::$slider_active = true;
 
 			// Flexslider defaults, used if the option isn't passed
 			$default_options = array(

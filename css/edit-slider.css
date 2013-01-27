@@ -105,7 +105,7 @@
 }
 
 /*---------- input fields ----------*/
-#lsjl-slides .lsjl-field-group {margin-bottom: 5px;}
+#lsjl-slides .lsjl-field-group {margin-bottom: 0.3333em;}
 #lsjl-slides .lsjl-field-group input,
 #lsjl-slides .lsjl-field-group select,
 #lsjl-slides .lsjl-field-group textarea {min-width: 250px;}
@@ -115,6 +115,18 @@
 
 #lsjl-slides .lsjl-slide-url-field {background: #f4f4f4;}
 .admin-color-classic #lsjl-slides .lsjl-slide-url-field {background: #eff8ff;}
+
+#lsjl-slides .lsjl-fields-wrap {
+	overflow: hidden;
+	max-height: 5em;
+	/*-webkit-transition: max-height 0.7s ease-in-out;
+	   -moz-transition: max-height 0.7s ease-in-out;
+	     -o-transition: max-height 0.7s ease-in-out;
+	        transition: max-height 0.7s ease-in-out;*/
+}
+#lsjl-slides .lsjl-expand-group {display: none; visibility: hidden; margin-top: 0.5em;}
+#lsjl-slides .lsjl-fields-wrap.expandable + .lsjl-expand-group {display: inline-block; visibility: visible;}
+#lsjl-slides .lsjl-fields-wrap.expanded {max-height: 50em;}
 
 /*---------- Remove slide ----------*/
 #lsjl-slides .lsjl-remove-slide {

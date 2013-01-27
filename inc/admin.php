@@ -92,41 +92,9 @@ class Lucid_Slider_Admin {
 	 */
 	public function populate_columns( $column, $post_id ) {
 
-		// Images column. Shows the first three images in a stacked style.
+		// Images column.
 		if ( 'lsjl_images' == $column ) :
-			$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
-
-			if ( ! empty( $slides['slide-group'] ) ) :
-				$slides = $slides['slide-group'];
-
-				// Containing div
-				$width = 120 + ( count( $slides ) * 40 );
-				$output = "<div style=\"width: {$width}px; position: relative;\">";
-
-				$count = 0;
-				foreach ( $slides as $slide ) :
-
-					// Only show the first three images
-					if ( $count > 2 ) continue;
-
-					// CSS styles. $count is 0 for first image.
-					$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
-					$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
-					$top = $count * 5; // Half the height reduction
-					$z_index = 5 - $count; // Stack downwards
-					$left = $count * ( $height + $top - 10 ); // Arbitrary formula
-
-					$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
-
-					if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
-						$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" style=\"{$style}\">";
-					endif;
-
-					$count++;
-				endforeach;
-
-				echo $output .= '</div>';
-			endif;
+			Lucid_Slider_Admin::slide_stack( $post_id );
 
 		// ID column
 		elseif ( 'lsjl_id' == $column ) :
@@ -136,6 +104,57 @@ class Lucid_Slider_Admin {
 		elseif ( 'lsjl_shortcode' == $column ) :
 			echo "<code>[lucidslider id=\"{$post_id}\"]</code>";
 
+		endif;
+	}
+
+	/**
+	 * Shows the first three images of a slider, in a stacked style.
+	 *
+	 * @param int $post_id Slider post ID.
+	 * @param bool $fixed_width Set a fixed width on the containing element no
+	 *    matter how many images are displayed. Default true.
+	 */
+	public static function slide_stack( $post_id, $fixed_width = true ) {
+		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
+
+		if ( ! empty( $slides['slide-group'] ) ) :
+			$slides = $slides['slide-group'];
+
+			// Containing element width
+			$width = 240;
+			if ( ! $fixed_width ) :
+				$times = 1;
+				if ( 2 == count( $slides ) ) $times = 2;
+				if ( 2 < count( $slides ) ) $times = 3;
+
+				$width = 120 + ( $times * 40 );
+			endif;
+
+			$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
+
+			$count = 0;
+			foreach ( $slides as $slide ) :
+
+				// Only show the first three images
+				if ( $count > 2 ) continue;
+
+				// CSS styles. $count is 0 for first image.
+				$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
+				$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
+				$top = $count * 5; // Half the height reduction
+				$z_index = 5 - $count; // Stack downwards
+				$left = $count * ( $height + $top - 10 ); // Arbitrary formula
+
+				$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
+
+				if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
+					$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$style}\">";
+				endif;
+
+				$count++;
+			endforeach;
+
+			echo $output .= '</span>';
 		endif;
 	}
 

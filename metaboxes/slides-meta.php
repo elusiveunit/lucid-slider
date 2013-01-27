@@ -23,30 +23,40 @@
 		<img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt="">
 	</div>
 
-	<?php do_action_ref_array( 'lsjl_meta_fields_start', array( &$mb ) ); ?>
+	<?php
+	/* 
+	 * NO HTML COMMENTS INSIDE lsjl-fields-wrap, for correct element.children
+	 * count in IE < 8.
+	 */
+	?>
+	<div class="lsjl-fields-wrap">
+		<?php do_action_ref_array( 'lsjl_meta_fields_start', array( &$mb ) ); ?>
 
-	<?php /*---------- Slide image URL field ----------*/
-	$mb->the_field( 'slide-image-url' ); ?>
-	<div class="lsjl-slide-url lsjl-field-group">
-		<label for="<?php $mb->the_name(); ?>"><?php _e( 'Image:', 'lucid-slider' ); ?></label>
-		<input type="text" readonly="readonly" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-url-field" value="<?php $mb->the_value(); ?>">
-		
-		<a href="#" title="<?php _e( 'Add an image', 'lucid-slider' ); ?>" class="button lsjl-upload" id="<?php $mb->the_name(); ?>-upload" onclick="return false;" data-uploader-title="<?php _e( 'Choose slide image', 'lucid-slider' ); ?>" data-uploader-button-text="<?php _e( 'Choose image', 'lucid-slider' ); ?>"><?php _e( 'Add...', 'lucid-slider' ); ?></a>
+		<?php /*---------- Slide image URL field ----------*/
+		$mb->the_field( 'slide-image-url' ); ?>
+		<div class="lsjl-slide-url lsjl-field-group">
+			<label for="<?php $mb->the_name(); ?>"><?php _e( 'Image:', 'lucid-slider' ); ?></label>
+			<input type="text" readonly="readonly" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-url-field" value="<?php $mb->the_value(); ?>">
+			
+			<a href="#" title="<?php _e( 'Add an image', 'lucid-slider' ); ?>" class="button lsjl-upload" id="<?php $mb->the_name(); ?>-upload" onclick="return false;" data-uploader-title="<?php _e( 'Choose slide image', 'lucid-slider' ); ?>" data-uploader-button-text="<?php _e( 'Choose image', 'lucid-slider' ); ?>"><?php _e( 'Add...', 'lucid-slider' ); ?></a>
+		</div>
+
+		<?php $include_alt = apply_filters( 'lsjl_include_alt_field', true ); ?>
+
+		<?php if ( $include_alt ) :
+			/*---------- Slide image alt text field ----------*/
+			$mb->the_field( 'slide-image-alt' ); ?>
+			<div class="lsjl-slide-alt lsjl-field-group">
+				<label for="<?php $mb->the_name(); ?>"><?php _e( 'Alt text:', 'lucid-slider' ); ?></label>
+				<input type="text" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-alt-field" value="<?php $mb->the_value(); ?>">
+				<span class="description"><?php _e( 'Image description for search engines and visually impaired people.', 'lucid-slider' ); ?></span>
+			</div>
+		<?php endif; ?>
+
+		<?php do_action_ref_array( 'lsjl_meta_fields_end', array( &$mb ) ); ?>
 	</div>
 
-	<?php $include_alt = apply_filters( 'lsjl_include_alt_field', true ); ?>
-
-	<?php if ( $include_alt ) :
-		/*---------- Slide image alt text field ----------*/
-		$mb->the_field( 'slide-image-alt' ); ?>
-		<div class="lsjl-slide-alt lsjl-field-group">
-			<label for="<?php $mb->the_name(); ?>"><?php _e( 'Alt text:', 'lucid-slider' ); ?></label>
-			<input type="text" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-alt-field" value="<?php $mb->the_value(); ?>">
-			<span class="description"><?php _e( 'Image description for search engines and visually impaired people.', 'lucid-slider' ); ?></span>
-		</div>
-	<?php endif; ?>
-
-	<?php do_action_ref_array( 'lsjl_meta_fields_end', array( &$mb ) ); ?>
+	<a href="#" class="lsjl-expand-group" data-show-text="<?php _e( 'Show all fields', 'lucid-slider' ); ?>" data-hide-text="<?php _e( 'Hide fields', 'lucid-slider' ); ?>"><?php _e( 'Show all fields', 'lucid-slider' ); ?></a>
 
 	<a href="#" class="lsjl-remove-slide dodelete"><?php _e( 'Remove', 'lucid-slider' ); ?></a>
 

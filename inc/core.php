@@ -21,6 +21,13 @@ class Lucid_Slider_Core {
 	public $plugin_file;
 
 	/**
+	 * Plugin settings
+	 *
+	 * @var array
+	 */
+	static $settings;
+
+	/**
 	 * Constructor, add hooks.
 	 *
 	 * clean_file_name is always loaded, in case some kind of front-end
@@ -29,10 +36,14 @@ class Lucid_Slider_Core {
 	public function __construct( $file = '' ) {
 		$this->plugin_file = (string) $file;
 		$this->load_translation();
+		Lucid_Slider_Core::get_settings();
 
 		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
 		add_filter( 'sanitize_file_name', array( $this, 'clean_file_name' ) );
 		add_shortcode( 'lucidslider', array( $this, 'slider_shortcode' ) );
+
+		if ( ! empty( self::$settings['enable_widget'] ) )
+			add_action( 'widgets_init',  array( $this, 'slider_widget' ) );
 	}
 
 	/**
@@ -77,7 +88,7 @@ class Lucid_Slider_Core {
 	}
 
 	/**
-	 * Shortcode for displaying a slider. Usage: [lucidslider id="35"]
+	 * Shortcode for displaying a slider. Usage: [lucidslider id="123"]
 	 *
 	 * @param array $atts Shortcode attributes.
 	 * @return string Slider HTML.
@@ -86,6 +97,13 @@ class Lucid_Slider_Core {
 		$id = ( ! empty( $atts['id'] ) ) ? (int) $atts['id'] : 0;
 
 		return lucid_slider_get( $id );
+	}
+
+	/**
+	 * Register custom widget.
+	 */
+	public function slider_widget() {
+		register_widget( 'Lucid_Slider_Widget' );
 	}
 
 	/**
@@ -98,7 +116,7 @@ class Lucid_Slider_Core {
 		$dimensions = explode( 'x', trim( (string) $size ) );
 
 		// Need two values
-		if ( 2 != count( $dimensions ) ) return false;
+		if ( 2 != count( $dimensions ) ) return '';
 
 		$dimensions[0] = (int) $dimensions[0];
 		$dimensions[1] = (int) $dimensions[1];
@@ -115,12 +133,15 @@ class Lucid_Slider_Core {
 	 * @return array
 	 */
 	public static function get_settings() {
-		$general = (array) get_option( 'lsjl_general_settings' );
-		$slider = (array) get_option( 'lsjl_slider_settings' );
 
-		$settings = array_merge( $general, $slider );
+		if ( empty( self::$settings ) ) :
+			$general = (array) get_option( 'lsjl_general_settings' );
+			$slider = (array) get_option( 'lsjl_slider_settings' );
 
-		return $settings;
+			self::$settings = array_merge( $general, $slider );
+		endif;
+
+		return self::$settings;
 	}
 
 	/**
