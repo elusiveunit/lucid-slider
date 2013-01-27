@@ -29,7 +29,7 @@
 	 * count in IE < 8.
 	 */
 	?>
-	<div class="lsjl-fields-wrap">
+	<div class="lsjl-fields-wrap"><div class="lsjl-fields-wrap-inner">
 		<?php do_action_ref_array( 'lsjl_meta_fields_start', array( &$mb ) ); ?>
 
 		<?php /*---------- Slide image URL field ----------*/
@@ -54,7 +54,7 @@
 		<?php endif; ?>
 
 		<?php do_action_ref_array( 'lsjl_meta_fields_end', array( &$mb ) ); ?>
-	</div>
+	</div></div>
 
 	<a href="#" class="lsjl-expand-group" data-show-text="<?php _e( 'Show all fields', 'lucid-slider' ); ?>" data-hide-text="<?php _e( 'Hide fields', 'lucid-slider' ); ?>"><?php _e( 'Show all fields', 'lucid-slider' ); ?></a>
 

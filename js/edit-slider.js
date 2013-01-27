@@ -8,6 +8,8 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	// Settings
 	var conf = {
 		$slides: $('#lsjl-slides'),
+		$firstWrap: $('.wpa_group-slide-group.first .lsjl-fields-wrap'),
+		$firstWrapInner: null,
 		fieldsCount: 0,
 
 		// jQuery UI sortable settings
@@ -32,10 +34,11 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	};
 
 	function init() {
-		conf.fieldsCount = $('.wpa_group-slide-group.first .lsjl-fields-wrap')[0].children.length;
+		conf.$firstWrapInner = conf.$firstWrap.children();
+		conf.fieldsCount = conf.$firstWrapInner[0].children.length;
 
 		bindEvents();
-		checkFieldHeight();
+		checkFieldExpand();
 	}
 
 	/**
@@ -130,11 +133,13 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	}
 
 	/**
-	 * Add class for showing a height toggle link if there are more than two
-	 * fields for a slide.
+	 * Add class for showing a height toggle.
+	 * 
+	 * Check if there are more than the default two fields, or if the inner wrap
+	 * is taller than 70 pixels (about 60 by default).
 	 */
-	function checkFieldHeight() {
-		if ( conf.fieldsCount > 2 ) {
+	function checkFieldExpand() {
+		if ( conf.fieldsCount > 2 || conf.$firstWrapInner.height() > 70 ) {
 			conf.$slides.find('.lsjl-fields-wrap').each(function() {
 				$(this).addClass( 'expandable' );
 			});
