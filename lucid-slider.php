@@ -37,11 +37,18 @@ $lucid_slider_core = new Lucid_Slider_Core( __FILE__ );
 // Register custom post type
 require 'inc/post-type.php';
 
+// Another global unfortunately needed for conditional widget loading
+$lucid_slider_setting = Lucid_Slider_Core::get_settings();
+
+// Slider widget
+if ( ! empty( $lucid_slider_setting['enable_widget'] ) ) :
+	require 'inc/widget.php';
+endif;
+
 // Use selective loading for some parts
 if ( is_admin() ) :
 
-	// Current admin page. Unfortunately Too early to get the exact ID via
-	// get_current_screen().
+	// Current admin page. Too early for exact ID via get_current_screen().
 	global $pagenow;
 
 	// Admin/dashboard related
@@ -57,6 +64,12 @@ if ( is_admin() ) :
 		// WPAlchemy metabox initialization
 		require 'inc/metaboxes.php';
 
+	endif;
+
+	// TinyMCE plugin
+	if ( ! empty( $lucid_slider_setting['enable_tinymce'] ) ) :
+		require 'tinymce/tinymce.php';
+		$lucid_slider_tinymce = new Lucid_Slider_Tinymce();
 	endif;
 
 else :
