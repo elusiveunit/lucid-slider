@@ -36,9 +36,6 @@ class Lucid_Slider_Admin {
 			wp_enqueue_style( 'lsjl-style', LSJL_URL . 'css/edit-slider.min.css', false, null );
 
 			// Media upload
-			/*wp_enqueue_style( 'thickbox' );
-			wp_enqueue_script( 'thickbox' );
-			wp_enqueue_script( 'media-upload' );*/
 			wp_enqueue_media();
 
 			// Upload handling and other misc. stuff

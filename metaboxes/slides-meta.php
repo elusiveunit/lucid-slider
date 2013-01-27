@@ -63,7 +63,6 @@
 <?php $mb->the_group_close(); ?>
 <?php endwhile; ?>
 
-<p><a href="#" class="docopy-slide-group button"><?php _e( 'Add slide', 'lucid-slider' ); ?></a>
-<!-- <input type="submit" class="button-primary" id="lsjl-save" name="save" value="<?php _e( 'Save', 'lucid-slider' ); ?>"> --></p>
+<p><a href="#" class="docopy-slide-group button"><?php _e( 'Add slide', 'lucid-slider' ); ?></a></p>
 
 </div>
