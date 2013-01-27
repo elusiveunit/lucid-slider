@@ -80,6 +80,39 @@ $lsjl_settings->field(
 	)
 );
 
+/* -Tools
+-----------------------------------------------------------------------------*/
+$lsjl_settings->section( 'lsjl_tools_section', array(
+	'heading' => __( 'Tools', 'lucid-slider' ),
+	'tab' => 'lsjl_general_settings'
+) );
+
+$lsjl_settings->field(
+	'enable_widget',
+	__( 'Widget', 'lucid-slider' ),
+	array(
+		'type' => 'checkbox',
+		'sanitize' => 'checkbox',
+		'section' => 'lsjl_tools_section',
+		'inline_label' => __( 'Enable slider widget', 'lucid-slider' ),
+		'description' => __( 'Make a widget available for use in a sidebar.', 'lucid-slider' ),
+		'default' => 0
+	)
+);
+
+$lsjl_settings->field(
+	'enable_tinymce',
+	__( 'Editor', 'lucid-slider' ),
+	array(
+		'type' => 'checkbox',
+		'sanitize' => 'checkbox',
+		'section' => 'lsjl_tools_section',
+		'inline_label' => __( 'Enable visual editor button', 'lucid-slider' ),
+		'description' => __( 'Make a UI available for visual shortcode insertion', 'lucid-slider' ),
+		'default' => 0
+	)
+);
+
 
 /*===========================================================================*\
       =Slider
