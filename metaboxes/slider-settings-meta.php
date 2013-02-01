@@ -1,6 +1,6 @@
 <div id="lsjl-slider-settings">
 
-<?php $opt = Lucid_Slider_Core::get_settings();
+<?php $opt = Lucid_Slider_Utility::get_settings();
 
 /*---------- Slider size dropdown ----------*/
 

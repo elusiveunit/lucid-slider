@@ -18,14 +18,14 @@ class Lucid_Slider_Core {
 	 *
 	 * @var string
 	 */
-	public $plugin_file;
+	static $plugin_file;
 
 	/**
 	 * Plugin settings
 	 *
 	 * @var array
 	 */
-	static $settings;
+	private $settings;
 
 	/**
 	 * Constructor, add hooks.
@@ -34,15 +34,15 @@ class Lucid_Slider_Core {
 	 * uploading is at work.
 	 */
 	public function __construct( $file = '' ) {
-		$this->plugin_file = (string) $file;
+		self::$plugin_file = (string) $file;
+		$this->settings = Lucid_Slider_Utility::get_settings();
 		$this->load_translation();
-		Lucid_Slider_Core::get_settings();
 
 		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
 		add_filter( 'sanitize_file_name', array( $this, 'clean_file_name' ) );
 		add_shortcode( 'lucidslider', array( $this, 'slider_shortcode' ) );
 
-		if ( ! empty( self::$settings['enable_widget'] ) )
+		if ( ! empty( $this->settings['enable_widget'] ) )
 			add_action( 'widgets_init',  array( $this, 'slider_widget' ) );
 	}
 
@@ -50,7 +50,7 @@ class Lucid_Slider_Core {
 	 * Make the plugin available for translation.
 	 */
 	public function load_translation() {
-		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( $this->plugin_file ) ) ) . 'lang/' );
+		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'lang/' );
 	}
 
 	/**
@@ -59,7 +59,7 @@ class Lucid_Slider_Core {
 	 * Make sure there is always a thumbnail size for the slider edit screen.
 	 */
 	public function add_image_sizes() {
-		$opt = Lucid_Slider_Core::get_settings();
+		$opt = Lucid_Slider_Utility::get_settings();
 
 		// Make sure post thumbnails are supported
 		add_theme_support( 'post-thumbnails' );
@@ -75,7 +75,7 @@ class Lucid_Slider_Core {
 			$count = 1;
 
 			foreach ( $sizes as $size ) :
-				$dimensions = Lucid_Slider_Core::get_dimensions( $size );
+				$dimensions = Lucid_Slider_Utility::get_dimensions( $size );
 
 				if ( ! ( $dimensions ) ) continue;
 
@@ -107,41 +107,12 @@ class Lucid_Slider_Core {
 	}
 
 	/**
-	 * Get a two-value array of image dimensions from a string like 200x300.
-	 *
-	 * @param string $size Sizes, separated with an 'x'.
-	 * @return array Width as the first item, height as the second.
+	 * Get plugin main file.
+	 * 
+	 * @return string
 	 */
-	public static function get_dimensions( $size ) {
-		$dimensions = explode( 'x', trim( (string) $size ) );
-
-		// Need two values
-		if ( 2 != count( $dimensions ) ) return '';
-
-		$dimensions[0] = (int) $dimensions[0];
-		$dimensions[1] = (int) $dimensions[1];
-
-		return $dimensions;
-	}
-
-	/**
-	 * Get all the plugin settings.
-	 *
-	 * If settings are changed, get_option only needs to be edited in one place.
-	 * Also removes the need to remember which tab a setting is on.
-	 *
-	 * @return array
-	 */
-	public static function get_settings() {
-
-		if ( empty( self::$settings ) ) :
-			$general = (array) get_option( 'lsjl_general_settings' );
-			$slider = (array) get_option( 'lsjl_slider_settings' );
-
-			self::$settings = array_merge( $general, $slider );
-		endif;
-
-		return self::$settings;
+	public static function get_plugin_file() {
+		return self::$plugin_file;
 	}
 
 	/**

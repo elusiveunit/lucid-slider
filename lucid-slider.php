@@ -30,7 +30,10 @@ if ( ! defined( 'LSJL_PATH' ) )
       =Load functionality
 \*===========================================================================*/
 
-// Setup and misc. utility functions
+// Misc. utility functions
+require 'inc/utility.php';
+
+// Setup
 require 'inc/core.php';
 $lucid_slider_core = new Lucid_Slider_Core( __FILE__ );
 
@@ -38,10 +41,10 @@ $lucid_slider_core = new Lucid_Slider_Core( __FILE__ );
 require 'inc/post-type.php';
 
 // Another global unfortunately needed for conditional widget loading
-$lucid_slider_setting = Lucid_Slider_Core::get_settings();
+$lucid_slider_settings = Lucid_Slider_Utility::get_settings();
 
 // Slider widget
-if ( ! empty( $lucid_slider_setting['enable_widget'] ) ) :
+if ( ! empty( $lucid_slider_settings['enable_widget'] ) ) :
 	require 'inc/widget.php';
 endif;
 
@@ -67,7 +70,7 @@ if ( is_admin() ) :
 	endif;
 
 	// TinyMCE plugin
-	if ( ! empty( $lucid_slider_setting['enable_tinymce'] ) ) :
+	if ( ! empty( $lucid_slider_settings['enable_tinymce'] ) ) :
 		require 'tinymce/tinymce.php';
 		$lucid_slider_tinymce = new Lucid_Slider_Tinymce();
 	endif;
