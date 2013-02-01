@@ -23,7 +23,7 @@ class Lucid_Slider_Frontend {
 		$opt = Lucid_Slider_Utility::get_settings();
 
 		if ( ! empty( $opt['load_js'] ) )
-			add_action( 'wp_enqueue_scripts', array( $this, 'load_script' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'register_script' ) );
 
 		if ( ! empty( $opt['load_css'] ) )
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_style' ) );
@@ -37,7 +37,7 @@ class Lucid_Slider_Frontend {
 	 * the proper way, but it prevents it from being loaded on pages without a
 	 * slider active.
 	 */
-	public function load_script() {
+	public function register_script() {
 		wp_register_script( 'flexslider', LSJL_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
 	}
 

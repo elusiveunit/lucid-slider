@@ -73,54 +73,6 @@ class Lucid_Slider {
 	}
 
 	/**
-	 * Get slide image URL.
-	 *
-	 * If the uploaded image is the exact same size as an added image size, that
-	 * size is not available as an 'image size' that can be grabbed with
-	 * wp_get_attachment_image_src (i.e. add_image_size with 600x200 and upload
-	 * a 600x200 image). Therefore, if an intermediate image size is requested,
-	 * all registered sizes are checked against the dimensions set in the slider
-	 * settings. If there is a match, there is a crop, if not, the full image is
-	 * assumed to be the correct one to get.
-	 *
-	 * @param int $slide_id Image ID.
-	 * @return string Image URL.
-	 */
-	/*protected function _get_image_src( $slide_id ) {
-		$size = $this->slider_options['slider-size'];
-
-		if ( 'full' != $size )
-			$size = Lucid_Slider_Utility::get_dimensions( trim( $size ) );
-
-		$image_sizes = wp_get_attachment_metadata( $slide_id );
-		if ( empty( $image_sizes['sizes'] ) )
-			return '';
-
-		$use_full_size = ( 'full' == $size );
-
-		if ( 'full' != $size ) :
-
-			// Assume full size and override if there is a resized image
-			// available.
-			$use_full_size = true;
-			foreach ( $image_sizes['sizes'] as $size_name => $data ) :
-
-				// If width and height matches, there is a crop available.
-				if ( $size[0] == $data['width'] && $size[1] == $data['height'] ) :
-					$use_full_size = false;
-				endif;
-			endforeach;
-		endif;
-
-		if ( $use_full_size )
-			$src = wp_get_attachment_url( $slide_id );
-		else
-			$src = wp_get_attachment_image_src( $slide_id, $size )[0];
-
-		return $src;
-	}*/
-
-	/**
 	 * Error messages when no slider is found for the supplied ID.
 	 *
 	 * @return string HTML content.
@@ -148,13 +100,6 @@ class Lucid_Slider {
 
 		return $html;
 	}
-
-	/**
-	 * Enqueue FlexSlider JavaScript.
-	 */
-	public function load_script() { ?>
-		<script src="<?php echo LSJL_URL . 'js/jquery.flexslider.min.js'; ?>"></script>
-	<?php }
 
 	/**
 	 * Create a slider structure.

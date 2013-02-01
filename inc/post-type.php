@@ -23,6 +23,7 @@ $lucid_slider_post_type = new Lucid_Slider_Post_Type( 'slider', array(
 	'post_type_args' => array(
 		'hierarchical' => true,
 		'labels' => array(
+			
 			// menu_name default, use plural
 			'name' =>               _x( 'Sliders', 'post type general name', 'lucid-slider' ),
 			'singular_name' =>      _x( 'Slider', 'post type singular name', 'lucid-slider' ),

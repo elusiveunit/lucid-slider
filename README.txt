@@ -228,6 +228,11 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 
 == Changelog ==
 
+= 1.3.1: Feb 01, 2013 =
+
+* Tweak: Slide image URLs are now saved as post meta, which will save two database request for every slide on a page. Re-save every slider for a performace boost!
+* Tweak: The slider JavaScript is now loaded manually in the footer, only if there is a slider on the page (and JavaScript loading by the plugin is enabled in the settings).
+
 = 1.3: Jan 27, 2013 =
 
 * New: A button is now available in the visual editor, which enables an easy UI for shortcode insertion.

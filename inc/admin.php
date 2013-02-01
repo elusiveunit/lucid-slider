@@ -32,6 +32,7 @@ class Lucid_Slider_Admin {
 		$screen_id = $screen->id;
 
 		if ( 'slider' == $screen_id ) :
+			
 			// Metabox style
 			wp_enqueue_style( 'lsjl-style', LSJL_URL . 'css/edit-slider.min.css', false, null );
 
