@@ -18,10 +18,10 @@ class Lucid_Slider_Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		//add_filter( 'gettext', array( $this, 'insert_button_text' ), 1, 3 );
 		add_filter( 'manage_edit-slider_columns', array( $this, 'admin_columns' ) );
 		add_action( 'manage_slider_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
 		add_action( 'admin_head-edit.php', array( $this, 'column_style' ) );
+		add_action( 'save_post', array( $this, 'set_slide_meta' ) );
 	}
 
 	/**
@@ -41,25 +41,6 @@ class Lucid_Slider_Admin {
 			// Upload handling and other misc. stuff
 			wp_enqueue_script( 'lsjl-script', LSJL_URL . 'js/edit-slider.min.js', array( 'jquery' ), null, true );
 		endif;
-	}
-
-	/**
-	 * Edit 'Insert into Post' string in media uploader.
-	 *
-	 * @param string $translated_text The current localized string.
-	 * @param string $source_text The original string.
-	 * @param string $domain Text domain.
-	 * @return string
-	 */
-	public function insert_button_text( $translated_text, $source_text, $domain ) {
-		if ( // lsjl... set in JS, to make sure the request is from Lucid Slider
-		  isset( $_REQUEST['lsjl-from-slide-insert'] )
-		  && 'lucid-slider' == $_REQUEST['lsjl-from-slide-insert']
-		  && 'Insert into Post' == $source_text ) :
-			$translated_text = __( 'Add to slide', 'lucid-slider' );
-		endif;
-
-		return $translated_text;
 	}
 
 	/**
@@ -165,4 +146,47 @@ class Lucid_Slider_Admin {
 			.widefat .column-lsjl_shortcode {width: 13em;}
 		</style>
 	<?php }
+
+	/**
+	 * Save image URLs to slide post meta.
+	 *
+	 * The wp_get_attachment_* functions used to grab the slide image URLs does
+	 * database queries for every image, which can rapidly increase queries per
+	 * page request (disregarding potential caching). This instead does that
+	 * task on post save for a single user and saves the URLs as post meta data.
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	public function set_slide_meta( $post_id ) {
+
+		// Make sure not to do unnecessary processing.
+		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
+		  || empty( $_POST['post_type'] )
+		  || 'slider' != $_POST['post_type']
+		  || ! current_user_can( 'edit_post', $post_id ) ) return;
+
+		// Get meta from POST, since the data from get_post_meta is from before
+		// this save being processed.
+		$slides = ( ! empty( $_POST['_lsjl-slides']['slide-group'] ) )
+			? $_POST['_lsjl-slides']['slide-group']
+			: false;
+		$slider_size = ( ! empty( $_POST['_lsjl-slider-settings']['slider-size'] ) )
+			? $_POST['_lsjl-slider-settings']['slider-size']
+			: 'full';
+		$slide_image_urls = array();
+
+		// Set image URLs as id => URL
+		if ( $slides ) :
+			foreach ( $slides as $key => $data ) :
+				if ( ! empty( $data['slide-image-id'] ) ) :
+					$id = $data['slide-image-id'];
+
+					$slide_image_urls[$id] = Lucid_Slider_Utility::get_slide_image_src( $id, $slider_size );
+				endif;
+			endforeach;
+		endif;
+
+		// Save meta
+		update_post_meta( $post_id, '_lsjl-slides-urls', $slide_image_urls );
+	}
 }
