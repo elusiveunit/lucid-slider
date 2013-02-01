@@ -32,7 +32,14 @@ class Lucid_Slider {
 	 *
 	 * @var array
 	 */
-	public $slides;
+	public $slides = array();
+
+	/**
+	 * Stored slide URLs to save database queries.
+	 *
+	 * @var array
+	 */
+	public $slides_urls = array();
 
 	/**
 	 * Settings for the individual slider.
@@ -55,12 +62,14 @@ class Lucid_Slider {
 	 */
 	public function __construct( $id = 0 ) {
 		$this->id = (int) $id;
-		$this->settings = Lucid_Slider_Core::get_settings();
+		$this->settings = Lucid_Slider_Utility::get_settings();
 		$this->slider_options = get_post_meta( (int) $id, '_lsjl-slider-settings', true );
 
 		$slides = get_post_meta( (int) $id, '_lsjl-slides', true );
 		if ( ! empty( $slides['slide-group'] ) )
 			$this->slides = $slides['slide-group'];
+
+		$this->slides_urls = get_post_meta( (int) $id, '_lsjl-slides-urls', true );
 	}
 
 	/**
@@ -77,11 +86,11 @@ class Lucid_Slider {
 	 * @param int $slide_id Image ID.
 	 * @return string Image URL.
 	 */
-	protected function _get_image_src( $slide_id ) {
+	/*protected function _get_image_src( $slide_id ) {
 		$size = $this->slider_options['slider-size'];
 
 		if ( 'full' != $size )
-			$size = Lucid_Slider_Core::get_dimensions( trim( $size ) );
+			$size = Lucid_Slider_Utility::get_dimensions( trim( $size ) );
 
 		$image_sizes = wp_get_attachment_metadata( $slide_id );
 		if ( empty( $image_sizes['sizes'] ) )
@@ -109,7 +118,7 @@ class Lucid_Slider {
 			$src = wp_get_attachment_image_src( $slide_id, $size )[0];
 
 		return $src;
-	}
+	}*/
 
 	/**
 	 * Error messages when no slider is found for the supplied ID.
@@ -141,6 +150,13 @@ class Lucid_Slider {
 	}
 
 	/**
+	 * Enqueue FlexSlider JavaScript.
+	 */
+	public function load_script() { ?>
+		<script src="<?php echo LSJL_URL . 'js/jquery.flexslider.min.js'; ?>"></script>
+	<?php }
+
+	/**
 	 * Create a slider structure.
 	 *
 	 * @return string HTML for the slider.
@@ -159,16 +175,21 @@ class Lucid_Slider {
 				$slide_id = ( ! empty( $slide['slide-image-id'] ) ) ? $slide['slide-image-id'] : 0;
 				$alt = ( ! empty( $slide['slide-image-alt'] ) ) ? esc_attr( $slide['slide-image-alt'] ) : '';
 
-				$src = $this->_get_image_src( $slide_id );
+				// Get from meta, if available
+				$src = ( ! empty( $this->slides_urls[$slide_id] ) )
+					? $this->slides_urls[$slide_id]
+					: Lucid_Slider_Utility::get_slide_image_src( $slide_id, $this->slider_options['slider-size'] );
 				
 				// Output
-				$html .= "\n<li>";
-					$html = apply_filters( 'ljsl_before_slide_image', $html, $key, $slide, $this->id );
+				if ( ! empty( $src ) ) :
+					$html .= "\n<li>";
+						$html = apply_filters( 'ljsl_before_slide_image', $html, $key, $slide, $this->id );
 
-					$html .= "<img src=\"{$src}\" alt=\"{$alt}\">";
+						$html .= "<img src=\"{$src}\" alt=\"{$alt}\">";
 
-					$html = apply_filters( 'ljsl_after_slide_image', $html, $key, $slide, $this->id );
-				$html .= '</li>';
+						$html = apply_filters( 'ljsl_after_slide_image', $html, $key, $slide, $this->id );
+					$html .= '</li>';
+				endif;
 			endforeach;
 
 			$html .= "\n</ul></div>";
@@ -254,7 +275,15 @@ class Lucid_Slider {
 
 			$js_options = apply_filters_ref_array( 'lsjl_js_options', array( $js_options, &$options_added ) );
 
-			$js_options .= ' }'; ?>
+			$js_options .= ' }';
+			
+			// The name 'flexslider' is registered without being enqueued and
+			// instead inserted manually here. Not really proper, but it prevents
+			// it from being unnecessarily loaded on pages without a slider.
+			if ( ! empty( $this->settings['load_js'] ) ) : ?>
+			<script src="<?php echo LSJL_URL . 'js/jquery.flexslider.min.js'; ?>"></script>
+			<?php endif; ?>
+
 			<script>
 			(function($){
 				$('.flexslider').flexslider(<?php if ( $options_added > 0 ) echo $js_options; ?>);

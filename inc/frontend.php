@@ -20,7 +20,7 @@ class Lucid_Slider_Frontend {
 	 * they're set.
 	 */
 	public function __construct() {
-		$opt = Lucid_Slider_Core::get_settings();
+		$opt = Lucid_Slider_Utility::get_settings();
 
 		if ( ! empty( $opt['load_js'] ) )
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_script' ) );
@@ -30,10 +30,15 @@ class Lucid_Slider_Frontend {
 	}
 
 	/**
-	 * Enqueue FlexSlider JavaScript.
+	 * Register FlexSlider JavaScript.
+	 *
+	 * This is only registered to prevent potential double loading. The printing
+	 * to page is done manually through the slider display functions. Not really
+	 * the proper way, but it prevents it from being loaded on pages without a
+	 * slider active.
 	 */
 	public function load_script() {
-		wp_enqueue_script( 'flexslider', LSJL_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
+		wp_register_script( 'flexslider', LSJL_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
 	}
 
 	/**
