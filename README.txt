@@ -228,6 +228,11 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 
 == Changelog ==
 
+= 1.3.2: Feb 05, 2013 =
+
+* Fix: Explicitly enqueue jQuery, since the manual loading introduced in 1.3.1 won't ensure jQuery being loaded.
+* Fix: Load metaboxes if $pagenow is null, which is at this time the case in multisite.
+
 = 1.3.1: Feb 01, 2013 =
 
 * Tweak: Slide image URLs are now saved as post meta, which will save two database request for every slide on a page. Re-save every slider for a performace boost!

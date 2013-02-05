@@ -216,6 +216,13 @@ add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 
 <h2 id="changelog">Changelog</h2>
 
+<h3>1.3.2: Feb 05, 2013</h3>
+
+<ul>
+<li>Fix: Explicitly enqueue jQuery, since the manual loading introduced in 1.3.1 won't ensure jQuery being loaded.</li>
+<li>Fix: Load metaboxes if $pagenow is null, which is at this time the case in multisite.</li>
+</ul>
+
 <h3>1.3.1: Feb 01, 2013</h3>
 
 <ul>
