@@ -26,6 +26,7 @@ if ( ! defined( 'LSJL_URL' ) )
 if ( ! defined( 'LSJL_PATH' ) )
 	define( 'LSJL_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
+
 /*===========================================================================*\
       =Load functionality
 \*===========================================================================*/
@@ -61,8 +62,8 @@ if ( is_admin() ) :
 	// Settings page
 	require 'inc/settings.php';
 
-	// Edit screens
-	if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) :
+	// Edit screens. For multisite, $pagenow is null at this point.
+	if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) || is_null( $pagenow ) ) :
 
 		// WPAlchemy metabox initialization
 		require 'inc/metaboxes.php';
