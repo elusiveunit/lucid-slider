@@ -83,7 +83,7 @@ class Lucid_Slider_Widget extends WP_Widget {
 		$slider = esc_attr( $instance['slider'] );
 
 		$sliders = get_posts( array(
-			'post_type' => 'slider',
+			'post_type' => Lucid_Slider_Core::get_post_type_name(),
 			'numberposts' => -1,
 			'orderby' => 'title',
 			'order' => 'ASC'

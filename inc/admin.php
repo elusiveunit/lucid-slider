@@ -18,8 +18,8 @@ class Lucid_Slider_Admin {
 	 */
 	public function __construct() {
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		add_filter( 'manage_edit-slider_columns', array( $this, 'admin_columns' ) );
-		add_action( 'manage_slider_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
+		add_filter( 'manage_edit-' . Lucid_Slider_Core::get_post_type_name() . '_columns', array( $this, 'admin_columns' ) );
+		add_action( 'manage_' . Lucid_Slider_Core::get_post_type_name() . '_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
 		add_action( 'admin_head-edit.php', array( $this, 'column_style' ) );
 		add_action( 'save_post', array( $this, 'set_slide_meta' ) );
 	}
@@ -31,7 +31,7 @@ class Lucid_Slider_Admin {
 		$screen = get_current_screen();
 		$screen_id = $screen->id;
 
-		if ( 'slider' == $screen_id ) :
+		if ( $screen_id == Lucid_Slider_Core::get_post_type_name() ) :
 			
 			// Metabox style
 			wp_enqueue_style( 'lsjl-style', LSJL_URL . 'css/edit-slider.min.css', false, null );
@@ -163,7 +163,7 @@ class Lucid_Slider_Admin {
 		// Make sure not to do unnecessary processing.
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE )
 		  || empty( $_POST['post_type'] )
-		  || 'slider' != $_POST['post_type']
+		  || $_POST['post_type'] != Lucid_Slider_Core::get_post_type_name()
 		  || ! current_user_can( 'edit_post', $post_id ) ) return;
 
 		// Get meta from POST, since the data from get_post_meta is from before

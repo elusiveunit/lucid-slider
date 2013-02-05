@@ -14,14 +14,21 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 class Lucid_Slider_Core {
 
 	/**
-	 * Plugin main file
+	 * Plugin main file.
 	 *
 	 * @var string
 	 */
 	static $plugin_file;
 
 	/**
-	 * Plugin settings
+	 * Post type name.
+	 *
+	 * @var string
+	 */
+	static $post_type_name;
+
+	/**
+	 * Plugin settings.
 	 *
 	 * @var array
 	 */
@@ -35,6 +42,8 @@ class Lucid_Slider_Core {
 	 */
 	public function __construct( $file = '' ) {
 		self::$plugin_file = (string) $file;
+		self::$post_type_name = 'lucidslider';
+
 		$this->settings = Lucid_Slider_Utility::get_settings();
 		$this->load_translation();
 
@@ -44,6 +53,24 @@ class Lucid_Slider_Core {
 
 		if ( ! empty( $this->settings['enable_widget'] ) )
 			add_action( 'widgets_init',  array( $this, 'slider_widget' ) );
+	}
+
+	/**
+	 * Get plugin main file.
+	 * 
+	 * @return string
+	 */
+	public static function get_plugin_file() {
+		return self::$plugin_file;
+	}
+
+	/**
+	 * Get plugin main file.
+	 * 
+	 * @return string
+	 */
+	public static function get_post_type_name() {
+		return self::$post_type_name;
 	}
 
 	/**
@@ -104,15 +131,6 @@ class Lucid_Slider_Core {
 	 */
 	public function slider_widget() {
 		register_widget( 'Lucid_Slider_Widget' );
-	}
-
-	/**
-	 * Get plugin main file.
-	 * 
-	 * @return string
-	 */
-	public static function get_plugin_file() {
-		return self::$plugin_file;
 	}
 
 	/**

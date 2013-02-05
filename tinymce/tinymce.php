@@ -103,7 +103,7 @@ class Lucid_Slider_Tinymce {
 	 */
 	public static function tinymce_popup() {
 		$sliders = get_posts( array(
-			'post_type' => 'slider',
+			'post_type' => Lucid_Slider_Core::get_post_type_name(),
 			'numberposts' => -1,
 			'orderby' => 'title',
 			'order' => 'ASC'

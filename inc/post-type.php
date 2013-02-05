@@ -15,7 +15,7 @@ if ( ! class_exists( 'Lucid_Slider_Post_Type' ) )
       =Register
 \*===========================================================================*/
 
-$lucid_slider_post_type = new Lucid_Slider_Post_Type( 'slider', array(
+$lucid_slider_post_type = new Lucid_Slider_Post_Type( Lucid_Slider_Core::get_post_type_name(), array(
 	'update_message' => _x( 'Slider', 'post type singular name', 'lucid-slider' ),
 	'update_message_format' => 'eng_no_links',
 	'small_menu_icon_url' => LSJL_URL . 'img/admin-icon-16.png',
@@ -48,6 +48,6 @@ $lucid_slider_post_type = new Lucid_Slider_Post_Type( 'slider', array(
 			'title'
 		),
 		'has_archive' => false,
-		'rewrite' => array( 'slug' => 'slider', 'with_front' => false ), // with_front false->/news/, true->/blog/news/
+		'rewrite' => array( 'slug' => Lucid_Slider_Core::get_post_type_name(), 'with_front' => false ), // with_front false->/news/, true->/blog/news/
 	)
 ) );
