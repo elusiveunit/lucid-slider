@@ -22,11 +22,24 @@ class Lucid_Slider_Frontend {
 	public function __construct() {
 		$opt = Lucid_Slider_Utility::get_settings();
 
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_jquery' ) );
+
 		if ( ! empty( $opt['load_js'] ) )
 			add_action( 'wp_enqueue_scripts', array( $this, 'register_script' ) );
 
 		if ( ! empty( $opt['load_css'] ) )
 			add_action( 'wp_enqueue_scripts', array( $this, 'load_style' ) );
+	}
+
+	/**
+	 * Enqueue jQuery shipped with WordPress.
+	 *
+	 * jQuery is always needed, and since the flexslider script is only
+	 * registered and not enqueued, jQuery may not be present unless added
+	 * here.
+	 */
+	public function enqueue_jquery() {
+		wp_enqueue_script( 'jquery' );
 	}
 
 	/**
