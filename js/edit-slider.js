@@ -8,6 +8,10 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	// Settings
 	var conf = {
 		$slides: $('#lsjl-slides'),
+		$templates: $('#lsjl-slider-template'),
+		$templateInputs: null,
+
+		$extraFields: $('.lsjl-extra-fields'),
 		$firstWrap: $('.wpa_group-slide-group.first .lsjl-fields-wrap'),
 		$firstWrapInner: null,
 		fieldsCount: 0,
@@ -33,9 +37,12 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 		}
 	};
 
+	/**
+	 * Initialization
+	 */
 	function init() {
-		conf.$firstWrapInner = conf.$firstWrap.children();
-		conf.fieldsCount = conf.$firstWrapInner[0].children.length;
+		conf.fieldsCount = conf.$extraFields[0].children.length;
+		conf.$templateInputs = conf.$templates.find('input[type="radio"]');
 
 		bindEvents();
 		checkFieldExpand();
@@ -58,6 +65,16 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 			toggleFields( $(this).prev() );
 		});
 
+		// Selected class for templates
+		conf.$templates.on( 'click', 'input', function() {
+			conf.$templateInputs.each(function() {
+				$(this).parent().removeClass('selected');
+			});
+
+			$(this).parent().addClass('selected');
+		});
+
+		// jQuery UI sortable
 		$('#wpa_loop-slide-group').sortable( conf.sortableSettings );
 	}
 
@@ -139,10 +156,8 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	 * is taller than 70 pixels (about 60 by default).
 	 */
 	function checkFieldExpand() {
-		if ( conf.fieldsCount > 2 || conf.$firstWrapInner.height() > 70 ) {
-			conf.$slides.find('.lsjl-fields-wrap').each(function() {
-				$(this).addClass( 'expandable' );
-			});
+		if ( conf.fieldsCount > 0 ) {
+			conf.$slides.find('.lsjl-fields-wrap').addClass( 'expandable' );
 		}
 	}
 

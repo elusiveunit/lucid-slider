@@ -49,6 +49,13 @@ class Lucid_Slider {
 	public $slider_options;
 
 	/**
+	 * Template settings for the individual slider.
+	 *
+	 * @var array
+	 */
+	public $slider_template;
+
+	/**
 	 * Whether a slider has been initialized.
 	 *
 	 * @var boolean
@@ -63,7 +70,10 @@ class Lucid_Slider {
 	public function __construct( $id = 0 ) {
 		$this->id = (int) $id;
 		$this->settings = Lucid_Slider_Utility::get_settings();
+		$this->templates = Lucid_Slider_Utility::get_templates();
+
 		$this->slider_options = get_post_meta( (int) $id, '_lsjl-slider-settings', true );
+		$this->slider_template = get_post_meta( (int) $id, '_lsjl-slider-template', true );
 
 		$slides = get_post_meta( (int) $id, '_lsjl-slides', true );
 		if ( ! empty( $slides['slide-group'] ) )
@@ -73,16 +83,18 @@ class Lucid_Slider {
 	}
 
 	/**
-	 * Error messages when no slider is found for the supplied ID.
+	 * Error messages when slider files or settings are missing.
 	 *
+	 * @param string $template File path for invalid template.
 	 * @return string HTML content.
 	 */
-	protected function _no_slider_found() {
+	protected function _slider_error( $template = '' ) {
 		$html = '';
 		$errors = array();
 
 		if ( empty( $this->slides ) ) $errors[] = "No slides for ID {$this->id} found.";
 		if ( empty( $this->slider_options ) ) $errors[] = "Missing settings for ID {$this->id}.";
+		if ( ! empty( $template ) ) $errors[] = "Invalid template: {$template} does not exist.";
 
 		foreach ( $errors as $error ) :
 
@@ -108,39 +120,43 @@ class Lucid_Slider {
 	 */
 	public function get_slider() {
 		$html = '';
+		$template = ( ! empty( $this->slider_template['template'] ) )
+			? $this->slider_template['template']
+			: 'default';
 
-		if ( ! empty( $this->slides ) && ! empty( $this->slider_options ) ) :
-			
-			// Low priority so footer scripts are added before
-			add_action( 'wp_footer', array( $this, 'slider_init' ), 999 );
+		// First check that we have necessary settings
+		if ( ! empty( $this->slides )
+		  && ! empty( $this->slider_options )
+		  && ! empty( $this->templates[$template] ) ) :
 
-			$html .= '<div class="flexslider"><ul class="slides">';
+			$template_path = ( ! empty( $this->templates[$template]['path'] ) )
+				? $this->templates[$template]['path']
+				: $this->templates['default']['path'];
 
-			foreach ( $this->slides as $key => $slide ) :
-				$slide_id = ( ! empty( $slide['slide-image-id'] ) ) ? $slide['slide-image-id'] : 0;
-				$alt = ( ! empty( $slide['slide-image-alt'] ) ) ? esc_attr( $slide['slide-image-alt'] ) : '';
+			// Then check if the template exists
+			if ( file_exists( $template_path ) ) :
 
-				// Get from meta, if available
-				$src = ( ! empty( $this->slides_urls[$slide_id] ) )
-					? $this->slides_urls[$slide_id]
-					: Lucid_Slider_Utility::get_slide_image_src( $slide_id, $this->slider_options['slider-size'] );
-				
-				// Output
-				if ( ! empty( $src ) ) :
-					$html .= "\n<li>";
-						$html = apply_filters( 'ljsl_before_slide_image', $html, $key, $slide, $this->id );
+				// Low priority so footer scripts are added before
+				add_action( 'wp_footer', array( $this, 'slider_init' ), 999 );
 
-						$html .= "<img src=\"{$src}\" alt=\"{$alt}\">";
+				ob_start();
 
-						$html = apply_filters( 'ljsl_after_slide_image', $html, $key, $slide, $this->id );
-					$html .= '</li>';
-				endif;
-			endforeach;
+				// Variables without 'this' outside the class
+				$slides = $this->slides;
+				$options = $this->slider_options;
+				$slides_urls = $this->slides_urls;
 
-			$html .= "\n</ul></div>";
+				include $template_path;
+				$html = ob_get_clean();
 
+			// Set template does not exist
+			else :
+				$html .= $this->_slider_error( $template_path );
+			endif;
+
+		// Missing settings/data
 		else :
-			$html .= $this->_no_slider_found();
+			$html .= $this->_slider_error();
 		endif;
 
 		return $html;

@@ -29,5 +29,4 @@ if ( ! empty( $opt['image_sizes'] ) ) :
 else : ?>
 	<div class="lsjl-message-error"><p><?php _e( 'You must set image sizes in the settings to use the slider.', 'lucid-slider' ); ?></p></div>
 <?php endif; ?>
-
 </div>

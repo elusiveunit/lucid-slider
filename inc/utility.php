@@ -59,6 +59,43 @@ class Lucid_Slider_Utility {
 	}
 
 	/**
+	 * Get all "registered" templates.
+	 *
+	 * Templates can be added with the lsjl_templates filter, simply by
+	 * mimicking the structure of:
+	 *
+	 * $user_templates['unique_template_name'] = array(
+	 * 	'name' => __( 'User-visible name', 'textdomain' ),
+	 * 	'path' => 'path/to/template-display-file.php',
+	 * 	'screenshot' => 'URL/to/screenshot.jpg'
+	 * )
+	 *
+	 * Screenshot container is 250x100 pixels.
+	 *
+	 * @return array
+	 */
+	public static function get_templates() {
+		$default_templates = array(
+			'default' => array(
+				'name' => __( 'Default', 'lucid-slider' ),
+				'path' => LSJL_PATH . 'templates/default/slider.php',
+				'screenshot' => LSJL_URL . 'templates/default/screenshot.jpg'
+			)
+		);
+		$user_templates = apply_filters( 'lsjl_templates', array() );
+
+		return array_merge( $default_templates, $user_templates );
+
+		/*return apply_filters( 'lsjl_templates', array(
+			'default' => array(
+				'name' => __( 'Default', 'lucid-slider' ),
+				'path' => LSJL_PATH . 'templates/default.php',
+				'screenshot' => LSJL_PATH . 'templates/default'
+			)
+		) );*/
+	}
+
+	/**
 	 * Get slide image URL.
 	 *
 	 * If the uploaded image is the exact same size as an added image size, that

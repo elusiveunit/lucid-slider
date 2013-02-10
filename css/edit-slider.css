@@ -21,6 +21,7 @@
 }
 #lsjl-sort-message {display: none;}
 
+
 /*===========================================================================*\
       =Slide management
 \*===========================================================================*/
@@ -109,6 +110,8 @@
 #lsjl-slides .lsjl-field-group input,
 #lsjl-slides .lsjl-field-group select,
 #lsjl-slides .lsjl-field-group textarea {min-width: 250px;}
+#lsjl-slides .lsjl-field-group input[type="radio"],
+#lsjl-slides .lsjl-field-group input[type="checkbox"] {min-width: 0;}
 #lsjl-slides .lsjl-field-group textarea {min-height: 6.5em;}
 #lsjl-slides .lsjl-field-group input[type="submit"],
 #lsjl-slides .lsjl-field-group input[type="button"] {min-width: 0;}
@@ -116,17 +119,17 @@
 #lsjl-slides .lsjl-slide-url-field {background: #f4f4f4;}
 .admin-color-classic #lsjl-slides .lsjl-slide-url-field {background: #eff8ff;}
 
-#lsjl-slides .lsjl-fields-wrap {
+#lsjl-slides .lsjl-extra-fields {
 	overflow: hidden;
-	max-height: 5em;
-	/*-webkit-transition: max-height 0.7s ease-in-out;
-	   -moz-transition: max-height 0.7s ease-in-out;
-	     -o-transition: max-height 0.7s ease-in-out;
-	        transition: max-height 0.7s ease-in-out;*/
+	max-height: 0;
+	-webkit-transition: max-height 0.7s ease;
+	   -moz-transition: max-height 0.7s ease;
+	     -o-transition: max-height 0.7s ease;
+	        transition: max-height 0.7s ease;
 }
 #lsjl-slides .lsjl-expand-group {display: none; visibility: hidden; margin-top: 0.5em;}
 #lsjl-slides .lsjl-fields-wrap.expandable + .lsjl-expand-group {display: inline-block; visibility: visible;}
-#lsjl-slides .lsjl-fields-wrap.expanded {max-height: 50em;}
+#lsjl-slides .expanded .lsjl-extra-fields {max-height: 50em;}
 
 /*---------- Remove slide ----------*/
 #lsjl-slides .lsjl-remove-slide {
@@ -143,4 +146,34 @@
 #lsjl-slides .lsjl-remove-slide:focus {
 	background: #f00;
 	color: #fff;
+}
+
+
+/*===========================================================================*\
+      =Templates
+\*===========================================================================*/
+
+#lsjl-slider-template {overflow: hidden;}
+#lsjl-slider-template li {float: left; margin: 0 8px 8px 0;}
+#lsjl-slider-template label {
+	display: inline-block;
+	position: relative;
+	overflow: hidden;
+	width: 250px;
+	padding-bottom: 4px;
+	border: 3px solid #ddd;
+	text-align: center;
+}
+#lsjl-slider-template label:hover,
+#lsjl-slider-template label.selected {border-color: #1e8cbe;}
+#lsjl-slider-template input[type="radio"] {
+	position: absolute;
+	top: -20px;
+	left: -20px;
+}
+#lsjl-slider-template .lsjl-template-image {
+	display: inline-block;
+	width: 250px;
+	height: 100px;
+	margin-bottom: 4px;
 }

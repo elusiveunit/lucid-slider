@@ -40,3 +40,16 @@ $lsjl_slider_settings_meta = new WPAlchemy_MetaBox( array(
 	'context' => 'side', // normal, advanced, or side
 	'priority' => 'default' // high, core, default or low
 ) );
+
+if ( apply_filters( 'lsjl_show_template_metabox', true ) ) :
+$lsjl_slider_template_meta = new WPAlchemy_MetaBox( array(
+	'id' => '_lsjl-slider-template',
+	'title' => __( 'Slider template', 'lucid-slider' ),
+	'template' => LSJL_PATH . 'metaboxes/slider-template-meta.php',
+	//'mode' => WPALCHEMY_MODE_EXTRACT, // Individual wp_postmeta entries, set if using with WP_Query
+	//'prefix' => 'lsjl-slider-', // A good idea with WPALCHEMY_MODE_EXTRACT
+	'types' => array( Lucid_Slider_Core::get_post_type_name() ),
+	'context' => 'normal', // normal, advanced, or side
+	'priority' => 'default' // high, core, default or low
+) );
+endif;
