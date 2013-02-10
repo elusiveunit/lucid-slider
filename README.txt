@@ -62,46 +62,6 @@ There are a number of hooks available, for extending different parts of the plug
 
 #### Frontend
 
-##### ljsl\_before\_slide\_image
-
-Runs right after each slide opening `<li>`.
-	
-	/**
-	 * Manipulate slide content.
-	 *
-	 * @param string $html Current HTML output.
-	 * @param int $key Current array index key.
-	 * @param array $slide Slide data.
-	 * @param int $slider_id ID of the entire slider.
-	 * @return string New HTML.
-	 */
-	function themename_before_slide( $html, $key, $slide, $slider_id ) {
-		// Manipulate HTML
-		
-		return $html;
-	}
-	add_filter( 'ljsl_before_slide_image', 'themename_before_slide' );
-
-##### ljsl\_after\_slide\_image
-
-Runs right before each slide closing `</li>`.
-	
-	/**
-	 * Manipulate slide content.
-	 *
-	 * @param string $html Current HTML output.
-	 * @param int $key Current array index key.
-	 * @param array $slide Slide data.
-	 * @param int $slider_id ID of the entire slider.
-	 * @return string New HTML.
-	 */
-	function themename_after_slide( $html, $key, $slide, $slider_id ) {
-		// Manipulate HTML
-		
-		return $html;
-	}
-	add_filter( 'ljsl_after_slide_image', 'themename_after_slide' );
-
 ##### lsjl\_js\_options
 
 Runs before adding the closing curly bracket to the JavaScript options object. Via `$options_added` one can determine if a comma is needed when adding to the object. If `$options_added` is 0 the object will not be echoed no matter the contents, so increase it if needed.
@@ -121,6 +81,41 @@ Runs before adding the closing curly bracket to the JavaScript options object. V
 	add_filter( 'lsjl_js_options', 'themename_slide_options', 10, 2 );
 
 #### Backend
+
+##### lsjl\_templates
+
+Add templates to select. The screenshot is optional, but recommended.
+
+In the template file (set with 'path'), there are some key variables available:
+
+* `$slides` contains all the slides and their meta data.
+* `$options` has slider options, which at this time of writing is only the slider size.
+* `$slides_urls` has image URLs for every slide, which saves database requests.
+
+See the default template in the plugin for the structure.
+
+	/**
+	 * Add a slider template.
+	 *
+	 * @param array $templates Templates to add.
+	 * @return array
+	 */
+	function themename_add_slider_template( $templates ) {
+		$templates['unique_template_name'] = array(
+			'name' => __( 'User-visible name', 'textdomain' ),
+			'path' => 'path/to/template-display-file.php',
+			'screenshot' => 'URL/to/screenshot.jpg'
+		);
+
+		return $templates;
+	}
+	add_filter( 'lsjl_templates', 'themename_add_slider_template' );
+
+##### lsjl\_show\_template\_metabox
+
+Whether to show the template selection metabox. Hiding it still means any previously saved values are there. For new sliders, the template is set to the default, which can be overridden with `lsjl_templates`.
+
+	add_filter( 'lsjl_show_template_metabox', '__return_false' );
 
 ##### lsjl\_settings\_tabs
 
@@ -179,32 +174,6 @@ Filters the fields added to the settings screen.
 	}
 	add_filter( 'lsjl_settings_fields', 'themename_lsjl_settings_fields' );
 
-##### lsjl\_include\_alt\_field
-
-Determines if the field for image alt text should be shown on the slider edit screen.
-	
-	add_filter( 'lsjl_include_alt_field', '__return_false' );
-
-##### lsjl\_meta\_fields\_start
-
-Runs before the default meta data fields for each slide on the slider edit screen.
-
-Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `lsjl-textarea-group` for label alignment when adding a textarea.
-
-	/**
-	 * Add slide meta field.
-	 *
-	 * @param object $metabox WPAlchemy metabox object.
-	 */
-	function themename_lsjl_meta_before( &$metabox ) {
-		$metabox->the_field( 'themename_field' ); ?>
-		<div class="lsjl-field-group">
-			<label for="<?php $metabox->the_name(); ?>"><?php _e( 'Label:', 'themename' ); ?></label>
-			<input type="text" name="<?php $metabox->the_name(); ?>" id="<?php $metabox->the_name(); ?>" value="<?php $metabox->the_value(); ?>">
-		</div>
-	<?php }
-	add_action( 'lsjl_meta_fields_start', 'themename_lsjl_meta_before' );
-
 ##### lsjl\_meta\_fields\_end
 
 Runs after the default meta data fields for each slide on the slider edit screen.
@@ -225,8 +194,25 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 	<?php }
 	add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 
+== Templates ==
+
+The plugin currently only comes with the default flexslider template, more can be added with the `lsjl_templates` hook (see hooks section for code).
+
+The default template in the plugin can be used as a starting point for a custom one. It should contain a `<div class="flexslider">`, with the slides inside a `<ul class="slides">` (with `<li>`s, naturally) to function properly.
+
+In the template file (set with 'path' in the hook callback array), there are some key variables available:
+
+* `$slides` contains all the slides and their meta data. This will be looped over to display every slide. The keys `slide-image-thumbnail` and `slide-image-url` (which isn't a full URL anymore) are only saved for admin purposes.
+* `$options` has slider options, which at this time of writing is only the slider size.
+* `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as slide_id => URL.
+
 
 == Changelog ==
+
+= 1.4: Feb 10, 2013 =
+
+* New: The slider display code is now more of a template system, with separate view files, heavily inspired by Cyclone Slider 2. This means the hooks `ljsl_before_slide_image` and `ljsl_before_slide_image` are gone. Templates are added with the new `lsjl_templates` filter. See the developer integration section.
+* Removed: Two hooks for slide meta fields have been removed: `lsjl_meta_fields_start` action, which ran before the default fields, and `lsjl_include_alt_field` filter. Adding fields before the default ones felt pretty pointless and the alt text field should always be present to encourage accessibility and SEO. Extra meta fields now have their own wrapping `<div>`, for a more robust toggle check.
 
 = 1.3.2: Feb 05, 2013 =
 

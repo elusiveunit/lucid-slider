@@ -10,7 +10,7 @@ Plugin Name: Lucid Slider
 Description: A simple plugin for creating Flexslider structures.
 Author: Jens Lindberg
 Author URI: http://example.com
-Version: 1.3.2
+Version: 1.4
 */
 
 // Block direct requests
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 // Define plugin constants
 if ( ! defined( 'LSJL_VERSION' ) )
-	define( 'LSJL_VERSION', '1.3.2' );
+	define( 'LSJL_VERSION', '1.4' );
 
 if ( ! defined( 'LSJL_URL' ) )
 	define( 'LSJL_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );

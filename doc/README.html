@@ -42,48 +42,6 @@
 
 <h4>Frontend</h4>
 
-<h5 id="ljsl_before_slide_image">ljsl_before_slide_image</h5>
-
-<p>Runs right after each slide opening <code>&lt;li&gt;</code>.</p>
-
-<pre><code>/**
- * Manipulate slide content.
- *
- * @param string $html Current HTML output.
- * @param int $key Current array index key.
- * @param array $slide Slide data.
- * @param int $slider_id ID of the entire slider.
- * @return string New HTML.
- */
-function themename_before_slide( $html, $key, $slide, $slider_id ) {
-   // Manipulate HTML
-
-   return $html;
-}
-add_filter( 'ljsl_before_slide_image', 'themename_before_slide' );
-</code></pre>
-
-<h5 id="ljsl_after_slide_image">ljsl_after_slide_image</h5>
-
-<p>Runs right before each slide closing <code>&lt;/li&gt;</code>.</p>
-
-<pre><code>/**
- * Manipulate slide content.
- *
- * @param string $html Current HTML output.
- * @param int $key Current array index key.
- * @param array $slide Slide data.
- * @param int $slider_id ID of the entire slider.
- * @return string New HTML.
- */
-function themename_after_slide( $html, $key, $slide, $slider_id ) {
-   // Manipulate HTML
-
-   return $html;
-}
-add_filter( 'ljsl_after_slide_image', 'themename_after_slide' );
-</code></pre>
-
 <h5 id="lsjl_js_options">lsjl_js_options</h5>
 
 <p>Runs before adding the closing curly bracket to the JavaScript options object. Via <code>$options_added</code> one can determine if a comma is needed when adding to the object. If <code>$options_added</code> is 0 the object will not be echoed no matter the contents, so increase it if needed.</p>
@@ -96,29 +54,68 @@ add_filter( 'ljsl_after_slide_image', 'themename_after_slide' );
  * @return string New options.
  */
 function themename_slide_options( $js_options, &amp;$options_added ) {
-   // Modify options
+    // Modify options
 
-   return $js_options;
+    return $js_options;
 }
 add_filter( 'lsjl_js_options', 'themename_slide_options', 10, 2 );
 </code></pre>
 
 <h4>Backend</h4>
 
+<h5 id="lsjl_templates">lsjl_templates</h5>
+
+<p>Add templates to select. The screenshot is optional, but recommended.</p>
+
+<p>In the template file (set with 'path'), there are some key variables available:</p>
+
+<ul>
+<li><code>$slides</code> contains all the slides and their meta data.</li>
+<li><code>$options</code> has slider options, which at this time of writing is only the slider size.</li>
+<li><code>$slides_urls</code> has image URLs for every slide, which saves database requests.</li>
+</ul>
+
+<p>See the default template in the plugin for the structure.</p>
+
+<pre><code>/**
+ * Add a slider template.
+ *
+ * @param array $templates Templates to add.
+ * @return array
+ */
+function themename_add_slider_template( $templates ) {
+    $templates['unique_template_name'] = array(
+        'name' =&gt; __( 'User-visible name', 'textdomain' ),
+        'path' =&gt; 'path/to/template-display-file.php',
+        'screenshot' =&gt; 'URL/to/screenshot.jpg'
+    );
+
+    return $templates;
+}
+add_filter( 'lsjl_templates', 'themename_add_slider_template' );
+</code></pre>
+
+<h5 id="lsjl_show_template_metabox">lsjl_show_template_metabox</h5>
+
+<p>Whether to show the template selection metabox. Hiding it still means any previously saved values are there. For new sliders, the template is set to the default, which can be overridden with <code>lsjl_templates</code>.</p>
+
+<pre><code>add_filter( 'lsjl_show_template_metabox', '__return_false' );
+</code></pre>
+
 <h5 id="lsjl_settings_tabs">lsjl_settings_tabs</h5>
 
 <p>Filters the tabs added to the settings screen.</p>
 
 <pre><code>/**
- * Add tabs to the Lucid Slider settings.
+ * Add tabs to the Lucis Slider settings.
  *
  * @param array $tabs Default tab data.
  * @return array New tab data.
  */
 function themename_lsjl_settings_tabs( $tabs ) {
-   $tabs['themename_lsjl_test_tab'] = __( 'Test tab', 'themename' );
+    $tabs['themename_lsjl_test_tab'] = __( 'Test tab', 'themename' );
 
-   return $tabs;
+    return $tabs;
 }
 add_filter( 'lsjl_settings_tabs', 'themename_lsjl_settings_tabs' );
 </code></pre>
@@ -128,18 +125,18 @@ add_filter( 'lsjl_settings_tabs', 'themename_lsjl_settings_tabs' );
 <p>Filters the sections added to the settings screen.</p>
 
 <pre><code>/**
- * Add sections to the Lucid Slider settings.
+ * Add sections to the Lucis Slider settings.
  *
  * @param array $sections Default section data.
  * @return array New section data.
  */
 function themename_lsjl_settings_sections( $sections ) {
-   $sections['themename_lsjl_test_section'] = array(
-      'heading' =&gt; __( 'Test section', 'themename' ),
-      'tab' =&gt; 'themename_lsjl_test_tab'
-   );
+    $sections['themename_lsjl_test_section'] = array(
+        'heading' =&gt; __( 'Test section', 'themename' ),
+        'tab' =&gt; 'themename_lsjl_test_tab'
+    );
 
-   return $sections;
+    return $sections;
 }
 add_filter( 'lsjl_settings_sections', 'themename_lsjl_settings_sections' );
 </code></pre>
@@ -149,48 +146,20 @@ add_filter( 'lsjl_settings_sections', 'themename_lsjl_settings_sections' );
 <p>Filters the fields added to the settings screen.</p>
 
 <pre><code>/**
- * Add fields to the Lucid Slider settings.
+ * Add fields to the Lucis Slider settings.
  *
  * @param array $fields Default field data.
  * @return array New field data.
  */
 function themename_lsjl_settings_fields( $fields ) {
-   $fields['themename_lsjl_test_field'] = array(
-      'label' =&gt; __( 'Test field', 'themename' ),
-      'section' =&gt; 'themename_lsjl_test_section'
-   );
+    $fields['themename_lsjl_test_field'] = array(
+        'label' =&gt; __( 'Test field', 'themename' ),
+        'section' =&gt; 'themename_lsjl_test_section'
+    );
 
-   return $fields;
+    return $fields;
 }
 add_filter( 'lsjl_settings_fields', 'themename_lsjl_settings_fields' );
-</code></pre>
-
-<h5 id="lsjl_include_alt_field">lsjl_include_alt_field</h5>
-
-<p>Determines if the field for image alt text should be shown on the slider edit screen.</p>
-
-<pre><code>add_filter( 'lsjl_include_alt_field', '__return_false' );
-</code></pre>
-
-<h5 id="lsjl_meta_fields_start">lsjl_meta_fields_start</h5>
-
-<p>Runs before the default meta data fields for each slide on the slider edit screen.</p>
-
-<p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout, and add <code>lsjl-textarea-group</code> for label alignment when adding a textarea.</p>
-
-<pre><code>/**
- * Add slide meta field.
- *
- * @param object $metabox WPAlchemy metabox object.
- */
-function themename_lsjl_meta_before( &amp;$metabox ) {
-   $metabox-&gt;the_field( 'themename_field' ); ?&gt;
-   &lt;div class="lsjl-field-group"&gt;
-      &lt;label for="&lt;?php $metabox-&gt;the_name(); ?&gt;"&gt;&lt;?php _e( 'Label:', 'themename' ); ?&gt;&lt;/label&gt;
-      &lt;input type="text" name="&lt;?php $metabox-&gt;the_name(); ?&gt;" id="&lt;?php $metabox-&gt;the_name(); ?&gt;" value="&lt;?php $metabox-&gt;the_value(); ?&gt;"&gt;
-   &lt;/div&gt;
-&lt;?php }
-add_action( 'lsjl_meta_fields_start', 'themename_lsjl_meta_before' );
 </code></pre>
 
 <h5 id="lsjl_meta_fields_end">lsjl_meta_fields_end</h5>
@@ -205,16 +174,37 @@ add_action( 'lsjl_meta_fields_start', 'themename_lsjl_meta_before' );
  * @param object $metabox WPAlchemy metabox object.
  */
 function themename_lsjl_meta_after( &amp;$metabox ) {
-   $metabox-&gt;the_field( 'themename_field' ); ?&gt;
-   &lt;div class="lsjl-field-group"&gt;
-      &lt;label for="&lt;?php $metabox-&gt;the_name(); ?&gt;"&gt;&lt;?php _e( 'Label:', 'themename' ); ?&gt;&lt;/label&gt;
-      &lt;input type="text" name="&lt;?php $metabox-&gt;the_name(); ?&gt;" id="&lt;?php $metabox-&gt;the_name(); ?&gt;" value="&lt;?php $metabox-&gt;the_value(); ?&gt;"&gt;
-   &lt;/div&gt;
+    $metabox-&gt;the_field( 'themename_field' ); ?&gt;
+    &lt;div class="lsjl-field-group"&gt;
+        &lt;label for="&lt;?php $metabox-&gt;the_name(); ?&gt;"&gt;&lt;?php _e( 'Label:', 'themename' ); ?&gt;&lt;/label&gt;
+        &lt;input type="text" name="&lt;?php $metabox-&gt;the_name(); ?&gt;" id="&lt;?php $metabox-&gt;the_name(); ?&gt;" value="&lt;?php $metabox-&gt;the_value(); ?&gt;"&gt;
+    &lt;/div&gt;
 &lt;?php }
 add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 </code></pre>
 
+<h2 id="templates">Templates</h2>
+
+<p>The plugin currently only comes with the default flexslider template, more can be added with the <code>lsjl_templates</code> hook (see hooks section for code).</p>
+
+<p>The default template in the plugin can be used as a starting point for a custom one. It should contain a <code>&lt;div class="flexslider"&gt;</code>, with the slides inside a <code>&lt;ul class="slides"&gt;</code> (with <code>&lt;li&gt;</code>s, naturally) to function properly.</p>
+
+<p>In the template file (set with 'path' in the hook callback array), there are some key variables available:</p>
+
+<ul>
+<li><code>$slides</code> contains all the slides and their meta data. This will be looped over to display every slide. The keys <code>slide-image-thumbnail</code> and <code>slide-image-url</code> (which isn't a full URL anymore) are only saved for admin purposes.</li>
+<li><code>$options</code> has slider options, which at this time of writing is only the slider size.</li>
+<li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as slide_id => URL.</li>
+</ul>
+
 <h2 id="changelog">Changelog</h2>
+
+<h3>1.4: Feb 10, 2013</h3>
+
+<ul>
+<li>New: The slider display code is now more of a template system, with separate view files, heavily inspired by Cyclone Slider 2. This means the hooks <code>ljsl_before_slide_image</code> and <code>ljsl_before_slide_image</code> are gone. Templates are added with the new <code>lsjl_templates</code> filter. See the developer integration section.</li>
+<li>Removed: Two hooks for slide meta fields have been removed: <code>lsjl_meta_fields_start</code> action, which ran before the default fields, and <code>lsjl_include_alt_field</code> filter. Adding fields before the default ones felt pretty pointless and the alt text field should always be present to encourage accessibility and SEO. Extra meta fields now have their own wrapping <code>&lt;div&gt;</code>, for a more robust toggle check.</li>
+</ul>
 
 <h3>1.3.2: Feb 05, 2013</h3>
 
