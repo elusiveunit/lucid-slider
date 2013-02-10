@@ -1,15 +1,16 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Lucid Slider v1.2\n"
+"Project-Id-Version: Lucid Slider v1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-22 22:02+0100\n"
-"PO-Revision-Date: 2013-01-27 17:56:46+0000\n"
+"PO-Revision-Date: 2013-02-10 22:13:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: Jens Lindberg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: CSL v1.x\n"
 "X-Poedit-Language: \n"
 "X-Poedit-Country: \n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -133,12 +134,7 @@ msgstr "Det finns inställningar med ogiltiga värden."
 msgid "'This action can not be undone, are you sure?'"
 msgstr "'Detta kan inte ångras, är du säker?'"
 
-#: inc/admin.php:62
-#@ lucid-slider
-msgid "Add to slide"
-msgstr "Lägg till bildspelsbild"
-
-#: inc/post-type.php:27
+#: inc/post-type.php:28
 #, fuzzy
 #@ lucid-slider
 msgctxt "post type general name"
@@ -146,60 +142,60 @@ msgid "Sliders"
 msgstr "Bildspel"
 
 #: inc/post-type.php:19
-#: inc/post-type.php:28
+#: inc/post-type.php:29
 #, fuzzy
 #@ lucid-slider
 msgctxt "post type singular name"
 msgid "Slider"
 msgstr "Bildspel"
 
-#: inc/post-type.php:29
+#: inc/post-type.php:30
 #@ lucid-slider
 msgid "All sliders"
 msgstr "Alla bildspel"
 
-#: inc/post-type.php:30
+#: inc/post-type.php:31
 #@ lucid-slider
 msgid "Add new"
 msgstr "Skapa nytt"
 
-#: inc/post-type.php:31
+#: inc/post-type.php:32
 #@ lucid-slider
 msgid "Add new slider"
 msgstr "Skapa nytt bildspel"
 
-#: inc/post-type.php:32
+#: inc/post-type.php:33
 #@ lucid-slider
 msgid "Edit slider"
 msgstr "Redigera bildspel"
 
-#: inc/post-type.php:33
+#: inc/post-type.php:34
 #@ lucid-slider
 msgid "New slider"
 msgstr "Nytt bildspel"
 
-#: inc/post-type.php:34
+#: inc/post-type.php:35
 #@ lucid-slider
 msgid "View slider"
 msgstr "Visa bildspel"
 
-#: inc/post-type.php:35
+#: inc/post-type.php:36
 #@ lucid-slider
 msgid "Search sliders"
 msgstr "Sök bildspel"
 
-#: inc/post-type.php:36
+#: inc/post-type.php:37
 #: tinymce/tinymce.php:138
 #@ lucid-slider
 msgid "No sliders found"
 msgstr "Hittade inga bildspel"
 
-#: inc/post-type.php:37
+#: inc/post-type.php:38
 #@ lucid-slider
 msgid "No sliders found in trash"
 msgstr "Hitta inga bildspel i papperskorgen"
 
-#: inc/post-type.php:40
+#: inc/post-type.php:41
 #@ lucid-slider
 msgid "Parent slider:"
 msgstr "Förälder:"
@@ -513,52 +509,47 @@ msgstr "Glöm inte att spara ordningen!"
 msgid "Move"
 msgstr "Flytta"
 
-#: metaboxes/slides-meta.php:38
+#: metaboxes/slides-meta.php:36
 #@ lucid-slider
 msgid "Image:"
 msgstr "Bild:"
 
-#: metaboxes/slides-meta.php:41
+#: metaboxes/slides-meta.php:39
 #@ lucid-slider
 msgid "Add an image"
 msgstr "Lägg till en bild"
 
-#: metaboxes/slides-meta.php:41
+#: metaboxes/slides-meta.php:39
 #@ lucid-slider
 msgid "Add..."
 msgstr "Lägg till..."
 
-#: metaboxes/slides-meta.php:50
+#: metaboxes/slides-meta.php:45
 #@ lucid-slider
 msgid "Alt text:"
 msgstr "Alternativ text:"
 
-#: metaboxes/slides-meta.php:52
+#: metaboxes/slides-meta.php:47
 #@ lucid-slider
 msgid "Image description for search engines and visually impaired people."
 msgstr "Bildbeskrivning för sökmotorer och synskadade personer"
 
-#: metaboxes/slides-meta.php:61
+#: metaboxes/slides-meta.php:57
 #@ lucid-slider
 msgid "Remove"
 msgstr "Ta bort"
 
-#: metaboxes/slides-meta.php:66
+#: metaboxes/slides-meta.php:62
 #@ lucid-slider
 msgid "Add slide"
 msgstr "Lägg till bild"
 
-#: metaboxes/slides-meta.php:67
-#@ lucid-slider
-msgid "Save"
-msgstr "Spara"
-
-#: inc/admin.php:78
+#: inc/admin.php:57
 #@ lucid-slider
 msgid "ID"
 msgstr "ID"
 
-#: inc/admin.php:79
+#: inc/admin.php:58
 #@ lucid-slider
 msgid "Shortcode"
 msgstr "Kortkod"
@@ -578,7 +569,7 @@ msgstr "Slumpa"
 msgid "Randomize slide order"
 msgstr "Slumpa bildernas ordning"
 
-#: inc/admin.php:77
+#: inc/admin.php:56
 #@ lucid-slider
 msgid "Overview"
 msgstr "Överblick"
@@ -593,12 +584,12 @@ msgstr "Aktivera bildspelet automatisk"
 msgid "Calls the <strong>flexslider</strong> JavaScript function with the options from the Slider settings page. Disable if calling it in the theme."
 msgstr "Anropar JavaScript-funktionen <strong>flexslider</strong> med de valda alternativen från inställningssidan Bildspel. Inaktivera om den anropas i temat."
 
-#: metaboxes/slides-meta.php:41
+#: metaboxes/slides-meta.php:39
 #@ lucid-slider
 msgid "Choose slide image"
 msgstr "Välj bildspelsbild"
 
-#: metaboxes/slides-meta.php:41
+#: metaboxes/slides-meta.php:39
 #@ lucid-slider
 msgid "Choose image"
 msgstr "Välj bild"
@@ -683,13 +674,23 @@ msgstr "Aktivera knapp för den visuella redigeraren"
 msgid "Make a UI available for visual shortcode insertion"
 msgstr "Gör ett gränssnitt tillgängligt för visuell infogning av kortkod"
 
-#: metaboxes/slides-meta.php:59
+#: metaboxes/slides-meta.php:55
 #@ lucid-slider
 msgid "Show all fields"
 msgstr "Visa alla fält"
 
-#: metaboxes/slides-meta.php:59
+#: metaboxes/slides-meta.php:55
 #@ lucid-slider
 msgid "Hide fields"
 msgstr "Dölj fält"
+
+#: inc/metaboxes.php:47
+#@ lucid-slider
+msgid "Slider template"
+msgstr "Bildspelsmall"
+
+#: inc/utility.php:80
+#@ lucid-slider
+msgid "Default"
+msgstr "Standard"
 
