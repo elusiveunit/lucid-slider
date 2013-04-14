@@ -2,7 +2,8 @@
 /**
  * Slider displaying.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Contains frontend logic related to the slider itself.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider {
 
@@ -136,6 +140,9 @@ class Lucid_Slider {
 			// Then check if the template exists
 			if ( file_exists( $template_path ) ) :
 
+				if ( ! empty( $this->settings['load_js'] ) )
+					wp_enqueue_script( 'flexslider' );
+
 				// Low priority so footer scripts are added before
 				add_action( 'wp_footer', array( $this, 'slider_init' ), 999 );
 
@@ -175,82 +182,74 @@ class Lucid_Slider {
 	 * @see http://www.woothemes.com/flexslider/
 	 */
 	public function slider_init() {
-		if ( ! self::$slider_active && ! empty( $this->settings['init_slider'] ) ) :
+		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;
 
-			// Only need a single JavaScript initialization.
-			self::$slider_active = true;
+		// Only need a single JavaScript initialization.
+		self::$slider_active = true;
 
-			// Flexslider defaults, used if the option isn't passed
-			$default_options = array(
-				's_animation' => 'fade',
-				's_direction' => 'horizontal',
-				's_animationLoop' => 1,
-				's_smoothHeight' => 0,
-				's_slideshow' => 1,
-				's_slideshowSpeed' => 7000,
-				's_animationSpeed' => 600,
-				's_randomize' => 0,
-				's_controlNav' => 1,
-				's_directionNav' => 1,
-				's_prevText' => 'Previous',
-				's_nextText' => 'Next',
-				's_pauseOnAction' => 1,
-				's_pauseOnHover' => 1,
-				's_touch' => 1,
-				's_video' => 0
-			);
+		// Flexslider defaults, used if the option isn't passed
+		$default_options = array(
+			's_animation' => 'fade',
+			's_direction' => 'horizontal',
+			's_animationLoop' => 1,
+			's_smoothHeight' => 0,
+			's_slideshow' => 1,
+			's_slideshowSpeed' => 7000,
+			's_animationSpeed' => 600,
+			's_randomize' => 0,
+			's_controlNav' => 1,
+			's_directionNav' => 1,
+			's_prevText' => 'Previous',
+			's_nextText' => 'Next',
+			's_pauseOnAction' => 1,
+			's_pauseOnHover' => 1,
+			's_touch' => 1,
+			's_video' => 0
+		);
 
-			$js_options = '{ ';
-			$options_added = 0;
+		$js_options = '{ ';
+		$options_added = 0;
 
-			// Build JavaScript object for settings
-			foreach ( $this->settings as $setting => $value ) :
+		// Build JavaScript object for settings
+		foreach ( $this->settings as $setting => $value ) :
 
-				// Only care about slider options, which are prefixed with 's_'
-				if ( false === strpos( $setting, 's_' ) ) continue;
+			// Only care about slider options, which are prefixed with 's_'
+			if ( 0 !== strpos( $setting, 's_' ) ) continue;
 
-				// Only add option to the object if it's different from the default
-				if ( $default_options[$setting] != $value ) :
-					$key = str_replace( 's_', '', $setting );
+			// Only add option to the object if it's different from the default
+			if ( $default_options[$setting] != $value ) :
+				$key = str_replace( 's_', '', $setting );
 
-					// Add comma after first option
-					if ( $options_added > 0 ) $js_options .= ', ';
+				// Add comma after first option
+				if ( $options_added > 0 ) $js_options .= ', ';
 
-					// Object key
-					$js_options .= $key . ': ';
+				// Object key
+				$js_options .= $key . ': ';
 
-					// Make the value format JavaScript friendly
-					if ( 1 === $value ) :
-						$js_options .= 'true';
-					elseif ( 0 === $value ) :
-						$js_options .= 'false';
-					elseif ( is_string( $value ) ) :
-						$js_options .= '"' . $value . '"';
-					else :
-						$js_options .= $value;
-					endif;
-					
-					$options_added++;
+				// Make the value format JavaScript friendly
+				if ( 1 === $value ) :
+					$js_options .= 'true';
+				elseif ( 0 === $value ) :
+					$js_options .= 'false';
+				elseif ( is_string( $value ) ) :
+					$js_options .= '"' . $value . '"';
+				else :
+					$js_options .= $value;
 				endif;
-			endforeach;
+				
+				$options_added++;
+			endif;
+		endforeach;
 
-			$js_options = apply_filters_ref_array( 'lsjl_js_options', array( $js_options, &$options_added ) );
+		$js_options = apply_filters_ref_array( 'lsjl_js_options', array( $js_options, &$options_added ) );
 
-			$js_options .= ' }';
-			
-			// The name 'flexslider' is registered without being enqueued and
-			// instead inserted manually here. Not really proper, but it prevents
-			// it from being unnecessarily loaded on pages without a slider.
-			if ( ! empty( $this->settings['load_js'] ) ) : ?>
-			<script src="<?php echo LSJL_URL . 'js/jquery.flexslider.min.js'; ?>"></script>
-			<?php endif; ?>
-
-			<script>
-			(function($){
-				$('.flexslider').flexslider(<?php if ( $options_added > 0 ) echo $js_options; ?>);
-			})(jQuery);
-			</script>
-		<?php endif;
+		$js_options .= ' }'; ?>
+		<script>
+		(function($){
+			$('.flexslider').flexslider(<?php if ( $options_added > 0 ) echo str_replace( "\n", '', $js_options ); ?>);
+		})(jQuery);
+		</script>
+		<?php
 	}
 }
 

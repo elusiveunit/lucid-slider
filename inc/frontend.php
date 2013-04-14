@@ -2,7 +2,8 @@
 /**
  * Frontend functionality.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Contains everything frontend related except slider displaying.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Frontend {
 
@@ -22,8 +26,6 @@ class Lucid_Slider_Frontend {
 	public function __construct() {
 		$opt = Lucid_Slider_Utility::get_settings();
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_jquery' ) );
-
 		if ( ! empty( $opt['load_js'] ) )
 			add_action( 'wp_enqueue_scripts', array( $this, 'register_script' ) );
 
@@ -32,32 +34,19 @@ class Lucid_Slider_Frontend {
 	}
 
 	/**
-	 * Enqueue jQuery shipped with WordPress.
-	 *
-	 * jQuery is always needed, and since the flexslider script is only
-	 * registered and not enqueued, jQuery may not be present unless added
-	 * here.
-	 */
-	public function enqueue_jquery() {
-		wp_enqueue_script( 'jquery' );
-	}
-
-	/**
 	 * Register FlexSlider JavaScript.
 	 *
-	 * This is only registered to prevent potential double loading. The printing
-	 * to page is done manually through the slider display functions. Not really
-	 * the proper way, but it prevents it from being loaded on pages without a
-	 * slider active.
+	 * The enqueuing is done in the slider display function, to prevent
+	 * unecessary loading.
 	 */
 	public function register_script() {
-		wp_register_script( 'flexslider', LSJL_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
+		wp_register_script( 'flexslider', LUCID_SLIDER_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
 	}
 
 	/**
 	 * Enqueue FlexSlider CSS.
 	 */
 	public function load_style() {
-		wp_enqueue_style( 'flexslider', LSJL_URL . 'css/flexslider.min.css', false, null );
+		wp_enqueue_style( 'flexslider', LUCID_SLIDER_URL . 'css/flexslider.min.css', false, null );
 	}
 }
