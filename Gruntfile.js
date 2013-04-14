@@ -58,21 +58,21 @@ module.exports = function(grunt) {
 			editSlider: {
 				options: {
 					report: 'min',
-					banner: '/*! <%= pkg.title %> - Slider edit screen | build <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */\n'
 				},
 				files: [{src: ['js/edit-slider.js'], dest: 'js/edit-slider.min.js'}]
 			},
 			tinyMCE: {
 				options: {
 					report: 'min',
-					banner: '/*! <%= pkg.title %> - TinyMCE button | build <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */\n'
 				},
 				files: [{src: ['js/tinymce-plugin.js'], dest: 'js/tinymce-plugin.min.js'}]
 			},
 			doc: {
 				options: {
 					report: 'min',
-					banner: '/*! <%= pkg.title %> - Readme script | build <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme script */\n'
 				},
 				files: [{src: ['doc/assets/doc.js'], dest: 'doc/assets/doc.min.js'}]
 			}
@@ -82,25 +82,25 @@ module.exports = function(grunt) {
 		cssmin: {
 			editSlider: {
 				options: {
-					banner: '/*! <%= pkg.title %> - Slider edit screen | build <%= grunt.template.today("yyyy-mm-dd") %> */'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */'
 				},
 				files: [{src: ['css/edit-slider.css'], dest: 'css/edit-slider.min.css'}]
 			},
 			tinyMCE: {
 				options: {
-					banner: '/*! <%= pkg.title %> - TinyMCE button | build <%= grunt.template.today("yyyy-mm-dd") %> */'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */'
 				},
 				files: [{src: ['css/tinymce-plugin.css'], dest: 'css/tinymce-plugin.min.css'}]
 			},
 			flexslider: {
 				options: {
-					banner: '/*! <%= pkg.title %> - jQuery FlexSlider, http://www.woothemes.com/flexslider/ */'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider, http://www.woothemes.com/flexslider/ */'
 				},
 				files: [{src: ['css/flexslider.css'], dest: 'css/flexslider.min.css'}]
 			},
 			doc: {
 				options: {
-					banner: '/*! <%= pkg.title %> - Readme style | build <%= grunt.template.today("yyyy-mm-dd") %> */'
+					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme style */'
 				},
 				files: [{src: ['doc/assets/doc.css'], dest: 'doc/assets/doc.min.css'}]
 			}
