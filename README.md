@@ -1,22 +1,24 @@
 # Lucid Slider
 
-Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily meant for theme developers to integrate with, and bring exactly what is needed for the individual site.
+Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily built for theme developers to integrate with, and bring exactly what is needed for the individual site.
 
 The slider itself is powered by the popular [Flexslider](https://github.com/woothemes/FlexSlider) jQuery plugin.
 
-Lucid Slider is available in the following languages:
+**Requires [Lucid Toolbox](https://github.com/elusiveunit/lucid-toolbox)**, which is a plugin with a set of classes used to speed up and automate common tasks. This is kept as a separate plugin for easier development and updates. **This plugin will try to install and/or activate Lucid Toolbox** on plugin activation, if it's not available. It simply unzips a bundled version to the directory one level above its install location, if it's not there already, and runs `activate_plugin`.
+
+Lucid Slider is currently available in the following languages:
 
 * English
 * Swedish
-
 
 ## Basic usage
 
 A standard slider setup is pretty simple:
 
-1. Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin.
+1. Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin, by selecting the desired `lsjl_...` image.
 2. As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.
-
+3. Simply add the desired slides and order them with drag-and-drop.
+4. Display the slider with the shortcode `[lucidslider id="123"]` (visual editor button available), the included widget (if activated), or the template tag `lucid_slider( 123 );`.
 
 ## Developer integration
 
@@ -33,7 +35,7 @@ There are a number of hooks available, for extending different parts of the plug
 ##### lsjl\_js\_options
 
 Runs before adding the closing curly bracket to the JavaScript options object. Via `$options_added` one can determine if a comma is needed when adding to the object. If `$options_added` is 0 the object will not be echoed no matter the contents, so increase it if needed.
-	
+
 	/**
 	 * Manipulate JavaScript options.
 	 *
@@ -47,6 +49,8 @@ Runs before adding the closing curly bracket to the JavaScript options object. V
 		return $js_options;
 	}
 	add_filter( 'lsjl_js_options', 'themename_slide_options', 10, 2 );
+
+-----
 
 #### Backend
 
@@ -71,16 +75,20 @@ Add templates to select. The screenshot is optional, but recommended. The screen
 	}
 	add_filter( 'lsjl_templates', 'themename_add_slider_template' );
 
+-----
+
 ##### lsjl\_show\_template\_metabox
 
 Whether to show the template selection metabox. Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with `lsjl_templates`, but there is always a default.
 
 	add_filter( 'lsjl_show_template_metabox', '__return_false' );
 
+-----
+
 ##### lsjl\_settings\_tabs
 
 Filters the tabs added to the settings screen.
-	
+
 	/**
 	 * Add tabs to the Lucis Slider settings.
 	 *
@@ -94,10 +102,12 @@ Filters the tabs added to the settings screen.
 	}
 	add_filter( 'lsjl_settings_tabs', 'themename_lsjl_settings_tabs' );
 
+-----
+
 ##### lsjl\_settings\_sections
 
 Filters the sections added to the settings screen.
-	
+
 	/**
 	 * Add sections to the Lucis Slider settings.
 	 *
@@ -109,15 +119,17 @@ Filters the sections added to the settings screen.
 			'heading' => __( 'Test section', 'themename' ),
 			'tab' => 'themename_lsjl_test_tab'
 		);
-		
+
 		return $sections;
 	}
 	add_filter( 'lsjl_settings_sections', 'themename_lsjl_settings_sections' );
 
+-----
+
 ##### lsjl\_settings\_fields
 
 Filters the fields added to the settings screen.
-	
+
 	/**
 	 * Add fields to the Lucis Slider settings.
 	 *
@@ -129,10 +141,12 @@ Filters the fields added to the settings screen.
 			'label' => __( 'Test field', 'themename' ),
 			'section' => 'themename_lsjl_test_section'
 		);
-		
+
 		return $fields;
 	}
 	add_filter( 'lsjl_settings_fields', 'themename_lsjl_settings_fields' );
+
+-----
 
 ##### lsjl\_meta\_fields\_end
 
@@ -164,27 +178,38 @@ In the template file (set with 'path' in the hook callback array), there are som
 
 * `$slides` contains all the slides and their meta data. This will be looped over to display every slide. The keys `slide-image-thumbnail` and `slide-image-url` (which isn't a full URL anymore) are only saved for admin purposes.
 * `$options` has slider options, which at this time of writing is only the slider size.
-* `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as slide_id => URL.
-
+* `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as `slide_id => URL`.
 
 ## Changelog
 
-### 1.4: Feb 10, 2013
+### 1.4.1: Apr 14, 2013
 
-* New: The slider display code is now more of a template system, with separate view files, heavily inspired by Cyclone Slider 2. This means the hooks `ljsl_before_slide_image` and `ljsl_before_slide_image` are gone. Templates are added with the new `lsjl_templates` filter. See the developer integration section.
+**Sin:** This would be 1.5.0, but version numbers have been retroactively changed. Plugin has until this point only been used internally anyway (so why have I kept a changelog?). Moving on!
+
+* New: **Now requires [Lucid Toolbox](https://github.com/elusiveunit/lucid-toolbox)**. Be sure to install it before updating.
+* New: Now includes an uninstall file that will remove options and slider posts when uninstalling (removing, not deactivating) the plugin.
+* New: Now includes a Grunt build script.
+* Tweak: Revert derp moment in 1.2.2 by not explicitly enqueueing jQuery on every page. `wp_enqueue_script` works fine in the body, so jQuery will only be loaded on pages with a slider (unless something else loads it everywhere of course).
+* Tweak: Fix some script problems, detected with the new Grunt build process.
+* Tweak: Remove -o- prefix from default CSS. Unprefixed since Opera 12.10 and Opera users tend to be good at updating.
+* Tweak: Renamed constants to something longer and less likely to conflict with others.
+
+### 1.3.0: Feb 10, 2013
+
+* New: The slider display code is now more of a template system, with separate view files, heavily inspired by [Cyclone Slider 2](http://wordpress.org/extend/plugins/cyclone-slider-2/). This means the hooks `ljsl_before_slide_image` and `ljsl_before_slide_image` are gone. Templates are added with the new `lsjl_templates` filter. See the developer integration section.
 * Removed: Two hooks for slide meta fields have been removed: `lsjl_meta_fields_start` action, which ran before the default fields, and `lsjl_include_alt_field` filter. Adding fields before the default ones felt pretty pointless and the alt text field should always be present to encourage accessibility and SEO. Extra meta fields now have their own wrapping `<div>`, for a more robust toggle check.
 
-### 1.3.2: Feb 05, 2013
+### 1.2.2: Feb 05, 2013
 
-* Fix: Explicitly enqueue jQuery, since the manual loading introduced in 1.3.1 won't ensure jQuery being loaded.
+* Fix: Explicitly enqueue jQuery, since the manual loading introduced in 1.2.1 won't ensure jQuery being loaded.
 * Fix: Load metaboxes if $pagenow is null, which is at this time the case in multisite.
 
-### 1.3.1: Feb 01, 2013
+### 1.2.1: Feb 01, 2013
 
 * Tweak: Slide image URLs are now saved as post meta, which will save two database request for every slide on a page. Re-save every slider for a performace boost!
 * Tweak: The slider JavaScript is now loaded manually in the footer, only if there is a slider on the page (and JavaScript loading by the plugin is enabled in the settings).
 
-### 1.3: Jan 27, 2013
+### 1.2.0: Jan 27, 2013
 
 * New: A button is now available in the visual editor, which enables an easy UI for shortcode insertion.
 * New: A widget is now available for displaying a slider in a sidebar or other widget area.
@@ -195,19 +220,19 @@ In the template file (set with 'path' in the hook callback array), there are som
 * Tweak: Errors for when no slider is found are now displayed with `trigger_error` when `WP_DEBUG` is active.
 * Tweak: Separate the HTML readme as 'documentation' in its own directory and give it a little more flair.
 
-### 1.2: Jan 24, 2013
+### 1.1.1: Jan 24, 2013
 
 * New: Can choose 'full' as a slider size, to use full-sized images.
 * Fix: Fall back to full-sized images if there isn't an image size matching the chosen one available. This is the case when an uploaded image has the exact same dimensions as an image size (i.e. the image size is 900x250 and the uploaded image is 900x250).
 * Fix: Trim whitespace from size values in slider settings.
 
-### 1.1: Jan 13, 2013
+### 1.1.0: Jan 13, 2013
 
 * New: Use WordPress 3.5 media uploader.
 * New: Update WPAlchemy version to 1.5.2, which fixes an issue where repeating metaboxes would not work in WordPress 3.5.
 * Tweak: Alter the slider management UI slightly.
 * Tweak: Add `position: relative;` to flexslider `<li>`'s, so positioning within a slide works out of the box.
 
-### 1.0: Dec 05, 2012
+### 1.0.0: Dec 05, 2012
 
 * Initial version.

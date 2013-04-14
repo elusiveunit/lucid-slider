@@ -11,7 +11,7 @@
 <h1>Lucid Slider</h1>
 <p>Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It&#39;s primarily built for theme developers to integrate with, and bring exactly what is needed for the individual site.</p>
 <p>The slider itself is powered by the popular <a href="https://github.com/woothemes/FlexSlider">Flexslider</a> jQuery plugin.</p>
-<p><strong>Requires Lucid Toolbox</strong>, which is a plugin with a set of classes used to speed up and automate common tasks. This is kept as a separate plugin to easily keep track of development, instead of constantly updating several plugins and tweaking class names and text domains for them.</p>
+<p><strong>Requires <a href="https://github.com/elusiveunit/lucid-toolbox">Lucid Toolbox</a></strong>, which is a plugin with a set of classes used to speed up and automate common tasks. This is kept as a separate plugin for easier development and updates. <strong>This plugin will try to install and/or activate Lucid Toolbox</strong> on plugin activation, if it&#39;s not available. It simply unzips a bundled version to the directory one level above its install location, if it&#39;s not there already, and runs <code>activate_plugin</code>.</p>
 <p>Lucid Slider is currently available in the following languages:</p>
 <ul>
 <li>English</li>
@@ -148,16 +148,20 @@ add_action( &#39;lsjl_meta_fields_end&#39;, &#39;themename_lsjl_meta_after&#39; 
 <li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as <code>slide_id =&gt; URL</code>.</li>
 </ul>
 <h2>Changelog</h2>
-<h3>1.4.0: Apr 08, 2013</h3>
+<h3>1.4.1: Apr 14, 2013</h3>
+<p><strong>Sin:</strong> This would be 1.5.0, but version numbers have been retroactively changed. Plugin has until this point only been used internally anyway (so why have I kept a changelog?). Moving on!</p>
 <ul>
-<li>New: <strong>Now requires Lucid Toolbox</strong>. Be sure to install it before updating.</li>
-<li>Tweak: Revert derp moment in 1.2.2 by not explicitly enqueueing jQuery on every page. <code>wp_enqueue_script</code> works fine in the body, so jQuery will only be loaded on pages with a slider.</li>
+<li>New: <strong>Now requires <a href="https://github.com/elusiveunit/lucid-toolbox">Lucid Toolbox</a></strong>. Be sure to install it before updating.</li>
+<li>New: Now includes an uninstall file that will remove options and slider posts when uninstalling (removing, not deactivating) the plugin.</li>
+<li>New: Now includes a Grunt build script.</li>
+<li>Tweak: Revert derp moment in 1.2.2 by not explicitly enqueueing jQuery on every page. <code>wp_enqueue_script</code> works fine in the body, so jQuery will only be loaded on pages with a slider (unless something else loads it everywhere of course).</li>
 <li>Tweak: Fix some script problems, detected with the new Grunt build process.</li>
 <li>Tweak: Remove -o- prefix from default CSS. Unprefixed since Opera 12.10 and Opera users tend to be good at updating.</li>
+<li>Tweak: Renamed constants to something longer and less likely to conflict with others.</li>
 </ul>
 <h3>1.3.0: Feb 10, 2013</h3>
 <ul>
-<li>New: The slider display code is now more of a template system, with separate view files, heavily inspired by Cyclone Slider 2. This means the hooks <code>ljsl_before_slide_image</code> and <code>ljsl_before_slide_image</code> are gone. Templates are added with the new <code>lsjl_templates</code> filter. See the developer integration section.</li>
+<li>New: The slider display code is now more of a template system, with separate view files, heavily inspired by <a href="http://wordpress.org/extend/plugins/cyclone-slider-2/">Cyclone Slider 2</a>. This means the hooks <code>ljsl_before_slide_image</code> and <code>ljsl_before_slide_image</code> are gone. Templates are added with the new <code>lsjl_templates</code> filter. See the developer integration section.</li>
 <li>Removed: Two hooks for slide meta fields have been removed: <code>lsjl_meta_fields_start</code> action, which ran before the default fields, and <code>lsjl_include_alt_field</code> filter. Adding fields before the default ones felt pretty pointless and the alt text field should always be present to encourage accessibility and SEO. Extra meta fields now have their own wrapping <code>&lt;div&gt;</code>, for a more robust toggle check.</li>
 </ul>
 <h3>1.2.2: Feb 05, 2013</h3>

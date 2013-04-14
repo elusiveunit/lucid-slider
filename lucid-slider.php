@@ -11,7 +11,7 @@ Plugin Name: Lucid Slider
 Description: A simple plugin for creating Flexslider structures.
 Author: Jens Lindberg
 Author URI: http://profiles.wordpress.org/elusiveunit/
-Version: 1.4.0
+Version: 1.4.1
 */
 
 // Block direct requests
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 // Plugin constants
 if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
-	define( 'LUCID_SLIDER_VERSION', '1.4.0' );
+	define( 'LUCID_SLIDER_VERSION', '1.4.1' );
 
 if ( ! defined( 'LUCID_SLIDER_URL' ) )
 	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
