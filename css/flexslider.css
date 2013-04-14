@@ -18,7 +18,7 @@
 .flexslider a:focus  {outline: none;}
 .slides,
 .flex-control-nav,
-.flex-direction-nav {margin: 0; padding: 0; list-style: none outside;} 
+.flex-direction-nav {margin: 0; padding: 0; list-style: none outside;}
 
 /*---------- FlexSlider Necessary Styles ----------*/
 .flexslider {margin: 0; padding: 0;}
@@ -52,7 +52,6 @@ Modernizr, make sure you include js that eliminates this class on page load. */
 	max-height: 2000px;
 	-webkit-transition: all 1s ease;
 	   -moz-transition: all 1s ease;
-	     -o-transition: all 1s ease;
 	        transition: all 1s ease;
 }
 .loading .flex-viewport {max-height: 300px;}
@@ -76,7 +75,6 @@ Modernizr, make sure you include js that eliminates this class on page load. */
 	opacity: 0;
 	-webkit-transition: all 0.3s ease;
 	   -moz-transition: all 0.3s ease;
-	     -o-transition: all 0.3s ease;
 	        transition: all 0.3s ease;
 }
 .flex-direction-nav .flex-next {background-position: 100% 0; right: 10px;}
