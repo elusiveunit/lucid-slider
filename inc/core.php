@@ -152,7 +152,7 @@ class Lucid_Slider_Core {
 	}
 
 	/**
-	 * Get plugin main file.
+	 * Get the slider post type name.
 	 *
 	 * @return string
 	 */
