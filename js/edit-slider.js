@@ -4,6 +4,7 @@
  * Slider edit screen
  */
 var lucidSliderEditScreen = (function ( $, win, undefined ) {
+	'use strict';
 
 	// Settings
 	var conf = {
@@ -56,7 +57,7 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 		// Load media manager
 		conf.$slides.on( 'click', '.lsjl-upload', function( e ) {
 			e.preventDefault();
-			insertImage( $(this).parents('.wpa_group-slide-group') );
+			insertImage( $(this).parents('.wpa_group-slide-group'), this );
 		});
 
 		// Expand hidden meta data fields
@@ -82,9 +83,10 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 	 * Open media manager and insert an image.
 	 *
 	 * @param {object} $slide jQuery object for the slide invoking the uploader.
+	 * @param {node} button Upload button clicked to show frame.
 	 */
-	function insertImage( $slide ) {
-		if ( 'undefined' === typeof $slide ) {return;}
+	function insertImage( $slide, button ) {
+		if ( 'undefined' === typeof $slide ) { return; }
 
 		// Get fields
 		var $slideThumbnail = $slide.find( conf.selector.thumbnail ),
@@ -102,9 +104,9 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 
 		// Create the media frame.
 		lucidSliderFrame = wp.media.frames.lucidSliderFrame = wp.media({
-			title: $(this).data( 'uploader-title' ),
+			title: $(button).data( 'uploader-title' ),
 			button: {
-				text: $(this).data( 'uploader-button-text' )
+				text: $(button).data( 'uploader-button-text' )
 			},
 			multiple: false // Can only select a single file
 		});
@@ -172,6 +174,9 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 })( jQuery, window );
 
 // Initialize
-jQuery(document).ready(function($) {
+jQuery(document).ready(function() {
+	'use strict';
+
 	lucidSliderEditScreen.init();
+
 });
