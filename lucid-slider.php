@@ -1,88 +1,35 @@
 <?php
 /**
- * Main file, loads relevant parts of the plugin depending on context.
- * 
- * @package Lucid_Slider
+ * Lucid Slider definition.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 
 /*
 Plugin Name: Lucid Slider
 Description: A simple plugin for creating Flexslider structures.
 Author: Jens Lindberg
-Author URI: http://example.com
-Version: 1.4
+Author URI: http://profiles.wordpress.org/elusiveunit/
+Version: 1.4.0
 */
 
 // Block direct requests
 if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
-// Define plugin constants
-if ( ! defined( 'LSJL_VERSION' ) )
-	define( 'LSJL_VERSION', '1.4' );
+// Plugin constants
+if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
+	define( 'LUCID_SLIDER_VERSION', '1.4.0' );
 
-if ( ! defined( 'LSJL_URL' ) )
-	define( 'LSJL_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+if ( ! defined( 'LUCID_SLIDER_URL' ) )
+	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
-if ( ! defined( 'LSJL_PATH' ) )
-	define( 'LSJL_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
-
-
-/*===========================================================================*\
-      =Load functionality
-\*===========================================================================*/
+if ( ! defined( 'LUCID_SLIDER_PATH' ) )
+	define( 'LUCID_SLIDER_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 
 // Misc. utility functions
-require 'inc/utility.php';
+require LUCID_SLIDER_PATH . 'inc/utility.php';
 
-// Setup
-require 'inc/core.php';
+// Load and initialize the plugin parts
+require LUCID_SLIDER_PATH . 'inc/core.php';
 $lucid_slider_core = new Lucid_Slider_Core( __FILE__ );
-
-// Register custom post type
-require 'inc/post-type.php';
-
-// Another global unfortunately needed for conditional widget loading
-$lucid_slider_settings = Lucid_Slider_Utility::get_settings();
-
-// Slider widget
-if ( ! empty( $lucid_slider_settings['enable_widget'] ) ) :
-	require 'inc/widget.php';
-endif;
-
-// Use selective loading for some parts
-if ( is_admin() ) :
-
-	// Current admin page. Too early for exact ID via get_current_screen().
-	global $pagenow;
-
-	// Admin/dashboard related
-	require 'inc/admin.php';
-	$lucid_slider_admin = new Lucid_Slider_Admin();
-
-	// Settings page
-	require 'inc/settings.php';
-
-	// Edit screens. For multisite, $pagenow is null at this point.
-	if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) || is_null( $pagenow ) ) :
-
-		// WPAlchemy metabox initialization
-		require 'inc/metaboxes.php';
-
-	endif;
-
-	// TinyMCE plugin
-	if ( ! empty( $lucid_slider_settings['enable_tinymce'] ) ) :
-		require 'tinymce/tinymce.php';
-		$lucid_slider_tinymce = new Lucid_Slider_Tinymce();
-	endif;
-
-else :
-
-	// Frontend related
-	require 'inc/frontend.php';
-	$lucid_slider_frontend = new Lucid_Slider_Frontend();
-
-	// Slider displaying
-	require 'inc/slider.php';
-
-endif;

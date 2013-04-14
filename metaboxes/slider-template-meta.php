@@ -1,13 +1,20 @@
-<div id="lsjl-slider-template">
+<?php
+/**
+ * Slider template selection metabox.
+ *
+ * @package Lucid
+ * @subpackage Slider
+ */
 
-<?php $templates = Lucid_Slider_Utility::get_templates();
+$templates = Lucid_Slider_Utility::get_templates();
 $mb->the_field( 'template' );
 $chosen_template = $mb->get_the_value();
 if ( empty( $chosen_template ) ) $chosen_template = 'default'; ?>
 
+<div id="lsjl-slider-template">
 <ul>
 <?php foreach ( $templates as $name => $data ) :
-	$screenshot = ( ! empty( $templates[$name]['screenshot'] ) ) ? $templates[$name]['screenshot'] : LSJL_URL . 'img/slide-placeholder.png';
+	$screenshot = ( ! empty( $templates[$name]['screenshot'] ) ) ? $templates[$name]['screenshot'] : LUCID_SLIDER_URL . 'img/slide-placeholder.png';
 	$class = ( $chosen_template == $name ) ? ' class="selected"' : ''; ?>
 	<li>
 		<label for="lsjl-template-<?php echo $name; ?>"<?php echo $class; ?>>
@@ -18,3 +25,4 @@ if ( empty( $chosen_template ) ) $chosen_template = 'default'; ?>
 	</li>
 <?php endforeach; ?>
 </ul>
+</div>

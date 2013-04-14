@@ -1,11 +1,19 @@
+<?php
+/**
+ * Slider settings metabox.
+ *
+ * @package Lucid
+ * @subpackage Slider
+ */
+
+$opt = Lucid_Slider_Utility::get_settings(); ?>
+
 <div id="lsjl-slider-settings">
 
-<?php $opt = Lucid_Slider_Utility::get_settings();
-
-/*---------- Slider size dropdown ----------*/
+<?php /*---------- Slider size dropdown ----------*/
 
 // Create a dropdown if there are sizes set
-if ( ! empty( $opt['image_sizes'] ) ) :
+if ( true || ! empty( $opt['image_sizes'] ) ) :
 
 	// Saved as '600x200<newline>'
 	$sizes = explode( "\n", trim( $opt['image_sizes'] ) );
@@ -20,9 +28,11 @@ if ( ! empty( $opt['image_sizes'] ) ) :
 	<label for="<?php $mb->the_name(); ?>"><?php _e( 'Slider size', 'lucid-slider' ); ?></label>
 	<select name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="widefat">
 		<option value="full"<?php $mb->the_select_state( 'full' ); ?>><?php _e( 'Full size', 'lucid-slider' ); ?></option>
-		<?php foreach ( $sizes as $size ) : $size = trim( $size ); ?>
-			<option value="<?php echo $size; ?>"<?php $mb->the_select_state( $size ); ?>><?php echo $size; ?></option>
-		<?php endforeach; ?>
+		<?php if ( ! empty( $opt['image_sizes'] ) ) :
+			foreach ( $sizes as $size ) : $size = trim( $size ); ?>
+				<option value="<?php echo $size; ?>"<?php $mb->the_select_state( $size ); ?>><?php echo $size; ?></option>
+			<?php endforeach;
+		endif; ?>
 	</select>
 
 <?php // Warn if there are no sizes set

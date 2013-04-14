@@ -1,8 +1,9 @@
 <?php
 /**
- * Core functionality, always loaded.
- * 
- * @package Lucid_Slider
+ * Core functionality and plugin setup.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,74 +11,153 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Contains basic setup and utility functions.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Core {
 
 	/**
-	 * Plugin main file.
+	 * Full path to plugin main file.
 	 *
 	 * @var string
 	 */
-	static $plugin_file;
+	public static $plugin_file;
 
 	/**
 	 * Post type name.
 	 *
 	 * @var string
 	 */
-	static $post_type_name;
+	public static $post_type_name = 'lucidslider';
 
 	/**
 	 * Plugin settings.
 	 *
 	 * @var array
 	 */
-	private $settings;
+	private $_settings;
+
+	/**
+	 * Instances of some plugin classes.
+	 *
+	 * @var array
+	 */
+	private static $_instances = array();
 
 	/**
 	 * Constructor, add hooks.
 	 *
-	 * clean_file_name is always loaded, in case some kind of front-end
-	 * uploading is at work.
+	 * @param string $file Full path to plugin main file.
 	 */
-	public function __construct( $file = '' ) {
+	public function __construct( $file ) {
 		self::$plugin_file = (string) $file;
-		self::$post_type_name = 'lucidslider';
 
-		$this->settings = Lucid_Slider_Utility::get_settings();
-		$this->load_translation();
+		$this->_load_toolbox();
+		$this->_settings = Lucid_Slider_Utility::get_settings();
 
-		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
-		add_filter( 'sanitize_file_name', array( $this, 'clean_file_name' ) );
 		add_shortcode( 'lucidslider', array( $this, 'slider_shortcode' ) );
 
-		if ( ! empty( $this->settings['enable_widget'] ) )
-			add_action( 'widgets_init',  array( $this, 'slider_widget' ) );
+		add_action( 'init', array( $this, 'load_translation' ), 1 );
+		add_action( 'init', array( $this, 'load_plugin_parts' ), 1 ); // Need 1 for widget
+		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
+		add_filter( 'sanitize_file_name', array( $this, 'clean_file_name' ) );
 	}
 
 	/**
-	 * Get plugin main file.
-	 * 
-	 * @return string
+	 * Activate Lucid Toolbox if needed.
 	 */
-	public static function get_plugin_file() {
-		return self::$plugin_file;
+	private function _load_toolbox() {
+
+		// Only load in admin.
+		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) :
+			require LUCID_SLIDER_PATH . 'inc/activate-toolbox.php';
+			new Lucid_Slider_Activate_Toolbox( self::$plugin_file );
+		endif;
+	}
+
+	/**
+	 * Load translation.
+	 */
+	public function load_translation() {
+		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'lang/' );
+	}
+
+	/**
+	 * Load the rest of the plugin.
+	 */
+	public function load_plugin_parts() {
+
+		// Register custom post type
+		require LUCID_SLIDER_PATH . 'inc/post-type.php';
+
+		// Slider widget
+		if ( ! empty( $this->_settings['enable_widget'] ) ) :
+			require LUCID_SLIDER_PATH . 'inc/widget.php';
+			$this->slider_widget();
+		endif;
+
+		// Selectively load some parts, start with admin. Ajax the WordPress way
+		// goes through admin-ajax, so is_admin alone isn't enough for proper
+		// admin/template separation.
+		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) :
+
+			// Current admin page. Too early for exact ID via get_current_screen().
+			global $pagenow;
+
+			// Admin/dashboard related
+			require LUCID_SLIDER_PATH . 'inc/admin.php';
+			self::$_instances['admin'] = new Lucid_Slider_Admin();
+
+			// Settings page
+			require LUCID_SLIDER_PATH . 'inc/settings.php';
+
+			// Edit screens. For multisite, $pagenow is null at this point.
+			if ( ( 'post.php' == $pagenow || 'post-new.php' == $pagenow ) || is_null( $pagenow ) ) :
+
+				// WPAlchemy metabox initialization
+				require LUCID_SLIDER_PATH . 'inc/metaboxes.php';
+				self::$_instances['metaboxes'] = new Lucid_Slider_Metaboxes();
+
+			endif;
+
+			// TinyMCE plugin
+			if ( ! empty( $this->_settings['enable_tinymce'] ) ) :
+				require LUCID_SLIDER_PATH . 'inc/tinymce.php';
+				self::$_instances['tinymce'] = new Lucid_Slider_Tinymce();
+			endif;
+
+		// Frontend
+		elseif ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) :
+
+			// Frontend related
+			require LUCID_SLIDER_PATH . 'inc/frontend.php';
+			self::$_instances['frontend'] = new Lucid_Slider_Frontend();
+
+			// Slider displaying
+			require LUCID_SLIDER_PATH . 'inc/slider.php';
+
+		endif;
+	}
+
+	/**
+	 * Get the class instance with specified ID.
+	 *
+	 * @see load_plugin_parts() For instance IDs.
+	 * @param string $id ID of instance.
+	 * @return object|bool Object instance if found, false otherwise.
+	 */
+	public static function get_instance( $id ) {
+		return ( isset( self::$_instances[$id] ) ) ? self::$_instances[$id] : false;
 	}
 
 	/**
 	 * Get plugin main file.
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function get_post_type_name() {
 		return self::$post_type_name;
-	}
-
-	/**
-	 * Make the plugin available for translation.
-	 */
-	public function load_translation() {
-		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'lang/' );
 	}
 
 	/**
@@ -135,7 +215,7 @@ class Lucid_Slider_Core {
 
 	/**
 	 * Add extra forbidden characters to be sanitized from filenames.
-	 * 
+	 *
 	 * This function is supposed to make filenames more browser friendly.
 	 * Safari 5.1.5 on Windows is currently an offender, refusing to display
 	 * images with strange characters in the name. This is a problem for
@@ -143,23 +223,21 @@ class Lucid_Slider_Core {
 	 *
 	 * Additionally, strings similar to image dimensions added by WordPress are
 	 * removed, so some regex functionality can be more reliable.
-	 * 
+	 *
 	 * The sanitize_file_name filter runs just before the filename is
 	 * returned, so the name has already passed the default sanitation.
 	 * The sanitize_file_name_chars filter can be used to modify what
 	 * special characters should be handled.
-	 * 
+	 *
 	 * @see sanitize_file_name()
 	 * @param string $filename The filename to be sanitized, with default
 	 *   sanitation applied.
 	 * @return string The sanitized filename.
 	 */
 	public function clean_file_name( $filename ) {
-		$special_chars = array( 'á', 'é', 'í', 'ó', 'ú', 'ü', 'ñ', 'Á', 'É', 'Í', 'Ó', 'Ú', 'Ü', 'Ñ', 'å', 'ä', 'ö', 'Å', 'Ä', 'Ö' );
-		$sanitized_chars = array( 'a', 'e', 'i', 'o', 'u', 'u', 'n', 'A', 'E', 'I', 'O', 'U', 'U', 'N', 'a', 'a', 'o', 'A', 'A', 'O' );
-		$filename = str_replace( $special_chars, $sanitized_chars, $filename );
+		$filename = remove_accents( $filename );
 
-		/* 
+		/*
 		 * A strange, 'incorrect' version of 'ä' (from a Mac) slipped past the
 		 * above replacing and caused problems in a project, so after converting
 		 * regular verisons of characters above, we strip anything that might
@@ -171,7 +249,7 @@ class Lucid_Slider_Core {
 		 * Removes '-300x400' style patterns, so the regex in admin.js doesn't
 		 * match any 'fake' image size string, i.e. ones not added by WordPress
 		 * upload.
-		 * 
+		 *
 		 * Without this, a user might upload an image named 'i-300x400.jpg', which
 		 * is then named in the style 'i-300x400-120x80.jpg' for every image size
 		 * EXCEPT the original. So when the script in admin.js tries to create

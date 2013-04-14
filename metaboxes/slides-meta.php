@@ -1,6 +1,17 @@
+<?php
+/**
+ * Slider slide management metabox.
+ *
+ * @package Lucid
+ * @subpackage Slider
+ */
+?>
+
 <div id="lsjl-slides">
 
 <div class="lsjl-message-notice" id="lsjl-sort-message"><p><?php _e( 'Remember to save your sort order!', 'lucid-slider' ); ?></p></div>
+
+<?php do_action_ref_array( 'lsjl_fields_meta', array( &$mb ) ); // User defined metabox content ?>
 
 <?php while ( $mb->have_fields_and_multi( 'slide-group' ) ) : ?>
 <?php $mb->the_group_open( 'div' ); ?>
@@ -18,7 +29,7 @@
 
 		<?php $lsjl_slide_thumbnail_url = $mb->get_the_value();
 		if ( empty( $lsjl_slide_thumbnail_url ) ) :
-			$lsjl_slide_thumbnail_url = LSJL_URL . 'img/slide-placeholder.png';
+			$lsjl_slide_thumbnail_url = LUCID_SLIDER_URL . 'img/slide-placeholder.png';
 		endif; ?>
 		<img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt="">
 	</div>

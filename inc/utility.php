@@ -2,7 +2,8 @@
 /**
  * Core functionality, always loaded.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Contains basic setup and utility functions.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Utility {
 
@@ -64,11 +68,13 @@ class Lucid_Slider_Utility {
 	 * Templates can be added with the lsjl_templates filter, simply by
 	 * mimicking the structure of:
 	 *
+	 * <code>
 	 * $user_templates['unique_template_name'] = array(
 	 * 	'name' => __( 'User-visible name', 'textdomain' ),
 	 * 	'path' => 'path/to/template-display-file.php',
 	 * 	'screenshot' => 'URL/to/screenshot.jpg'
 	 * )
+	 * </code>
 	 *
 	 * Screenshot container is 250x100 pixels.
 	 *
@@ -78,21 +84,13 @@ class Lucid_Slider_Utility {
 		$default_templates = array(
 			'default' => array(
 				'name' => __( 'Default', 'lucid-slider' ),
-				'path' => LSJL_PATH . 'templates/default/slider.php',
-				'screenshot' => LSJL_URL . 'templates/default/screenshot.jpg'
+				'path' => LUCID_SLIDER_PATH . 'templates/default/slider.php',
+				'screenshot' => LUCID_SLIDER_URL . 'templates/default/screenshot.jpg'
 			)
 		);
 		$user_templates = apply_filters( 'lsjl_templates', array() );
 
 		return array_merge( $default_templates, $user_templates );
-
-		/*return apply_filters( 'lsjl_templates', array(
-			'default' => array(
-				'name' => __( 'Default', 'lucid-slider' ),
-				'path' => LSJL_PATH . 'templates/default.php',
-				'screenshot' => LSJL_PATH . 'templates/default'
-			)
-		) );*/
 	}
 
 	/**
@@ -135,10 +133,12 @@ class Lucid_Slider_Utility {
 			endforeach;
 		endif;
 
-		if ( $use_full_size )
+		if ( $use_full_size ) :
 			$src = wp_get_attachment_url( $slide_id );
-		else
-			$src = wp_get_attachment_image_src( $slide_id, $size )[0];
+		else :
+			$src = wp_get_attachment_image_src( $slide_id, $size );
+			$src = $src[0];
+		endif;
 
 		return $src;
 	}

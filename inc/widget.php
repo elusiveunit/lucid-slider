@@ -2,7 +2,8 @@
 /**
  * Create a slider widget.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Widget for choosing and displaying a slider.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Widget extends WP_Widget {
 

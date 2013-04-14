@@ -2,7 +2,8 @@
 /**
  * Admin functionality.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Assets and UI configuration for the admin.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Admin {
 
@@ -17,6 +21,7 @@ class Lucid_Slider_Admin {
 	 * Constructor, add hooks.
 	 */
 	public function __construct() {
+		add_action( 'admin_notices', array( $this, 'toolbox_notice' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 		add_filter( 'manage_edit-' . Lucid_Slider_Core::get_post_type_name() . '_columns', array( $this, 'admin_columns' ) );
 		add_action( 'manage_' . Lucid_Slider_Core::get_post_type_name() . '_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
@@ -25,22 +30,32 @@ class Lucid_Slider_Admin {
 	}
 
 	/**
+	 * Show a notice if Lucid Toolbox isn't activated.
+	 */
+	public function toolbox_notice() {
+		global $pagenow;
+		
+		if ( 'plugins.php' == $pagenow
+		  &&  ! is_plugin_active( 'lucid-toolbox/lucid-toolbox.php' ) )
+			printf( '<div class="error"><p>%s</p></div>', __( 'Lucid Toolbox is needed for Lucid Slider to function properly.', 'lucid-slider' ) );
+	}
+
+	/**
 	 * Load required CSS and JavaScript.
 	 */
 	public function load_assets() {
 		$screen = get_current_screen();
-		$screen_id = $screen->id;
 
-		if ( $screen_id == Lucid_Slider_Core::get_post_type_name() ) :
+		if ( $screen->id == Lucid_Slider_Core::get_post_type_name() ) :
 			
 			// Metabox style
-			wp_enqueue_style( 'lsjl-style', LSJL_URL . 'css/edit-slider.min.css', false, null );
+			wp_enqueue_style( 'lsjl-style', LUCID_SLIDER_URL . 'css/edit-slider.min.css', false, null );
 
 			// Media upload
 			wp_enqueue_media();
 
 			// Upload handling and other misc. stuff
-			wp_enqueue_script( 'lsjl-script', LSJL_URL . 'js/edit-slider.min.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'lsjl-script', LUCID_SLIDER_URL . 'js/edit-slider.min.js', array( 'jquery' ), null, true );
 		endif;
 	}
 
@@ -73,7 +88,7 @@ class Lucid_Slider_Admin {
 
 		// Images column.
 		if ( 'lsjl_images' == $column ) :
-			Lucid_Slider_Admin::slide_stack( $post_id );
+			self::slide_stack( $post_id );
 
 		// ID column
 		elseif ( 'lsjl_id' == $column ) :
@@ -83,57 +98,6 @@ class Lucid_Slider_Admin {
 		elseif ( 'lsjl_shortcode' == $column ) :
 			echo "<code>[lucidslider id=\"{$post_id}\"]</code>";
 
-		endif;
-	}
-
-	/**
-	 * Shows the first three images of a slider, in a stacked style.
-	 *
-	 * @param int $post_id Slider post ID.
-	 * @param bool $fixed_width Set a fixed width on the containing element no
-	 *    matter how many images are displayed. Default true.
-	 */
-	public static function slide_stack( $post_id, $fixed_width = true ) {
-		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
-
-		if ( ! empty( $slides['slide-group'] ) ) :
-			$slides = $slides['slide-group'];
-
-			// Containing element width
-			$width = 240;
-			if ( ! $fixed_width ) :
-				$times = 1;
-				if ( 2 == count( $slides ) ) $times = 2;
-				if ( 2 < count( $slides ) ) $times = 3;
-
-				$width = 120 + ( $times * 40 );
-			endif;
-
-			$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
-
-			$count = 0;
-			foreach ( $slides as $slide ) :
-
-				// Only show the first three images
-				if ( $count > 2 ) continue;
-
-				// CSS styles. $count is 0 for first image.
-				$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
-				$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
-				$top = $count * 5; // Half the height reduction
-				$z_index = 5 - $count; // Stack downwards
-				$left = $count * ( $height + $top - 10 ); // Arbitrary formula
-
-				$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
-
-				if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
-					$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$style}\">";
-				endif;
-
-				$count++;
-			endforeach;
-
-			echo $output .= '</span>';
 		endif;
 	}
 
@@ -189,5 +153,56 @@ class Lucid_Slider_Admin {
 
 		// Save meta
 		update_post_meta( $post_id, '_lsjl-slides-urls', $slide_image_urls );
+	}
+
+	/**
+	 * Shows the first three images of a slider, in a stacked style.
+	 *
+	 * @param int $post_id Slider post ID.
+	 * @param bool $fixed_width Set a fixed width on the containing element no
+	 *    matter how many images are displayed. Default true.
+	 */
+	public static function slide_stack( $post_id, $fixed_width = true ) {
+		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
+
+		if ( ! empty( $slides['slide-group'] ) ) :
+			$slides = $slides['slide-group'];
+
+			// Containing element width
+			$width = 240;
+			if ( ! $fixed_width ) :
+				$times = 1;
+				if ( 2 == count( $slides ) ) $times = 2;
+				if ( 2 < count( $slides ) ) $times = 3;
+
+				$width = 120 + ( $times * 40 );
+			endif;
+
+			$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
+
+			$count = 0;
+			foreach ( $slides as $slide ) :
+
+				// Only show the first three images
+				if ( $count > 2 ) continue;
+
+				// CSS styles. $count is 0 for first image.
+				$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
+				$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
+				$top = $count * 5; // Half the height reduction
+				$z_index = 5 - $count; // Stack downwards
+				$left = $count * ( $height + $top - 10 ); // Arbitrary formula
+
+				$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
+
+				if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
+					$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$style}\">";
+				endif;
+
+				$count++;
+			endforeach;
+
+			echo $output .= '</span>';
+		endif;
 	}
 }

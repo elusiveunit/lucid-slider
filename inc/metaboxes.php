@@ -1,55 +1,90 @@
 <?php
 /**
- * Setup metaboxes with WPAlchemy.
+ * Metabox generation.
  *
- * @package Lucid_Slider
- * @uses WPAlchemy_MetaBox
- * @see http://www.farinspace.com/wpalchemy-metabox/
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
 if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 // WPAlchemy setup
-if ( ! class_exists( 'WPAlchemy_MetaBox' ) )
-	require LSJL_PATH . 'classes/MetaBox.php';
+if ( defined( 'LUCID_TOOLBOX_CLASS' ) && ! class_exists( 'WPAlchemy_MetaBox' ) )
+	require LUCID_TOOLBOX_CLASS . 'MetaBox.php';
+elseif ( ! class_exists( 'WPAlchemy_MetaBox' ) )
+	return;
 
+/**
+ * Setup metaboxes with WPAlchemy.
+ *
+ * A wrapper for a wrapper... pretty silly, but reduces copy-paste when
+ * creating multiple metaboxes.
+ *
+ * @uses WPAlchemy_MetaBox
+ * @see http://www.farinspace.com/wpalchemy-metabox/
+ * @package Lucid
+ * @subpackage Slider
+ */
+class Lucid_Slider_Metaboxes {
 
-/*===========================================================================*\
-      =Metabox specs
-\*===========================================================================*/
+	/**
+	 * Created metaboxes.
+	 *
+	 * @var array
+	 */
+	public $metaboxes = array();
 
-$lsjl_slides_meta = new WPAlchemy_MetaBox( array(
-	'id' => '_lsjl-slides',
-	'title' => __( 'Slides', 'lucid-slider' ),
-	'template' => LSJL_PATH . 'metaboxes/slides-meta.php',
-	//'mode' => WPALCHEMY_MODE_EXTRACT, // Individual wp_postmeta entries, set if using with WP_Query
-	//'prefix' => 'lsjl-slider-', // A good idea with WPALCHEMY_MODE_EXTRACT
-	'types' => array( Lucid_Slider_Core::get_post_type_name() ),
-	'context' => 'normal', // normal, advanced, or side
-	'priority' => 'default' // high, core, default or low
-) );
+	/**
+	 * Constructor, do the registering.
+	 */
+	public function __construct() {
+		if ( ! defined( 'LUCID_TOOLBOX_VERSION' ) ) return;
 
-$lsjl_slider_settings_meta = new WPAlchemy_MetaBox( array(
-	'id' => '_lsjl-slider-settings',
-	'title' => __( 'Slider settings', 'lucid-slider' ),
-	'template' => LSJL_PATH . 'metaboxes/slider-settings-meta.php',
-	//'mode' => WPALCHEMY_MODE_EXTRACT, // Individual wp_postmeta entries, set if using with WP_Query
-	//'prefix' => 'lsjl-slider-', // A good idea with WPALCHEMY_MODE_EXTRACT
-	'types' => array( Lucid_Slider_Core::get_post_type_name() ),
-	'context' => 'side', // normal, advanced, or side
-	'priority' => 'default' // high, core, default or low
-) );
+		$this->register_metabox( 'slides', array(
+			'title' => __( 'Slides', 'lucid-slider' ),
+			'context' => 'normal'
+		) );
 
-if ( apply_filters( 'lsjl_show_template_metabox', true ) ) :
-$lsjl_slider_template_meta = new WPAlchemy_MetaBox( array(
-	'id' => '_lsjl-slider-template',
-	'title' => __( 'Slider template', 'lucid-slider' ),
-	'template' => LSJL_PATH . 'metaboxes/slider-template-meta.php',
-	//'mode' => WPALCHEMY_MODE_EXTRACT, // Individual wp_postmeta entries, set if using with WP_Query
-	//'prefix' => 'lsjl-slider-', // A good idea with WPALCHEMY_MODE_EXTRACT
-	'types' => array( Lucid_Slider_Core::get_post_type_name() ),
-	'context' => 'normal', // normal, advanced, or side
-	'priority' => 'default' // high, core, default or low
-) );
-endif;
+		$this->register_metabox( 'slider-settings', array(
+			'title' => __( 'Slider settings', 'lucid-slider' ),
+		) );
+
+		if ( apply_filters( 'lsjl_show_template_metabox', true ) ) :
+			$this->register_metabox( 'slider-template', array(
+				'title' => __( 'Slider template', 'lucid-slider' ),
+				'context' => 'normal'
+			) );
+		endif;
+	}
+
+	/**
+	 * Register a WPAlchemy metabox.
+	 *
+	 * @param string $id Metabox ID. Will be a part of the full id; prefixed
+	 *    with '_lsjl-'.
+	 * @param array $args Metabox arguments, will overwrite defaults.
+	 */
+	public function register_metabox( $id, array $args = array() ) {
+		$args = array_merge( array(
+			'id' => "_lsjl-{$id}",
+			'title' => __( 'Extra', 'lucid-slider' ),
+			'template' => LUCID_SLIDER_PATH . "metaboxes/{$id}-meta.php",
+			'types' => array( Lucid_Slider_Core::get_post_type_name() ),
+			'context' => 'side', // normal, advanced, or side
+			'priority' => 'default' // high, core, default or low
+		), $args );
+
+		$this->metaboxes[$id] = new WPAlchemy_MetaBox( $args );
+	}
+
+	/**
+	 * Get a WPAlchemy metabox object.
+	 *
+	 * @param string $id Metabox ID passed to register_metabox().
+	 * @return object
+	 */
+	public function get_metabox( $id ) {
+		return ( ! empty( $this->metaboxes[$id] ) ) ? $this->metaboxes[$id] : false;
+	}
+}

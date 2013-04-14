@@ -1,17 +1,21 @@
 <?php
 /**
  * Register settings page
- * 
- * @package Lucid_Slider
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
 if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
-if ( ! class_exists( 'Lucid_Slider_Settings' ) )
-	require LSJL_PATH . 'classes/class.lucid-slider-settings.php';
+// Settings class
+if ( defined( 'LUCID_TOOLBOX_CLASS' ) && ! class_exists( 'Lucid_Settings' ) )
+	require LUCID_TOOLBOX_CLASS . 'lucid-settings.php';
+elseif ( ! class_exists( 'Lucid_Settings' ) )
+	return;
 
-$lsjl_settings = new Lucid_Slider_Settings( 'lsjl_settings', __( 'Lucid Slider Settings', 'lucid-slider' ) );
+$lsjl_settings = new Lucid_Settings( 'lsjl_settings', __( 'Lucid Slider Settings', 'lucid-slider' ) );
 
 $lsjl_settings->submenu( 'Lucid Slider', array(
 	'title' => __( 'Lucid Slider Settings', 'lucid-slider' ),
