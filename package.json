@@ -1,0 +1,19 @@
+{
+  "name": "lucid-slider",
+  "title": "Lucid Slider",
+  "description": "A WordPress plugin for creating Flexslider structures.",
+  "version": "1.4.0",
+  "author": {
+    "name": "Jens Lindberg",
+    "url": "http://profiles.wordpress.org/elusiveunit/"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-cssmin": "~0.6.0",
+    "grunt-markdown": "~0.2.0",
+    "grunt-rename": "~0.1.0",
+    "grunt-contrib-watch": "~0.3.1"
+  }
+}
