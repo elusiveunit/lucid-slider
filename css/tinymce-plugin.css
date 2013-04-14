@@ -1,4 +1,4 @@
-span.mce_lucidSlider {background: url('tinymce-button.gif') no-repeat 0 0 !important;}
+span.mce_lucidSlider {background: url('../img/tinymce-button.gif') no-repeat 0 0 !important;}
 #content_lucidSlider:hover span.mce_lucidSlider,
 #content_lucidSlider:focus span.mce_lucidSlider {background-position: 0 -20px !important;}
 

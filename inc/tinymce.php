@@ -2,7 +2,8 @@
 /**
  * TinyMCE plugin for easily inserting a shortcode.
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests
@@ -10,6 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 /**
  * Adds a button to the visual editor.
+ *
+ * @package Lucid
+ * @subpackage Slider
  */
 class Lucid_Slider_Tinymce {
 
@@ -57,7 +61,7 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function add_button( $plugins ) {
-		$plugins['lucidSlider'] = LSJL_URL . 'tinymce/tinymce-plugin.min.js';
+		$plugins['lucidSlider'] = LUCID_SLIDER_URL . 'js/tinymce-plugin.min.js';
 
 		return $plugins;
 	}
@@ -66,7 +70,7 @@ class Lucid_Slider_Tinymce {
 	 * Button and Thickbox content CSS.
 	 */
 	public function load_css() {
-		wp_enqueue_style( 'lucid-slider-tinymce', LSJL_URL . 'tinymce/tinymce-plugin.min.css', false, null );
+		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_URL . 'css/tinymce-plugin.min.css', false, null );
 	}
 
 	/**
@@ -76,7 +80,7 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function localization( $langs ) {
-		$langs[] = LSJL_PATH . 'tinymce/tinymce-lang.php';
+		$langs[] = LUCID_SLIDER_PATH . 'inc/tinymce-lang.php';
 		return $langs;
 	}
 

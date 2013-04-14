@@ -4,7 +4,8 @@
  *
  * http://wordpress.stackexchange.com/questions/44785/how-to-provide-translations-for-a-wordpress-tinymce-plugin
  * 
- * @package Lucid_Slider
+ * @package Lucid
+ * @subpackage Slider
  */
 
 // Block direct requests

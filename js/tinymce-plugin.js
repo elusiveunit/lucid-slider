@@ -5,6 +5,8 @@
  * "lucid_slider_tinymce", which handles the output.
  */
 (function() {
+	'use strict';
+
 	tinymce.create('tinymce.plugins.lucidSlider', {
 		init : function(ed, url) {
 
