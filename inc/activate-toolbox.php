@@ -65,11 +65,13 @@ class Lucid_Slider_Activate_Toolbox {
 	 * Plugin activation hook. Install and/or activate Lucid Toolbox if needed.
 	 */
 	public function plugin_activation() {
-		$active = get_option( 'active_plugins' );
+		$active = (array) get_option( 'active_plugins' );
+		$this->_find_toolbox( $active );
 
 		// Check if Lucid Toolbox is activated.
 		if ( ! in_array( $this->toolbox_basename, $active ) ) :
 			$installed = array_keys( get_plugins() );
+			$this->_find_toolbox( $installed );
 
 			if ( in_array( $this->toolbox_basename, $installed ) ) :
 				add_action( 'update_option_active_plugins', array( $this, 'activate_toolbox' ) );
@@ -77,6 +79,22 @@ class Lucid_Slider_Activate_Toolbox {
 				$this->_install_toolbox();
 			endif;
 		endif;
+	}
+
+	/**
+	 * Check for Lucid Toolbox plugin.
+	 *
+	 * The default basename may not pass since the plugin folder name can vary.
+	 * Only search for the main file instead and set that match, if found, as
+	 * the new basename for activate_toolbox().
+	 *
+	 * @param array $search Plugin names to search.
+	 */
+	protected function _find_toolbox( array $search ) {
+		foreach ( $search as $plugin ) :
+			if ( false !== strpos( $plugin, 'lucid-toolbox.php' ) )
+				$this->toolbox_basename = $plugin;
+		endforeach;
 	}
 
 	/**
@@ -124,6 +142,8 @@ class Lucid_Slider_Activate_Toolbox {
 
 	/**
 	 * Admin notice for install failure.
+	 *
+	 * Doesn't seem to be working as I intended, but I'll leave it for now.
 	 */
 	public function toolbox_install_failed() {
 		$notice = sprintf( __( 'Lucid Toolbox couldn\'t be activated, error message: %s', 'lucid-slider' ), $this->activation_error );
@@ -132,6 +152,8 @@ class Lucid_Slider_Activate_Toolbox {
 
 	/**
 	 * Admin notice for install success.
+	 *
+	 * Doesn't seem to be working as I intended, but I'll leave it for now.
 	 */
 	public function toolbox_install_success() {
 		printf( '<div class="updated"><p>%s</p></div>', __( 'Lucid Toolbox was activated successfully!', 'lucid-slider' ) );

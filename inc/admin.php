@@ -1,7 +1,7 @@
 <?php
 /**
  * Admin functionality.
- * 
+ *
  * @package Lucid
  * @subpackage Slider
  */
@@ -34,10 +34,21 @@ class Lucid_Slider_Admin {
 	 */
 	public function toolbox_notice() {
 		global $pagenow;
-		
-		if ( 'plugins.php' == $pagenow
-		  &&  ! is_plugin_active( 'lucid-toolbox/lucid-toolbox.php' ) )
-			printf( '<div class="error"><p>%s</p></div>', __( 'Lucid Toolbox is needed for Lucid Slider to function properly.', 'lucid-slider' ) );
+
+		if ( 'plugins.php' == $pagenow ) :
+			$active = (array) get_option( 'active_plugins' );
+			$toolbox_active = false;
+
+			// Don't check exact basename with is_plugin_active, since the folder
+			// name may vary.
+			foreach ( $active as $plugin ) :
+				if ( false !== strpos( $plugin, 'lucid-toolbox.php' ) )
+					$toolbox_active = true;
+			endforeach;
+
+			if ( ! $toolbox_active )
+				printf( '<div class="error"><p>%s</p></div>', __( 'Lucid Toolbox is needed for Lucid Slider to function properly.', 'lucid-slider' ) );
+		endif;
 	}
 
 	/**
@@ -47,7 +58,7 @@ class Lucid_Slider_Admin {
 		$screen = get_current_screen();
 
 		if ( $screen->id == Lucid_Slider_Core::get_post_type_name() ) :
-			
+
 			// Metabox style
 			wp_enqueue_style( 'lsjl-style', LUCID_SLIDER_URL . 'css/edit-slider.min.css', false, null );
 
