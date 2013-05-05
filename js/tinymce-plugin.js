@@ -1,7 +1,7 @@
 /*!
  * Lucid Slider
- * 
- * TinyMCE button functionality. Does and AJAX request with action
+ *
+ * TinyMCE button functionality. Does an AJAX request with action
  * "lucid_slider_tinymce", which handles the output.
  */
 (function() {
