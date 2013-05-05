@@ -16,9 +16,13 @@
 .flexslider a:active,
 .flex-container a:focus,
 .flexslider a:focus  {outline: none;}
-.slides,
-.flex-control-nav,
-.flex-direction-nav {margin: 0; padding: 0; list-style: none outside;}
+.flexslider .slides,
+.flexslider .flex-control-nav,
+.flexslider .flex-direction-nav {
+	margin: 0;
+	padding: 0;
+	list-style: none outside !important;
+}
 
 /*---------- FlexSlider Necessary Styles ----------*/
 .flexslider {margin: 0; padding: 0;}
@@ -31,7 +35,12 @@
 .slides {zoom: 1;}
 
 /* Hide the slides before the JS is loaded. Avoids image jumping */
-.flexslider .slides > li {display: none; -webkit-backface-visibility: hidden; position: relative;}
+.flexslider .slides > li {
+	-webkit-backface-visibility: hidden;
+	display: none;
+	position: relative;
+	margin: 0;
+}
 
 /* No JavaScript Fallback. If you are not using another script, such as
 Modernizr, make sure you include js that eliminates this class on page load. */
