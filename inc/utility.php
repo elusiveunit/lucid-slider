@@ -1,7 +1,7 @@
 <?php
 /**
  * Core functionality, always loaded.
- * 
+ *
  * @package Lucid
  * @subpackage Slider
  */
@@ -27,19 +27,32 @@ class Lucid_Slider_Utility {
 	/**
 	 * Get a two-value array of image dimensions from a string like 200x300.
 	 *
-	 * @param string $size Sizes, separated with an 'x'.
+	 * @param string $size Image size. Width and height separated with an 'x'.
 	 * @return array Width as the first item, height as the second.
 	 */
 	public static function get_dimensions( $size ) {
 		$dimensions = explode( 'x', trim( (string) $size ) );
 
 		// Need two values
-		if ( 2 != count( $dimensions ) ) return '';
+		if ( 2 != count( $dimensions ) )
+			return false;
 
 		$dimensions[0] = (int) $dimensions[0];
 		$dimensions[1] = (int) $dimensions[1];
 
 		return $dimensions;
+	}
+
+	/**
+	 * Get an image size name from a string like 200x300.
+	 *
+	 * @param string $size Image size. Width and height separated with an 'x'.
+	 * @return string Image size like 'lsjl-[size]-slide-image'.
+	 */
+	public static function get_image_size( $size ) {
+		$size_name = preg_replace( '/[\s]+/', '', str_replace( 'x', '-', $size ) );
+
+		return 'lsjl-' . $size_name . '-slide-image';
 	}
 
 	/**
@@ -109,25 +122,35 @@ class Lucid_Slider_Utility {
 	 * @return string Image URL.
 	 */
 	public static function get_slide_image_src( $slide_id, $size ) {
-
-		if ( 'full' != $size )
-			$size = self::get_dimensions( trim( $size ) );
-
 		$image_sizes = wp_get_attachment_metadata( $slide_id );
 		if ( empty( $image_sizes['sizes'] ) )
 			return '';
 
+		// If the result from get_dimensions is an array, the size is a dimension
+		// string.
+		$size_dim = self::get_dimensions( trim( $size ) );
+		$is_dimension = ( is_array( $size_dim ) );
+		if ( $is_dimension )
+			$size = $size_dim;
+
 		$use_full_size = ( 'full' == $size );
 
-		if ( 'full' != $size ) :
+		if ( ! $use_full_size ) :
 
 			// Assume full size and override if there is a resized image
 			// available.
 			$use_full_size = true;
 			foreach ( $image_sizes['sizes'] as $size_name => $data ) :
 
-				// If width and height matches, there is a crop available.
-				if ( $size[0] == $data['width'] && $size[1] == $data['height'] ) :
+				// If a dimension string is passed and width and height matches,
+				// there is a crop available.
+				if ( $is_dimension
+				  && $size[0] == $data['width']
+				  && $size[1] == $data['height'] ) :
+					$use_full_size = false;
+
+				// Otherwise check if the name exists.
+				elseif ( $size_name == $size ) :
 					$use_full_size = false;
 				endif;
 			endforeach;
@@ -141,5 +164,56 @@ class Lucid_Slider_Utility {
 		endif;
 
 		return $src;
+	}
+
+	/**
+	 * Shows the first three images of a slider, in a stacked style.
+	 *
+	 * @param int $post_id Slider post ID.
+	 * @param bool $fixed_width Set a fixed width on the containing element no
+	 *    matter how many images are displayed. Default true.
+	 */
+	public static function slide_stack( $post_id, $fixed_width = true ) {
+		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
+
+		if ( ! empty( $slides['slide-group'] ) ) :
+			$slides = $slides['slide-group'];
+
+			// Containing element width
+			$width = 240;
+			if ( ! $fixed_width ) :
+				$times = 1;
+				if ( 2 == count( $slides ) ) $times = 2;
+				if ( 2 < count( $slides ) ) $times = 3;
+
+				$width = 120 + ( $times * 40 );
+			endif;
+
+			$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
+
+			$count = 0;
+			foreach ( $slides as $slide ) :
+
+				// Only show the first three images
+				if ( $count > 2 ) continue;
+
+				// CSS styles. $count is 0 for first image.
+				$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
+				$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
+				$top = $count * 5; // Half the height reduction
+				$z_index = 5 - $count; // Stack downwards
+				$left = $count * ( $height + $top - 10 ); // Arbitrary formula
+
+				$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
+
+				if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
+					$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$style}\">";
+				endif;
+
+				$count++;
+			endforeach;
+
+			echo $output .= '</span>';
+		endif;
 	}
 }
