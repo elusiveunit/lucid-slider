@@ -1,7 +1,7 @@
 <?php
 /**
  * TinyMCE plugin for easily inserting a shortcode.
- * 
+ *
  * @package Lucid
  * @subpackage Slider
  */
@@ -119,15 +119,18 @@ class Lucid_Slider_Tinymce {
 				<h2><?php _e( 'Choose a slider', 'lucid-slider' ); ?></h2>
 				<div class="lsjl-tb-labels-wrap">
 				<?php foreach ( $sliders as $key => $data ) :
-					$opt = get_post_meta( (int) $data->ID, '_lsjl-slider-settings', true );
-					$size = ( ! empty( $opt['slider-size'] ) ) ? ucfirst( $opt['slider-size'] ) : __( 'No size', 'lucid-slider' ); ?>
+					/*$opt = get_post_meta( (int) $data->ID, '_lsjl-slider-settings', true );
+					$size = ( ! empty( $opt['slider-size'] ) )
+						? ucfirst( $opt['slider-size'] )
+						: __( 'No size', 'lucid-slider' );*/ ?>
 
 					<label for="lsjl-<?php echo $data->ID; ?>">
 						<span class="lsjl-tb-item-wrap">
 							<input type="radio" name="lsjl-slider-id" value="<?php echo $data->ID; ?>" id="lsjl-<?php echo $data->ID; ?>">
-							<?php Lucid_Slider_Admin::slide_stack( $data->ID ); ?>
+							<?php Lucid_Slider_Utility::slide_stack( $data->ID ); ?>
 							<b class="lsjl-tb-title"><?php
-								printf( '%s <span>(%s)</span>', $data->post_title, $size );
+								//printf( '%s <span>(%s)</span>', $data->post_title, $size );
+								echo $data->post_title
 							?></b>
 						</span>
 					</label>
