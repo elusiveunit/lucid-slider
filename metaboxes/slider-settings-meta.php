@@ -6,7 +6,8 @@
  * @subpackage Slider
  */
 
-$opt = Lucid_Slider_Utility::get_settings(); ?>
+$opt = Lucid_Slider_Utility::get_settings();
+$added_sizes = get_intermediate_image_sizes(); ?>
 
 <div id="lsjl-slider-settings">
 
@@ -17,7 +18,7 @@ if ( true || ! empty( $opt['image_sizes'] ) ) :
 
 	// Saved as '600x200<newline>'
 	$sizes = explode( "\n", trim( $opt['image_sizes'] ) );
-	
+
 	$mb->the_field( 'slider-size' );
 
 	$chosen_slider_size = $mb->get_the_value();
@@ -28,11 +29,18 @@ if ( true || ! empty( $opt['image_sizes'] ) ) :
 	<label for="<?php $mb->the_name(); ?>"><?php _e( 'Slider size', 'lucid-slider' ); ?></label>
 	<select name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="widefat">
 		<option value="full"<?php $mb->the_select_state( 'full' ); ?>><?php _e( 'Full size', 'lucid-slider' ); ?></option>
-		<?php if ( ! empty( $opt['image_sizes'] ) ) :
-			foreach ( $sizes as $size ) : $size = trim( $size ); ?>
-				<option value="<?php echo $size; ?>"<?php $mb->the_select_state( $size ); ?>><?php echo $size; ?></option>
-			<?php endforeach;
-		endif; ?>
+		<?php
+		// Add registered image sizes
+		foreach ( $sizes as $size ) :
+			$size_label = str_replace( 'x', '&times;', trim( $size ) );
+			$size_name = Lucid_Slider_Utility::get_image_size( $size );
+			if ( in_array( $size_name, $added_sizes ) ) : ?>
+				<option value="<?php echo $size_name; ?>"<?php $mb->the_select_state( $size_name ); ?>><?php echo $size_label; ?></option>
+		<?php endif;
+		endforeach;
+
+		// Allow custom sizes to be added
+		do_action_ref_array( 'lsjl_slider_size_select', array( &$mb ) ); ?>
 	</select>
 
 <?php // Warn if there are no sizes set
