@@ -168,6 +168,22 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout, and add `
 	<?php }
 	add_action( 'lsjl_meta_fields_end', 'themename_lsjl_meta_after' );
 
+-----
+
+##### lsjl\_slider\_size\_select
+
+Used to add additional selectable image sizes to the slider size dropdown. The value should be the name of the size (first argument to `add_image_size`).
+
+	/**
+	 * Add selectable slider image sizes.
+	 *
+	 * @param object $metabox WPAlchemy metabox object.
+	 */
+	function themename_lsjl_extra_sizes( &$metabox ) { ?>
+		<option value="image_size_name"<?php $metabox->the_select_state( 'image_size_name' ); ?>>800&times;300</option>
+	<?php }
+	add_action( 'lsjl_slider_size_select', 'themename_lsjl_extra_sizes' );
+
 ## Templates
 
 The plugin currently only comes with the default flexslider template, more can be added with the `lsjl_templates` hook (see hooks section for code).
@@ -181,6 +197,13 @@ In the template file (set with 'path' in the hook callback array), there are som
 * `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as `slide_id => URL`.
 
 ## Changelog
+
+### 1.4.2: May 05, 2013
+
+* New: Allow custom sizes to be added to the slider size dropdown with the `lsjl_slider_size_select` action. Example in the 'Hooks' documentation section.
+* Fix: Properly load the TinyMCE plugin.
+* Fix/tweak: Save image size name instead of dimensions. Passing a size array to `wp_get_attachment_image_src` has occasionally resulted in the wrong URL returned, something I have not observed when passing an image size name. **Re-save sliders to ensure correct results**.
+* Tweak: Increase some slider CSS specificity to handle rules like Twenty Twelve's `.entry-content ul`.
 
 ### 1.4.1: Apr 14, 2013
 

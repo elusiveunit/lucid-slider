@@ -138,6 +138,18 @@ function themename_lsjl_meta_after( &amp;$metabox ) {
     &lt;/div&gt;
 &lt;?php }
 add_action( &#39;lsjl_meta_fields_end&#39;, &#39;themename_lsjl_meta_after&#39; );</code></pre>
+<hr>
+<h5>lsjl_slider_size_select</h5>
+<p>Used to add additional selectable image sizes to the slider size dropdown. The value should be the name of the size (first argument to <code>add_image_size</code>).</p>
+<pre><code>/**
+ * Add selectable slider image sizes.
+ *
+ * @param object $metabox WPAlchemy metabox object.
+ */
+function themename_lsjl_extra_sizes( &amp;$metabox ) { ?&gt;
+    &lt;option value=&quot;image_size_name&quot;&lt;?php $metabox-&gt;the_select_state( &#39;image_size_name&#39; ); ?&gt;&gt;800&amp;times;300&lt;/option&gt;
+&lt;?php }
+add_action( &#39;lsjl_slider_size_select&#39;, &#39;themename_lsjl_extra_sizes&#39; );</code></pre>
 <h2>Templates</h2>
 <p>The plugin currently only comes with the default flexslider template, more can be added with the <code>lsjl_templates</code> hook (see hooks section for code).</p>
 <p>The default template in the plugin can be used as a starting point for a custom one. It should contain a <code>&lt;div class=&quot;flexslider&quot;&gt;</code>, with the slides inside a <code>&lt;ul class=&quot;slides&quot;&gt;</code> (with <code>&lt;li&gt;</code>s, naturally) to function properly.</p>
@@ -148,6 +160,13 @@ add_action( &#39;lsjl_meta_fields_end&#39;, &#39;themename_lsjl_meta_after&#39; 
 <li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as <code>slide_id =&gt; URL</code>.</li>
 </ul>
 <h2>Changelog</h2>
+<h3>1.4.2: May 05, 2013</h3>
+<ul>
+<li>New: Allow custom sizes to be added to the slider size dropdown with the <code>lsjl_slider_size_select</code> action. Example in the &#39;Hooks&#39; documentation section.</li>
+<li>Fix: Properly load the TinyMCE plugin.</li>
+<li>Fix/tweak: Save image size name instead of dimensions. Passing a size array to <code>wp_get_attachment_image_src</code> has occasionally resulted in the wrong URL returned, something I have not observed when passing an image size name. <strong>Re-save sliders to ensure correct results</strong>.</li>
+<li>Tweak: Increase some slider CSS specificity to handle rules like Twenty Twelve&#39;s <code>.entry-content ul</code>.</li>
+</ul>
 <h3>1.4.1: Apr 14, 2013</h3>
 <p><strong>Sin:</strong> This would be 1.5.0, but version numbers have been retroactively changed. Plugin has until this point only been used internally anyway (so why have I kept a changelog?). Moving on!</p>
 <ul>

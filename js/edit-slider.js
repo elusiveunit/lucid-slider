@@ -1,6 +1,6 @@
 /*!
  * Lucid Slider
- * 
+ *
  * Slider edit screen
  */
 var lucidSliderEditScreen = (function ( $, win, undefined ) {
@@ -153,7 +153,7 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 
 	/**
 	 * Add class for showing a height toggle.
-	 * 
+	 *
 	 * Check if there are more than the default two fields, or if the inner wrap
 	 * is taller than 70 pixels (about 60 by default).
 	 */
