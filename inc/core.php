@@ -97,6 +97,12 @@ class Lucid_Slider_Core {
 			$this->slider_widget();
 		endif;
 
+		// TinyMCE plugin
+		if ( is_admin() && ! empty( $this->_settings['enable_tinymce'] ) ) :
+			require LUCID_SLIDER_PATH . 'inc/tinymce.php';
+			self::$_instances['tinymce'] = new Lucid_Slider_Tinymce();
+		endif;
+
 		// Selectively load some parts, start with admin. Ajax the WordPress way
 		// goes through admin-ajax, so is_admin alone isn't enough for proper
 		// admin/template separation.
@@ -119,12 +125,6 @@ class Lucid_Slider_Core {
 				require LUCID_SLIDER_PATH . 'inc/metaboxes.php';
 				self::$_instances['metaboxes'] = new Lucid_Slider_Metaboxes();
 
-			endif;
-
-			// TinyMCE plugin
-			if ( ! empty( $this->_settings['enable_tinymce'] ) ) :
-				require LUCID_SLIDER_PATH . 'inc/tinymce.php';
-				self::$_instances['tinymce'] = new Lucid_Slider_Tinymce();
 			endif;
 
 		// Frontend
@@ -179,17 +179,15 @@ class Lucid_Slider_Core {
 
 			// Saved as '600x200<newline>'
 			$sizes = explode( "\n", trim( $opt['image_sizes'] ) );
-			$count = 1;
 
 			foreach ( $sizes as $size ) :
 				$dimensions = Lucid_Slider_Utility::get_dimensions( $size );
+				$size_name = Lucid_Slider_Utility::get_image_size( $size );
 
-				if ( ! ( $dimensions ) ) continue;
+				if ( ! $dimensions || ! $size_name )
+					continue;
 
-				$size_name = preg_replace( '/[\s]/', '', str_replace( 'x', '-', $size ) );
-
-				add_image_size( 'lsjl-' . $size_name . '-slide-image', $dimensions[0], $dimensions[1], true );
-				$count++;
+				add_image_size( $size_name, $dimensions[0], $dimensions[1], true );
 			endforeach;
 		endif;
 	}
