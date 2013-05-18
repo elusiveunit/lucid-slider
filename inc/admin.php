@@ -21,7 +21,12 @@ class Lucid_Slider_Admin {
 	 * Constructor, add hooks.
 	 */
 	public function __construct() {
+		$basename = plugin_basename( Lucid_Slider_Core::$plugin_file );
+
 		add_action( 'admin_notices', array( $this, 'toolbox_notice' ) );
+		add_filter( "plugin_action_links_{$basename}", array( $this, 'add_action_links' ) );
+		add_filter( 'plugin_row_meta', array( $this, 'add_meta_links' ), 10, 2 );
+
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 		add_filter( 'manage_edit-' . Lucid_Slider_Core::get_post_type_name() . '_columns', array( $this, 'admin_columns' ) );
 		add_action( 'manage_' . Lucid_Slider_Core::get_post_type_name() . '_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
@@ -49,6 +54,51 @@ class Lucid_Slider_Admin {
 			if ( ! $toolbox_active )
 				printf( '<div class="error"><p>%s</p></div>', __( 'Lucid Toolbox is needed for Lucid Slider to function properly.', 'lucid-slider' ) );
 		endif;
+	}
+
+	/**
+	 * Add a settings page link to the plugin action links.
+	 *
+	 * @param array $links Default meta links.
+	 * @return array
+	 */
+	public function add_action_links( $links ) {
+
+		// Only add link if user have access to the page
+		if ( current_user_can( 'manage_options' ) ) :
+			$url = esc_attr( trailingslashit( get_admin_url() ) . 'options-general.php?page=lsjl_settings' );
+
+			// Generally bad practice to rely on core strings, but I feel it's
+			// unlikely this is ever untranslated. If it happens, it's a simple
+			// update.
+			$text = __( 'Settings' );
+
+			$links['settings'] = "<a href=\"{$url}\">{$text}</a>";
+		endif;
+
+		return $links;
+	}
+
+	/**
+	 * Add a documentation link to the plugin meta data.
+	 *
+	 * @param array $links Default meta links.
+	 * @param string $basename Basename of plugin currently processing.
+	 * @return array
+	 */
+	public function add_meta_links( $links, $basename ) {
+		if ( plugin_basename( Lucid_Slider_Core::$plugin_file ) == $basename ) :
+			$url = esc_attr( LUCID_SLIDER_URL . 'doc' );
+
+			// Generally bad practice to rely on core strings, but I feel it's
+			// unlikely this is ever untranslated. If it happens, it's a simple
+			// update.
+			$text = __( 'Documentation' );
+
+			$links['documentation'] = "<a href=\"{$url}\">{$text}</a>";
+		endif;
+
+		return $links;
 	}
 
 	/**
