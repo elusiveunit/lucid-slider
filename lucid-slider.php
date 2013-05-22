@@ -1,18 +1,19 @@
 <?php
 /**
- * Lucid Slider definition.
+ * Lucid Slider plugin definition.
+ *
+ * Plugin Name: Lucid Slider
+ * Plugin URI: https://github.com/elusiveunit/lucid-slider
+ * Description: A simple plugin for creating Flexslider structures.
+ * Author: Jens Lindberg
+ * Version: 1.4.2
+ * License: GPL-2.0+
+ * Text Domain: lucid-slider
+ * Domain Path: /lang
  *
  * @package Lucid
  * @subpackage Slider
  */
-
-/*
-Plugin Name: Lucid Slider
-Plugin URI: https://github.com/elusiveunit/lucid-slider
-Description: A simple plugin for creating Flexslider structures.
-Author: Jens Lindberg
-Version: 1.4.2
-*/
 
 // Block direct requests
 if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
