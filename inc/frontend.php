@@ -40,7 +40,7 @@ class Lucid_Slider_Frontend {
 	 * unecessary loading.
 	 */
 	public function register_script() {
-		wp_register_script( 'flexslider', LUCID_SLIDER_ASSETS . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
+		wp_register_script( 'flexslider', LUCID_SLIDER_ASSETS . 'js/jquery.flexslider.min.js', array( 'jquery-core' ), null, true );
 	}
 
 	/**
