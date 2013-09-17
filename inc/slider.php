@@ -150,7 +150,6 @@ class Lucid_Slider {
 
 				// Variable aliases
 				$slider = $this;
-				$slider_id = $this->id;
 				$slides = $this->slides;
 				$options = $this->slider_options;
 				$slides_urls = $this->slides_urls;
