@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Lucid Slider v1.4.0\n"
+"Project-Id-Version: Lucid Slider v1.5.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-11-22 22:02+0100\n"
-"PO-Revision-Date: 2013-04-04 09:28:01+0000\n"
+"PO-Revision-Date: 2013-09-17 18:34:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: Jens Lindberg\n"
 "MIME-Version: 1.0\n"
@@ -20,67 +20,67 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Textdomain-Support: yes"
 
-#: inc/post-type.php:31
+#: inc/post-type.php:30
 #, fuzzy
 #@ lucid-slider
 msgctxt "post type general name"
 msgid "Sliders"
 msgstr "Bildspel"
 
-#: inc/post-type.php:32
+#: inc/post-type.php:31
 #, fuzzy
 #@ lucid-slider
 msgctxt "post type singular name"
 msgid "Slider"
 msgstr "Bildspel"
 
-#: inc/post-type.php:33
+#: inc/post-type.php:32
 #@ lucid-slider
 msgid "All sliders"
 msgstr "Alla bildspel"
 
-#: inc/post-type.php:34
+#: inc/post-type.php:33
 #@ lucid-slider
 msgid "Add new"
 msgstr "Skapa nytt"
 
-#: inc/post-type.php:35
+#: inc/post-type.php:34
 #@ lucid-slider
 msgid "Add new slider"
 msgstr "Skapa nytt bildspel"
 
-#: inc/post-type.php:36
+#: inc/post-type.php:35
 #@ lucid-slider
 msgid "Edit slider"
 msgstr "Redigera bildspel"
 
-#: inc/post-type.php:37
+#: inc/post-type.php:36
 #@ lucid-slider
 msgid "New slider"
 msgstr "Nytt bildspel"
 
-#: inc/post-type.php:38
+#: inc/post-type.php:37
 #@ lucid-slider
 msgid "View slider"
 msgstr "Visa bildspel"
 
-#: inc/post-type.php:39
+#: inc/post-type.php:38
 #@ lucid-slider
 msgid "Search sliders"
 msgstr "Sök bildspel"
 
-#: inc/post-type.php:40
-#: inc/tinymce.php:142
+#: inc/post-type.php:39
+#: inc/tinymce.php:145
 #@ lucid-slider
 msgid "No sliders found"
 msgstr "Hittade inga bildspel"
 
-#: inc/post-type.php:41
+#: inc/post-type.php:40
 #@ lucid-slider
 msgid "No sliders found in trash"
 msgstr "Hitta inga bildspel i papperskorgen"
 
-#: inc/post-type.php:44
+#: inc/post-type.php:43
 #@ lucid-slider
 msgid "Parent slider:"
 msgstr "Förälder:"
@@ -95,291 +95,291 @@ msgstr "Bildspelsbilder"
 msgid "Slider settings"
 msgstr "Bildspelsinställningar"
 
-#: inc/settings.php:17
-#: inc/settings.php:20
+#: inc/settings.php:18
+#: inc/settings.php:21
 #@ lucid-slider
 msgid "Lucid Slider Settings"
 msgstr "Inställningar Lucid Slider"
 
-#: inc/settings.php:22
+#: inc/settings.php:23
 #, fuzzy
 #@ lucid-slider
 msgctxt "Settings tab"
 msgid "General"
 msgstr "Allmänt"
 
-#: inc/settings.php:23
+#: inc/settings.php:24
 #, fuzzy
 #@ lucid-slider
 msgctxt "Settings tab"
 msgid "Slider"
 msgstr "Bildspel"
 
-#: inc/settings.php:35
+#: inc/settings.php:36
 #@ lucid-slider
 msgid "Images"
 msgstr "Bilder"
 
-#: inc/settings.php:41
+#: inc/settings.php:42
 #@ lucid-slider
 msgid "Image sizes"
 msgstr "Bildstorlekar"
 
-#: inc/settings.php:45
+#: inc/settings.php:46
 #@ lucid-slider
 msgid "Make sure the dimensions are formatted correctly."
 msgstr "Se till att måtten är korrekt formaterade."
 
-#: inc/settings.php:47
+#: inc/settings.php:48
 #@ lucid-slider
 msgid "Separate each image size with a new line. Format like <strong>800x250</strong> (width&times;height)."
 msgstr "Separera varje bildstorlek med en blankrad. Format: <strong>800x250</strong> (bredd&times;höjd)."
 
-#: inc/settings.php:54
+#: inc/settings.php:55
 #@ lucid-slider
 msgid "Theme integration"
 msgstr "Temaintegration"
 
-#: inc/settings.php:60
+#: inc/settings.php:61
 #@ lucid-slider
 msgid "Load bundled assets"
 msgstr "Ladda standardfiler"
 
-#: inc/settings.php:65
+#: inc/settings.php:66
 #@ lucid-slider
 msgid "Load if not using in the theme."
 msgstr "Ladda om de inte finns med i temat."
 
-#: inc/settings.php:67
+#: inc/settings.php:68
 #@ lucid-slider
 msgid "Load CSS"
 msgstr "Ladda CSS"
 
-#: inc/settings.php:68
+#: inc/settings.php:69
 #@ lucid-slider
 msgid "Load JavaScript"
 msgstr "Ladda JavaScript"
 
-#: inc/settings.php:75
+#: inc/settings.php:76
 #@ lucid-slider
 msgid "Initialize slider"
 msgstr "Starta bildspel"
 
-#: inc/settings.php:127
+#: inc/settings.php:128
 #@ lucid-slider
 msgid "General slider settings"
 msgstr "Allmänna bildspelsinställningar"
 
-#: inc/settings.php:133
+#: inc/settings.php:134
 #@ lucid-slider
 msgid "Animation"
 msgstr "Animation"
 
-#: inc/settings.php:139
+#: inc/settings.php:140
 #@ lucid-slider
 msgid "Fade"
 msgstr "Tona (fade)"
 
-#: inc/settings.php:140
+#: inc/settings.php:141
 #@ lucid-slider
 msgid "Slide"
 msgstr "Glid (slide)"
 
-#: inc/settings.php:148
+#: inc/settings.php:149
 #@ lucid-slider
 msgid "Sliding direction"
 msgstr "Riktning"
 
-#: inc/settings.php:153
+#: inc/settings.php:154
 #@ lucid-slider
 msgid "Only affects the \"slide\" animation"
 msgstr "Påverkar bara animationen \"glid\""
 
-#: inc/settings.php:155
+#: inc/settings.php:156
 #@ lucid-slider
 msgid "Horizontal"
 msgstr "Horisontellt"
 
-#: inc/settings.php:156
+#: inc/settings.php:157
 #@ lucid-slider
 msgid "Vertical"
 msgstr "Vertikalt"
 
-#: inc/settings.php:164
+#: inc/settings.php:165
 #@ lucid-slider
 msgid "Animation loop"
 msgstr "Animationsloop"
 
-#: inc/settings.php:169
+#: inc/settings.php:170
 #@ lucid-slider
 msgid "Loop the slides"
 msgstr "Loopa bildspelsbilderna"
 
-#: inc/settings.php:170
+#: inc/settings.php:171
 #@ lucid-slider
 msgid "If disabled, directional navigation will be disabled at either end"
 msgstr "Om avstängt kommer riktad navigering (pilar) inaktiveras i vardera ände"
 
-#: inc/settings.php:177
+#: inc/settings.php:178
 #@ lucid-slider
 msgid "Smooth height"
 msgstr "Mjuk höjd"
 
-#: inc/settings.php:183
+#: inc/settings.php:184
 #@ lucid-slider
 msgid "Only affects horizontal mode"
 msgstr "Påverkar endst horisontellt läge"
 
-#: inc/settings.php:189
+#: inc/settings.php:190
 #@ lucid-slider
 msgid "Slideshow"
 msgstr "Bildspel"
 
-#: inc/settings.php:194
+#: inc/settings.php:195
 #@ lucid-slider
 msgid "Animate slider automatically"
 msgstr "Animera bildspelet automatiskt"
 
-#: inc/settings.php:201
+#: inc/settings.php:202
 #@ lucid-slider
 msgid "Slideshow speed"
 msgstr "Bildhastighet"
 
-#: inc/settings.php:205
+#: inc/settings.php:206
 #@ lucid-slider
 msgid "Time each slide is displayed, in milliseconds"
 msgstr "Tid som varje bild visas, i millisekunder"
 
-#: inc/settings.php:213
+#: inc/settings.php:214
 #@ lucid-slider
 msgid "Animation speed"
 msgstr "Animeringshastighet"
 
-#: inc/settings.php:217
+#: inc/settings.php:218
 #@ lucid-slider
 msgid "Animation time (for fade/slide), in milliseconds"
 msgstr "Tid för animeringar (tona/glid), i millisekunder"
 
-#: inc/settings.php:237
+#: inc/settings.php:238
 #@ lucid-slider
 msgid "Controls"
 msgstr "Kontroller"
 
-#: inc/settings.php:243
+#: inc/settings.php:244
 #@ lucid-slider
 msgid "Slide navigation"
 msgstr "Bildnavigering"
 
-#: inc/settings.php:248
+#: inc/settings.php:249
 #@ lucid-slider
 msgid "Show small navigation buttons for each slide"
 msgstr "Visa små navigeringsknappar för varje bild"
 
-#: inc/settings.php:255
+#: inc/settings.php:256
 #@ lucid-slider
 msgid "Directional navigation"
 msgstr "Riktad navigering"
 
-#: inc/settings.php:260
+#: inc/settings.php:261
 #@ lucid-slider
 msgid "Show previous/next navigation"
 msgstr "Visa navigering för föregående/nästa"
 
-#: inc/settings.php:267
+#: inc/settings.php:268
 #@ lucid-slider
 msgid "Previous text"
 msgstr "Text föregående"
 
-#: inc/settings.php:271
+#: inc/settings.php:272
 #@ lucid-slider
 msgid "Text for the \"previous\" directional navigation button, usually only seen by people with screen readers"
 msgstr "Text för riktade navigeringsknappen \"föregående\", oftast bara synlig för personer med skärmläsare"
 
-#: inc/settings.php:272
+#: inc/settings.php:273
 #, fuzzy
 #@ lucid-slider
 msgctxt "Control nav previous text"
 msgid "Previous"
 msgstr "Föregående"
 
-#: inc/settings.php:278
+#: inc/settings.php:279
 #@ lucid-slider
 msgid "Next text"
 msgstr "Text nästa"
 
-#: inc/settings.php:282
+#: inc/settings.php:283
 #@ lucid-slider
 msgid "Text for the \"next\" directional navigation button, usually only seen by people with screen readers"
 msgstr "Text för riktade navigeringsknappen \"nästa\", oftast bara synlig för personer med skärmläsare"
 
-#: inc/settings.php:283
+#: inc/settings.php:284
 #, fuzzy
 #@ lucid-slider
 msgctxt "Control nav next text"
 msgid "Next"
 msgstr "Nästa"
 
-#: inc/settings.php:290
+#: inc/settings.php:291
 #@ lucid-slider
 msgid "Usability features"
 msgstr "Användbarhetsinställningar"
 
-#: inc/settings.php:296
+#: inc/settings.php:297
 #@ lucid-slider
 msgid "Pause on action"
 msgstr "Pausa vid interaktion"
 
-#: inc/settings.php:301
+#: inc/settings.php:302
 #@ lucid-slider
 msgid "Pause the slideshow when interacting with control elements"
 msgstr "Pausa bildspelet vid interaktion med kontroller"
 
-#: inc/settings.php:308
+#: inc/settings.php:309
 #@ lucid-slider
 msgid "Pause on hover"
 msgstr "Pausa vid mushover"
 
-#: inc/settings.php:313
+#: inc/settings.php:314
 #@ lucid-slider
 msgid "Pause the slideshow while hovering over slider"
 msgstr "Pausa bildspelet när muspekaren förs över det"
 
-#: inc/settings.php:320
+#: inc/settings.php:321
 #@ lucid-slider
 msgid "Touch"
 msgstr "Touch"
 
-#: inc/settings.php:325
+#: inc/settings.php:326
 #@ lucid-slider
 msgid "Allow touch swipe navigation"
 msgstr "Tillåt navigering genom svepande gester"
 
-#: inc/settings.php:332
+#: inc/settings.php:333
 #@ lucid-slider
 msgid "Video"
 msgstr "Video"
 
-#: inc/settings.php:337
+#: inc/settings.php:338
 #@ lucid-slider
 msgid "Using videos in the slider"
 msgstr "Video används i bildspelet"
 
-#: inc/settings.php:338
+#: inc/settings.php:339
 #@ lucid-slider
 msgid "If set, this will prevent CSS3 3D Transforms to avoid graphical glitches"
 msgstr "Om aktiverat kommer CSS3 3D Transforms stoppas för att motverka oönskade beteenden"
 
-#: metaboxes/slider-settings-meta.php:25
+#: metaboxes/slider-settings-meta.php:26
 #@ lucid-slider
 msgid "Remember to choose a size."
 msgstr "Kom ihåg att välja en storlek."
 
-#: metaboxes/slider-settings-meta.php:28
+#: metaboxes/slider-settings-meta.php:29
 #@ lucid-slider
 msgid "Slider size"
 msgstr "Bildspelsstorlek"
 
-#: metaboxes/slider-settings-meta.php:40
+#: metaboxes/slider-settings-meta.php:48
 #@ lucid-slider
 msgid "You must set image sizes in the settings to use the slider."
 msgstr "Du måste ställa in bildstorlekar på inställningssidan innan bildspelet kan användas."
@@ -389,117 +389,114 @@ msgstr "Du måste ställa in bildstorlekar på inställningssidan innan bildspel
 msgid "Remember to save your sort order!"
 msgstr "Glöm inte att spara ordningen!"
 
-#: metaboxes/slides-meta.php:19
+#: metaboxes/slides-meta.php:20
 #@ lucid-slider
 msgid "Move"
 msgstr "Flytta"
 
-#: metaboxes/slides-meta.php:47
+#: metaboxes/slides-meta.php:48
 #@ lucid-slider
 msgid "Image:"
 msgstr "Bild:"
 
-#: metaboxes/slides-meta.php:50
+#: metaboxes/slides-meta.php:51
 #@ lucid-slider
 msgid "Add an image"
 msgstr "Lägg till en bild"
 
-#: metaboxes/slides-meta.php:50
-#@ lucid-slider
-msgid "Add..."
-msgstr "Lägg till..."
-
-#: metaboxes/slides-meta.php:56
+#: metaboxes/slides-meta.php:57
 #@ lucid-slider
 msgid "Alt text:"
 msgstr "Alternativ text:"
 
-#: metaboxes/slides-meta.php:58
+#: metaboxes/slides-meta.php:59
 #@ lucid-slider
 msgid "Image description for search engines and visually impaired people."
 msgstr "Bildbeskrivning för sökmotorer och synskadade personer"
 
-#: metaboxes/slides-meta.php:68
+#: metaboxes/slides-meta.php:69
 #@ lucid-slider
 msgid "Remove"
 msgstr "Ta bort"
 
-#: metaboxes/slides-meta.php:73
+#: metaboxes/slides-meta.php:77
 #@ lucid-slider
 msgid "Add slide"
 msgstr "Lägg till bild"
 
-#: inc/admin.php:72
+#: inc/admin.php:133
 #@ lucid-slider
 msgid "ID"
 msgstr "ID"
 
-#: inc/admin.php:73
+#: inc/admin.php:134
 #@ lucid-slider
 msgid "Shortcode"
 msgstr "Kortkod"
 
-#: inc/settings.php:182
+#: inc/settings.php:183
 #@ lucid-slider
 msgid "Animate slide height differences"
 msgstr "Animera skillnader i höjd mellan bilder"
 
-#: inc/settings.php:225
+#: inc/settings.php:226
 #@ lucid-slider
 msgid "Randomize"
 msgstr "Slumpa"
 
-#: inc/settings.php:230
+#: inc/settings.php:231
 #@ lucid-slider
 msgid "Randomize slide order"
 msgstr "Slumpa bildernas ordning"
 
-#: inc/admin.php:71
+#: inc/admin.php:132
 #@ lucid-slider
 msgid "Overview"
 msgstr "Överblick"
 
-#: inc/settings.php:80
+#: inc/settings.php:81
 #@ lucid-slider
 msgid "Activate the slider automatically"
 msgstr "Aktivera bildspelet automatisk"
 
-#: inc/settings.php:81
+#: inc/settings.php:82
 #@ lucid-slider
 msgid "Calls the <strong>flexslider</strong> JavaScript function with the options from the Slider settings page. Disable if calling it in the theme."
 msgstr "Anropar JavaScript-funktionen <strong>flexslider</strong> med de valda alternativen från inställningssidan Bildspel. Inaktivera om den anropas i temat."
 
-#: metaboxes/slides-meta.php:50
+#: metaboxes/slides-meta.php:51
 #@ lucid-slider
 msgid "Choose slide image"
 msgstr "Välj bildspelsbild"
 
-#: metaboxes/slides-meta.php:50
+#: metaboxes/slides-meta.php:51
 #@ lucid-slider
 msgid "Choose image"
 msgstr "Välj bild"
 
-#: metaboxes/slider-settings-meta.php:30
+#: metaboxes/slider-settings-meta.php:31
 #@ lucid-slider
 msgid "Full size"
 msgstr "Full storlek"
 
-#: inc/settings.php:95
+#: inc/settings.php:96
 #@ lucid-slider
 msgid "Widget"
 msgstr "Widget"
 
-#: inc/settings.php:100
+#: inc/settings.php:101
 #@ lucid-slider
 msgid "Enable slider widget"
 msgstr "Aktivera bildspelswidget"
 
-#: inc/settings.php:101
+#: inc/settings.php:102
 #@ lucid-slider
 msgid "Make a widget available for use in a sidebar."
 msgstr "Gör en widget tillgänglig for användning i sidebars"
 
+#. translators: plugin header field 'Name'
 #: inc/widget.php:26
+#: lucid-slider.php:0
 #@ lucid-slider
 msgid "Lucid Slider"
 msgstr "Lucid Slider"
@@ -529,42 +526,37 @@ msgstr "Lägg till ett bildspel"
 msgid "Choose a slider"
 msgstr "Välj ett bildspel"
 
-#: inc/tinymce.php:123
-#@ lucid-slider
-msgid "No size"
-msgstr "Ingen storlek"
-
-#: inc/tinymce.php:138
+#: inc/tinymce.php:141
 #@ lucid-slider
 msgid "Insert slider"
 msgstr "Infoga bildspel"
 
-#: inc/settings.php:89
+#: inc/settings.php:90
 #@ lucid-slider
 msgid "Tools"
 msgstr "Verktyg"
 
-#: inc/settings.php:108
+#: inc/settings.php:109
 #@ lucid-slider
 msgid "Editor"
 msgstr "Redigerare"
 
-#: inc/settings.php:113
+#: inc/settings.php:114
 #@ lucid-slider
 msgid "Enable visual editor button"
 msgstr "Aktivera knapp för den visuella redigeraren"
 
-#: inc/settings.php:114
+#: inc/settings.php:115
 #@ lucid-slider
 msgid "Make a UI available for visual shortcode insertion"
 msgstr "Gör ett gränssnitt tillgängligt för visuell infogning av kortkod"
 
-#: metaboxes/slides-meta.php:66
+#: metaboxes/slides-meta.php:67
 #@ lucid-slider
 msgid "Show all fields"
 msgstr "Visa alla fält"
 
-#: metaboxes/slides-meta.php:66
+#: metaboxes/slides-meta.php:67
 #@ lucid-slider
 msgid "Hide fields"
 msgstr "Dölj fält"
@@ -574,28 +566,28 @@ msgstr "Dölj fält"
 msgid "Slider template"
 msgstr "Bildspelsmall"
 
-#: inc/utility.php:86
+#: inc/utility.php:99
 #@ lucid-slider
 msgid "Default"
 msgstr "Standard"
 
-#: inc/activate-toolbox.php:120
+#: inc/activate-toolbox.php:138
 #@ lucid-slider
 msgid "Unknown error"
 msgstr "Okänt fel"
 
-#: inc/activate-toolbox.php:129
+#: inc/activate-toolbox.php:149
 #, php-format
 #@ lucid-slider
 msgid "Lucid Toolbox couldn't be activated, error message: %s"
 msgstr "Lucid Toolbox kunde inte aktiveras, felmeddelande: %s"
 
-#: inc/activate-toolbox.php:137
+#: inc/activate-toolbox.php:159
 #@ lucid-slider
 msgid "Lucid Toolbox was activated successfully!"
 msgstr "Lucid Toolbox aktiverades utan problem!"
 
-#: inc/admin.php:40
+#: inc/admin.php:55
 #@ lucid-slider
 msgid "Lucid Toolbox is needed for Lucid Slider to function properly."
 msgstr "Lucid Toolbox krävs för att Lucid Slider ska fungera korrekt."
@@ -605,40 +597,79 @@ msgstr "Lucid Toolbox krävs för att Lucid Slider ska fungera korrekt."
 msgid "Extra"
 msgstr "Extra"
 
-#: inc/post-type.php:57
+#: inc/post-type.php:56
 #@ lucid-slider
 msgid "Slider updated."
 msgstr "Bildspel uppdaterat."
 
-#: inc/post-type.php:58
+#: inc/post-type.php:57
 #, php-format
 #@ lucid-slider
 msgid "Slider restored to revision from %s."
 msgstr "Bildspel återställt till version från %s."
 
-#: inc/post-type.php:59
+#: inc/post-type.php:58
 #@ lucid-slider
 msgid "Slider published."
 msgstr "Bildspel publicerat."
 
-#: inc/post-type.php:60
+#: inc/post-type.php:59
 #@ lucid-slider
 msgid "Slider saved."
 msgstr "Bildspel sparat."
 
-#: inc/post-type.php:61
+#: inc/post-type.php:60
 #@ lucid-slider
 msgid "Slider submitted."
 msgstr "Bildspel sparat"
 
-#: inc/post-type.php:62
+#: inc/post-type.php:61
 #, php-format
 #@ lucid-slider
 msgid "Slider scheduled for: <strong>%1$s</strong>."
 msgstr "Bildspel schemalagt till: <strong>%1$s</strong>."
 
-#: inc/post-type.php:63
+#: inc/post-type.php:62
 #@ lucid-slider
 msgid "Slider draft updated."
 msgstr "Utkast för bildspel uppdaterat."
+
+#: inc/admin.php:74
+#@ default
+msgid "Settings"
+msgstr ""
+
+#: inc/admin.php:96
+#@ default
+msgid "Documentation"
+msgstr ""
+
+#. translators: plugin header field 'PluginURI'
+#: lucid-slider.php:0
+#@ lucid-slider
+msgid "https://github.com/elusiveunit/lucid-slider"
+msgstr ""
+
+#. translators: plugin header field 'Description'
+#: lucid-slider.php:0
+#@ lucid-slider
+msgid "A simple plugin for creating Flexslider structures."
+msgstr ""
+
+#. translators: plugin header field 'Author'
+#: lucid-slider.php:0
+#@ lucid-slider
+msgid "Jens Lindberg"
+msgstr ""
+
+#. translators: plugin header field 'Version'
+#: lucid-slider.php:0
+#@ lucid-slider
+msgid "1.5.0"
+msgstr ""
+
+#: metaboxes/slides-meta.php:51
+#@ lucid-slider
+msgid "Choose..."
+msgstr "Välj..."
 
