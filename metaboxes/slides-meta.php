@@ -11,10 +11,11 @@
 
 <div class="lsjl-message-notice" id="lsjl-sort-message"><p><?php _e( 'Remember to save your sort order!', 'lucid-slider' ); ?></p></div>
 
-<?php do_action_ref_array( 'lsjl_fields_meta', array( &$mb ) ); // User defined metabox content ?>
+<?php // User defined metabox content
+do_action_ref_array( 'lsjl_slides_meta_start', array( &$mb ) );
 
-<?php while ( $mb->have_fields_and_multi( 'slide-group' ) ) : ?>
-<?php $mb->the_group_open( 'div' ); ?>
+while ( $mb->have_fields_and_multi( 'slide-group' ) ) :
+$mb->the_group_open( 'div' ); ?>
 
 	<div class="lsjl-move-handle" title="<?php _e( 'Move', 'lucid-slider' ); ?>"><i class="lsjl-move-icon"></i></div>
 
@@ -67,8 +68,11 @@
 
 	<a href="#" class="lsjl-remove-slide dodelete"><?php _e( 'Remove', 'lucid-slider' ); ?></a>
 
-<?php $mb->the_group_close(); ?>
-<?php endwhile; ?>
+<?php $mb->the_group_close();
+endwhile;
+
+// User defined metabox content
+do_action_ref_array( 'lsjl_slides_meta_end', array( &$mb ) ); ?>
 
 <p><a href="#" class="docopy-slide-group button"><?php _e( 'Add slide', 'lucid-slider' ); ?></a></p>
 
