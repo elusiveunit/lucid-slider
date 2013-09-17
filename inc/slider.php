@@ -1,7 +1,7 @@
 <?php
 /**
  * Slider displaying.
- * 
+ *
  * @package Lucid
  * @subpackage Slider
  */
@@ -148,7 +148,9 @@ class Lucid_Slider {
 
 				ob_start();
 
-				// Variables without 'this' outside the class
+				// Variable aliases
+				$slider = $this;
+				$slider_id = $this->id;
 				$slides = $this->slides;
 				$options = $this->slider_options;
 				$slides_urls = $this->slides_urls;
@@ -236,7 +238,7 @@ class Lucid_Slider {
 				else :
 					$js_options .= $value;
 				endif;
-				
+
 				$options_added++;
 			endif;
 		endforeach;
