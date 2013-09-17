@@ -14,8 +14,7 @@ module.exports = function(grunt) {
 				'curly  '  : true,
 				'eqeqeq'   : true,
 				'eqnull'   : true,
-				'es5'      : true,
-				'esnext'   : true,
+				'esnext'   : false,
 				'forin'    : true,
 				'immed'    : true,
 				'indent'   : false,
@@ -41,8 +40,8 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: [
-					'js/edit-slider.js',
-					'js/tinymce-plugin.js'
+					'assets/js/edit-slider.js',
+					'assets/js/tinymce-plugin.js'
 				]
 			},
 			doc: {
@@ -60,14 +59,14 @@ module.exports = function(grunt) {
 					report: 'min',
 					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */\n'
 				},
-				files: [{src: ['js/edit-slider.js'], dest: 'js/edit-slider.min.js'}]
+				files: [{src: ['assets/js/edit-slider.js'], dest: 'assets/js/edit-slider.min.js'}]
 			},
 			tinyMCE: {
 				options: {
 					report: 'min',
 					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */\n'
 				},
-				files: [{src: ['js/tinymce-plugin.js'], dest: 'js/tinymce-plugin.min.js'}]
+				files: [{src: ['assets/js/tinymce-plugin.js'], dest: 'assets/js/tinymce-plugin.min.js'}]
 			},
 			doc: {
 				options: {
@@ -84,19 +83,19 @@ module.exports = function(grunt) {
 				options: {
 					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */'
 				},
-				files: [{src: ['css/edit-slider.css'], dest: 'css/edit-slider.min.css'}]
+				files: [{src: ['assets/css/edit-slider.css'], dest: 'assets/css/edit-slider.min.css'}]
 			},
 			tinyMCE: {
 				options: {
 					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */'
 				},
-				files: [{src: ['css/tinymce-plugin.css'], dest: 'css/tinymce-plugin.min.css'}]
+				files: [{src: ['assets/css/tinymce-plugin.css'], dest: 'assets/css/tinymce-plugin.min.css'}]
 			},
 			flexslider: {
 				options: {
 					banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider, http://www.woothemes.com/flexslider/ */'
 				},
-				files: [{src: ['css/flexslider.css'], dest: 'css/flexslider.min.css'}]
+				files: [{src: ['assets/css/flexslider.css'], dest: 'assets/css/flexslider.min.css'}]
 			},
 			doc: {
 				options: {
@@ -106,25 +105,18 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// Watch project for changes
-		watch: {
-			css: {
-				files: ['css/theme.css'],
-				tasks: ['cssmin']
-			},
-			js: {
-				files: ['<%= jshint.scripts %>'],
-				tasks: ['jshint', 'uglify']
-			}
-		},
-
 		// Compile markdown
 		markdown: {
 			doc: {
-				files: ['README.md'],
-				template: 'doc/assets/template.html',
-				dest: 'doc',
+				//files: ['README.md'],
+				files: [{
+					expand: true,
+					src: 'README.md',
+					dest: 'doc/',
+					ext: '.html'
+				}],
 				options: {
+					template: 'doc/assets/template.html',
 					gfm: false, // Github flavored markdown
 					highlight: function(code, lang) {
 						return code; // No code highlighting
@@ -147,7 +139,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
-	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-markdown');
 	grunt.loadNpmTasks('grunt-rename');
 
