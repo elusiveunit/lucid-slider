@@ -6,7 +6,7 @@
  * Plugin URI: https://github.com/elusiveunit/lucid-slider
  * Description: A simple plugin for creating Flexslider structures.
  * Author: Jens Lindberg
- * Version: 1.4.2
+ * Version: 1.5.0
  * License: GPL-2.0+
  * Text Domain: lucid-slider
  * Domain Path: /lang
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 // Plugin constants
 if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
-	define( 'LUCID_SLIDER_VERSION', '1.4.2' );
+	define( 'LUCID_SLIDER_VERSION', '1.5.0' );
 
 if ( ! defined( 'LUCID_SLIDER_URL' ) )
 	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );

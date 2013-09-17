@@ -123,6 +123,22 @@ function themename_lsjl_settings_fields( $fields ) {
 }
 add_filter( &#39;lsjl_settings_fields&#39;, &#39;themename_lsjl_settings_fields&#39; );</code></pre>
 <hr>
+<h5>lsjl_slides_meta_start and lsjl_slides_meta_end</h5>
+<p>Runs at the start and the end, respectively, of the slides metabox. Can be used to add custom fields, or any other content, to the slider itself.</p>
+<pre><code>/**
+ * Add slider meta field.
+ *
+ * @param object $metabox WPAlchemy metabox object.
+ */
+function themename_lsjl_slider_meta( &amp;$metabox ) {
+    $metabox-&gt;the_field( &#39;themename_field&#39; ); ?&gt;
+    &lt;div class=&quot;lsjl-field-group&quot;&gt;
+        &lt;label for=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot;&gt;&lt;?php _e( &#39;Slider description:&#39;, &#39;themename&#39; ); ?&gt;&lt;/label&gt;
+        &lt;input type=&quot;text&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; id=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;&lt;?php $metabox-&gt;the_value(); ?&gt;&quot;&gt;
+    &lt;/div&gt;
+&lt;?php }
+add_action( &#39;lsjl_slides_meta_start&#39;, &#39;themename_lsjl_slider_meta&#39; );</code></pre>
+<hr>
 <h5>lsjl_meta_fields_end</h5>
 <p>Runs after the default meta data fields for each slide on the slider edit screen.</p>
 <p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout, and add <code>lsjl-textarea-group</code> for label alignment when adding a textarea.</p>
@@ -161,6 +177,14 @@ add_action( &#39;lsjl_slider_size_select&#39;, &#39;themename_lsjl_extra_sizes&#
 <li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as <code>slide_id =&gt; URL</code>.</li>
 </ul>
 <h2>Changelog</h2>
+<h3>1.5.0: Sep 17, 2013</h3>
+<p><strong>Requires 3.6+</strong></p>
+<ul>
+<li>New, removed: Replace the undocumented <code>lsjl_fields_meta</code> action with <code>lsjl_slides_meta_start</code> and also add <code>lsjl_slides_meta_end</code>. See &#39;Hooks&#39; documentation section.</li>
+<li>New: Add <code>$slider</code> as slider template alias to the slider object.</li>
+<li>Tweak: Update the FlexSlider script to 2.2.0.</li>
+<li>Tweak: Set <code>jquery-core</code> as a FlexSlider dependency, to skip jQuery migrate.</li>
+</ul>
 <h3>1.4.2: May 05, 2013</h3>
 <ul>
 <li>New: Allow custom sizes to be added to the slider size dropdown with the <code>lsjl_slider_size_select</code> action. Example in the &#39;Hooks&#39; documentation section.</li>

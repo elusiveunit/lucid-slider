@@ -148,6 +148,26 @@ Filters the fields added to the settings screen.
 
 -----
 
+##### lsjl\_slides\_meta\_start and lsjl\_slides\_meta\_end
+
+Runs at the start and the end, respectively, of the slides metabox. Can be used to add custom fields, or any other content, to the slider itself.
+
+	/**
+	 * Add slider meta field.
+	 *
+	 * @param object $metabox WPAlchemy metabox object.
+	 */
+	function themename_lsjl_slider_meta( &$metabox ) {
+		$metabox->the_field( 'themename_field' ); ?>
+		<div class="lsjl-field-group">
+			<label for="<?php $metabox->the_name(); ?>"><?php _e( 'Slider description:', 'themename' ); ?></label>
+			<input type="text" name="<?php $metabox->the_name(); ?>" id="<?php $metabox->the_name(); ?>" value="<?php $metabox->the_value(); ?>">
+		</div>
+	<?php }
+	add_action( 'lsjl_slides_meta_start', 'themename_lsjl_slider_meta' );
+
+-----
+
 ##### lsjl\_meta\_fields\_end
 
 Runs after the default meta data fields for each slide on the slider edit screen.
@@ -197,6 +217,15 @@ In the template file (set with 'path' in the hook callback array), there are som
 * `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as `slide_id => URL`.
 
 ## Changelog
+
+### 1.5.0: Sep 17, 2013
+
+**Requires 3.6+**
+
+* New, removed: Replace the undocumented `lsjl_fields_meta` action with `lsjl_slides_meta_start` and also add `lsjl_slides_meta_end`. See 'Hooks' documentation section.
+* New: Add `$slider` as slider template alias to the slider object.
+* Tweak: Update the FlexSlider script to 2.2.0.
+* Tweak: Set `jquery-core` as a FlexSlider dependency, to skip jQuery migrate.
 
 ### 1.4.2: May 05, 2013
 
