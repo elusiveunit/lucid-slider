@@ -1,7 +1,7 @@
 <?php
 /**
  * Frontend functionality.
- * 
+ *
  * @package Lucid
  * @subpackage Slider
  */
@@ -40,13 +40,13 @@ class Lucid_Slider_Frontend {
 	 * unecessary loading.
 	 */
 	public function register_script() {
-		wp_register_script( 'flexslider', LUCID_SLIDER_URL . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
+		wp_register_script( 'flexslider', LUCID_SLIDER_ASSETS . 'js/jquery.flexslider.min.js', array( 'jquery' ), null, true );
 	}
 
 	/**
 	 * Enqueue FlexSlider CSS.
 	 */
 	public function load_style() {
-		wp_enqueue_style( 'flexslider', LUCID_SLIDER_URL . 'css/flexslider.min.css', false, null );
+		wp_enqueue_style( 'flexslider', LUCID_SLIDER_ASSETS . 'css/flexslider.min.css', false, null );
 	}
 }

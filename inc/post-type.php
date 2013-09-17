@@ -20,8 +20,8 @@ elseif ( ! class_exists( 'Lucid_Post_Type' ) )
 \*===========================================================================*/
 
 $lucid_slider_post_type = new Lucid_Post_Type( Lucid_Slider_Core::get_post_type_name(), array(
-	'small_menu_icon_url' => LUCID_SLIDER_URL . 'img/admin-icon-16.png',
-	'large_menu_icon_url' => LUCID_SLIDER_URL . 'img/admin-icon-32.png',
+	'small_menu_icon_url' => LUCID_SLIDER_ASSETS . 'img/admin-icon-16.png',
+	'large_menu_icon_url' => LUCID_SLIDER_ASSETS . 'img/admin-icon-32.png',
 	'post_type_args' => array(
 		'hierarchical' => true,
 		'labels' => array(

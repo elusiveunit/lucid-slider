@@ -61,7 +61,7 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function add_button( $plugins ) {
-		$plugins['lucidSlider'] = LUCID_SLIDER_URL . 'js/tinymce-plugin.min.js';
+		$plugins['lucidSlider'] = LUCID_SLIDER_ASSETS . 'js/tinymce-plugin.min.js';
 
 		return $plugins;
 	}
@@ -70,7 +70,7 @@ class Lucid_Slider_Tinymce {
 	 * Button and Thickbox content CSS.
 	 */
 	public function load_css() {
-		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_URL . 'css/tinymce-plugin.min.css', false, null );
+		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . 'css/tinymce-plugin.min.css', false, null );
 	}
 
 	/**

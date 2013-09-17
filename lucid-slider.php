@@ -25,6 +25,9 @@ if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
 if ( ! defined( 'LUCID_SLIDER_URL' ) )
 	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 
+if ( ! defined( 'LUCID_SLIDER_ASSETS' ) )
+	define( 'LUCID_SLIDER_ASSETS', LUCID_SLIDER_URL . 'assets/' );
+
 if ( ! defined( 'LUCID_SLIDER_PATH' ) )
 	define( 'LUCID_SLIDER_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 

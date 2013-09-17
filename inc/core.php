@@ -80,7 +80,7 @@ class Lucid_Slider_Core {
 	 * Load translation.
 	 */
 	public function load_translation() {
-		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'lang/' );
+		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'assets/lang/' );
 	}
 
 	/**

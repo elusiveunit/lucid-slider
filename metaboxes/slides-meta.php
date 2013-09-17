@@ -29,13 +29,13 @@
 
 		<?php $lsjl_slide_thumbnail_url = $mb->get_the_value();
 		if ( empty( $lsjl_slide_thumbnail_url ) ) :
-			$lsjl_slide_thumbnail_url = LUCID_SLIDER_URL . 'img/slide-placeholder.png';
+			$lsjl_slide_thumbnail_url = LUCID_SLIDER_ASSETS . 'img/slide-placeholder.png';
 		endif; ?>
 		<img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt="">
 	</div>
 
 	<?php
-	/* 
+	/*
 	 * NO HTML COMMENTS INSIDE lsjl-fields-wrap, for correct element.children
 	 * count in IE < 8.
 	 */
@@ -46,7 +46,7 @@
 		<div class="lsjl-slide-url lsjl-field-group">
 			<label for="<?php $mb->the_name(); ?>"><?php _e( 'Image:', 'lucid-slider' ); ?></label>
 			<input type="text" readonly="readonly" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-url-field" value="<?php $mb->the_value(); ?>">
-			
+
 			<a href="#" title="<?php _e( 'Add an image', 'lucid-slider' ); ?>" class="button lsjl-upload" id="<?php $mb->the_name(); ?>-upload" onclick="return false;" data-uploader-title="<?php _e( 'Choose slide image', 'lucid-slider' ); ?>" data-uploader-button-text="<?php _e( 'Choose image', 'lucid-slider' ); ?>"><?php _e( 'Add...', 'lucid-slider' ); ?></a>
 		</div>
 
