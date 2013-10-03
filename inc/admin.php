@@ -110,13 +110,13 @@ class Lucid_Slider_Admin {
 		if ( $screen->id == Lucid_Slider_Core::get_post_type_name() ) :
 
 			// Metabox style
-			wp_enqueue_style( 'lsjl-style', LUCID_SLIDER_ASSETS . 'css/edit-slider.min.css', false, null );
+			wp_enqueue_style( 'lsjl-edit-slider', LUCID_SLIDER_ASSETS . 'css/edit-slider.min.css', false, LUCID_SLIDER_VERSION );
 
 			// Media upload
 			wp_enqueue_media();
 
 			// Upload handling and other misc. stuff
-			wp_enqueue_script( 'lsjl-script', LUCID_SLIDER_ASSETS . 'js/edit-slider.min.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'lsjl-edit-slider', LUCID_SLIDER_ASSETS . 'js/edit-slider.min.js', array( 'jquery-core' ), LUCID_SLIDER_VERSION, true );
 		endif;
 	}
 
