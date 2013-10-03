@@ -124,12 +124,15 @@
 	max-height: 0;
 	-webkit-transition: max-height 0.7s ease;
 	   -moz-transition: max-height 0.7s ease;
-	     -o-transition: max-height 0.7s ease;
 	        transition: max-height 0.7s ease;
 }
 #lsjl-slides .lsjl-expand-group {display: none; visibility: hidden; margin-top: 0.5em;}
-#lsjl-slides .lsjl-fields-wrap.expandable + .lsjl-expand-group {display: inline-block; visibility: visible;}
+#lsjl-slides .expandable + .lsjl-expand-group {display: inline-block; visibility: visible;}
+
 #lsjl-slides .expanded .lsjl-extra-fields {max-height: 50em;}
+
+#lsjl-slides .always-expanded + .lsjl-expand-group {display: none !important; visibility: hidden !important;}
+#lsjl-slides .always-expanded .lsjl-extra-fields {max-height: none;}
 
 /*---------- Remove slide ----------*/
 #lsjl-slides .lsjl-remove-slide {

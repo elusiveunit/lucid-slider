@@ -41,7 +41,7 @@ $mb->the_group_open( 'div' ); ?>
 	 * count in IE < 8.
 	 */
 	?>
-	<div class="lsjl-fields-wrap"><div class="lsjl-fields-wrap-inner">
+	<div class="lsjl-fields-wrap<?php if ( apply_filters( 'lsjl_show_all_slide_fields', false ) ) echo ' always-expanded'; ?>"><div class="lsjl-fields-wrap-inner">
 		<?php /*---------- Slide image URL field ----------*/
 		$mb->the_field( 'slide-image-url' ); ?>
 		<div class="lsjl-slide-url lsjl-field-group">
