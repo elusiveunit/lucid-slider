@@ -67,7 +67,8 @@ $lsjl_settings->field(
 		'options' => array(
 			'load_css' => __( 'Load CSS', 'lucid-slider' ),
 			'load_js'  => __( 'Load JavaScript', 'lucid-slider' )
-		)
+		),
+		'default' => 1
 	)
 );
 
