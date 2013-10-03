@@ -9,7 +9,7 @@
  * Version: 1.5.0
  * License: GPL-2.0+
  * Text Domain: lucid-slider
- * Domain Path: /lang
+ * Domain Path: /assets/lang
  *
  * @package Lucid
  * @subpackage Slider
