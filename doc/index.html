@@ -10,13 +10,22 @@
 <body id="intro">
 
 <h1>Lucid Slider</h1>
-<p>Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It&#39;s primarily built for theme developers to integrate with, and bring exactly what is needed for the individual site.</p>
+<p>Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It&#39;s primarily built for theme developers to integrate with and customize, to bring exactly what is needed for each individual site.</p>
 <p>The slider itself is powered by the popular <a href="https://github.com/woothemes/FlexSlider">Flexslider</a> jQuery plugin.</p>
 <p><strong>Requires <a href="https://github.com/elusiveunit/lucid-toolbox">Lucid Toolbox</a></strong>, which is a plugin with a set of classes used to speed up and automate common tasks. This is kept as a separate plugin for easier development and updates. <strong>This plugin will try to install and/or activate Lucid Toolbox</strong> on plugin activation, if it&#39;s not available. It simply unzips a bundled version to the directory one level above its install location, if it&#39;s not there already, and runs <code>activate_plugin</code>.</p>
 <p>Lucid Slider is currently available in the following languages:</p>
 <ul>
 <li>English</li>
 <li>Swedish</li>
+</ul>
+<h2>Features</h2>
+<ul>
+<li>Unlimited sliders and slides (obviously, why would there ever be a limit?).</li>
+<li>Easily add and order slides with a simple drag-and-drop interface.</li>
+<li>Uses the familiar WordPress media manager.</li>
+<li>Display sliders with template functions, shortcodes (easily selected through a button in the visual editor), or widgets.</li>
+<li>Extend sliders with additional meta data fields through hooks, and customize the display with your own slider templates.</li>
+<li><strong>Limitation:</strong> Uses global slider options set on the options page, with no options for individual sliders. The plugin was built with insecure/non-tech savvy clients in mind, which means reducing the clutter to a minimum. Use templates and initialize the slider yourself for more advanced usage.</li>
 </ul>
 <h2>Basic usage</h2>
 <p>A standard slider setup is pretty simple:</p>
@@ -69,7 +78,8 @@ function themename_add_slider_template( $templates ) {
 add_filter( &#39;lsjl_templates&#39;, &#39;themename_add_slider_template&#39; );</code></pre>
 <hr>
 <h5>lsjl_show_template_metabox</h5>
-<p>Whether to show the template selection metabox. Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with <code>lsjl_templates</code>, but there is always a default.</p>
+<p>Whether to show the template selection metabox.</p>
+<p>Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with <code>lsjl_templates</code>, but there is always a default.</p>
 <pre><code>add_filter( &#39;lsjl_show_template_metabox&#39;, &#39;__return_false&#39; );</code></pre>
 <hr>
 <h5>lsjl_settings_tabs</h5>

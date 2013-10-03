@@ -1,6 +1,6 @@
 # Lucid Slider
 
-Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily built for theme developers to integrate with, and bring exactly what is needed for the individual site.
+Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily built for theme developers to integrate with and customize, to bring exactly what is needed for each individual site.
 
 The slider itself is powered by the popular [Flexslider](https://github.com/woothemes/FlexSlider) jQuery plugin.
 
@@ -10,6 +10,15 @@ Lucid Slider is currently available in the following languages:
 
 * English
 * Swedish
+
+## Features
+
+* Unlimited sliders and slides (obviously, why would there ever be a limit?).
+* Easily add and order slides with a simple drag-and-drop interface.
+* Uses the familiar WordPress media manager.
+* Display sliders with template functions, shortcodes (easily selected through a button in the visual editor), or widgets.
+* Extend sliders with additional meta data fields through hooks, and customize the display with your own slider templates.
+* **Limitation:** Uses global slider options set on the options page, with no options for individual sliders. The plugin was built with insecure/non-tech savvy clients in mind, which means reducing the clutter to a minimum. Use templates and initialize the slider yourself for more advanced usage.
 
 ## Basic usage
 
@@ -79,7 +88,9 @@ Add templates to select. The screenshot is optional, but recommended. The screen
 
 ##### lsjl\_show\_template\_metabox
 
-Whether to show the template selection metabox. Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with `lsjl_templates`, but there is always a default.
+Whether to show the template selection metabox.
+
+Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with `lsjl_templates`, but there is always a default.
 
 	add_filter( 'lsjl_show_template_metabox', '__return_false' );
 
