@@ -82,6 +82,11 @@ add_filter( &#39;lsjl_templates&#39;, &#39;themename_add_slider_template&#39; );
 <p>Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with <code>lsjl_templates</code>, but there is always a default.</p>
 <pre><code>add_filter( &#39;lsjl_show_template_metabox&#39;, &#39;__return_false&#39; );</code></pre>
 <hr>
+<h5>lsjl_show_all_slide_fields</h5>
+<p>Whether to show all the meta data fields for slides.</p>
+<p>By default, any extra fields are hidden and toggled with an anchor. This stops slide items from growing tall and making sorting difficult. It doesn&#39;t make much sense when only a single extra field is added though, so toggling can be disabled with this hook.</p>
+<pre><code>add_filter( &#39;lsjl_show_all_slide_fields&#39;, &#39;__return_true&#39; );</code></pre>
+<hr>
 <h5>lsjl_settings_tabs</h5>
 <p>Filters the tabs added to the settings screen.</p>
 <pre><code>/**
@@ -187,6 +192,12 @@ add_action( &#39;lsjl_slider_size_select&#39;, &#39;themename_lsjl_extra_sizes&#
 <li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as <code>slide_id =&gt; URL</code>.</li>
 </ul>
 <h2>Changelog</h2>
+<h3>1.5.1: Oct 03, 2013</h3>
+<ul>
+<li>New: Add <code>lsjl_show_all_slide_fields</code> hook, to disable field collapsing. See backend hook section.</li>
+<li>Tweak: Use default WordPress thumbnail size for slide thumbnails and image stacks, instead of a custom one.</li>
+<li>Tweak: Set CSS and JavaScript to load by default on new installs.</li>
+</ul>
 <h3>1.5.0: Sep 17, 2013</h3>
 <p><strong>Requires 3.6+</strong></p>
 <ul>

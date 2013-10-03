@@ -96,6 +96,16 @@ Hiding it still means any previously saved values are there. If no template is s
 
 -----
 
+##### lsjl\_show\_all\_slide\_fields
+
+Whether to show all the meta data fields for slides.
+
+By default, any extra fields are hidden and toggled with an anchor. This stops slide items from growing tall and making sorting difficult. It doesn't make much sense when only a single extra field is added though, so toggling can be disabled with this hook.
+
+	add_filter( 'lsjl_show_all_slide_fields', '__return_true' );
+
+-----
+
 ##### lsjl\_settings\_tabs
 
 Filters the tabs added to the settings screen.
@@ -228,6 +238,12 @@ In the template file (set with 'path' in the hook callback array), there are som
 * `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as `slide_id => URL`.
 
 ## Changelog
+
+### 1.5.1: Oct 03, 2013
+
+* New: Add `lsjl_show_all_slide_fields` hook, to disable field collapsing. See backend hook section.
+* Tweak: Use default WordPress thumbnail size for slide thumbnails and image stacks, instead of a custom one.
+* Tweak: Set CSS and JavaScript to load by default on new installs.
 
 ### 1.5.0: Sep 17, 2013
 
