@@ -171,9 +171,6 @@ class Lucid_Slider_Core {
 		// Make sure post thumbnails are supported
 		add_theme_support( 'post-thumbnails' );
 
-		// Add required thumbnail
-		add_image_size( 'lsjl-thumbnail', 120, 80, true );
-
 		// Add sizes from settings
 		if ( ! empty( $opt['image_sizes'] ) ) :
 

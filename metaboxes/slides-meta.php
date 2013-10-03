@@ -29,10 +29,13 @@ $mb->the_group_open( 'div' ); ?>
 		<input type="hidden" name="<?php $mb->the_name(); ?>" id="<?php $mb->the_name(); ?>" class="lsjl-slide-thumbnail-field" value="<?php $mb->the_value(); ?>">
 
 		<?php $lsjl_slide_thumbnail_url = $mb->get_the_value();
+
 		if ( empty( $lsjl_slide_thumbnail_url ) ) :
 			$lsjl_slide_thumbnail_url = LUCID_SLIDER_ASSETS . 'img/slide-placeholder.png';
-		endif; ?>
-		<img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt="">
+		endif;
+
+		//BEWARE THE UGLY NESTING ?>
+		<span class="lsjl-thumb-wrap-1"><span class="lsjl-thumb-wrap-2"><img src="<?php echo $lsjl_slide_thumbnail_url; ?>" alt=""></span></span>
 	</div>
 
 	<?php

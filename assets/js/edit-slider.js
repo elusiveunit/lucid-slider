@@ -57,7 +57,8 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 		// Load media manager
 		conf.$slides.on( 'click', '.lsjl-upload', function( e ) {
 			e.preventDefault();
-			insertImage( $(this).parents('.wpa_group-slide-group'), this );
+			var self = this;
+			insertImage( $(self).parents('.wpa_group-slide-group'), self );
 		});
 
 		// Expand hidden meta data fields
@@ -114,11 +115,13 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 		// When an image is selected, run a callback.
 		lucidSliderFrame.on( 'select', function() {
 			var image = lucidSliderFrame.state().get('selection').first().toJSON(),
-			    thumbnailUrl = image.url;
+			    thumbnailUrl;
 
-			thumbnailUrl = thumbnailUrl.split( '.' );
-			thumbnailUrl[thumbnailUrl.length - 2] = thumbnailUrl[thumbnailUrl.length - 2] + '-120x80';
-			thumbnailUrl = thumbnailUrl.join( '.' );
+			if ( image.sizes ) {
+				thumbnailUrl = ( 'thumbnail' in image.sizes ) ? image.sizes.thumbnail.url : image.sizes.full.url;
+			} else {
+				thumbnailUrl = image.icon;
+			}
 
 			// Set field values
 			$idField.val( image.id );

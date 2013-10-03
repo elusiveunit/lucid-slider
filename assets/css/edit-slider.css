@@ -76,14 +76,38 @@
 	position: absolute;
 	left: 30px;
 	top: 50%;
-	width: 120px;
-	height: 80px;
+	width: 124px;
+	height: 84px;
 	margin-top: -43px;
-	padding: 2px;
 	border: 1px dashed #ccc;
 	border-radius: 2px;
+	overflow: hidden;
 }
-#lsjl-slides .lsjl-slide-thumbnail img {display: block;}
+#lsjl-slides .lsjl-thumb-wrap-1 {
+	position: relative;
+	display: block;
+	width: 120px;
+	height: 80px;
+	margin: 2px;
+	overflow: hidden;
+}
+#lsjl-slides .lsjl-thumb-wrap-2 {
+	position: absolute;
+	display: block;
+	width: 200px;
+	height: 200px;
+	line-height: 200px;
+	left: -40px;
+	top: -61px; /* For some reason, yeah, 61 */
+	text-align: center;
+}
+#lsjl-slides .lsjl-slide-thumbnail img {
+	display: inline-block;
+	max-width: 120px;
+	width: auto;
+	height: auto;
+	vertical-align: middle;
+}
 
 /*---------- Move handle ----------*/
 #lsjl-slides .lsjl-move-handle {

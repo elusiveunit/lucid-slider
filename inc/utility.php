@@ -176,44 +176,91 @@ class Lucid_Slider_Utility {
 	public static function slide_stack( $post_id, $fixed_width = true ) {
 		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
 
-		if ( ! empty( $slides['slide-group'] ) ) :
-			$slides = $slides['slide-group'];
+		if ( empty( $slides['slide-group'] ) )
+			return;
 
-			// Containing element width
-			$width = 240;
-			if ( ! $fixed_width ) :
-				$times = 1;
-				if ( 2 == count( $slides ) ) $times = 2;
-				if ( 2 < count( $slides ) ) $times = 3;
+		$slides = $slides['slide-group'];
 
-				$width = 120 + ( $times * 40 );
-			endif;
+		// Containing element width
+		$width = 240;
+		if ( ! $fixed_width ) :
+			$times = 1;
+			if ( 2 == count( $slides ) ) $times = 2;
+			if ( 2 < count( $slides ) ) $times = 3;
 
-			$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
-
-			$count = 0;
-			foreach ( $slides as $slide ) :
-
-				// Only show the first three images
-				if ( $count > 2 ) continue;
-
-				// CSS styles. $count is 0 for first image.
-				$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
-				$height = 80 - ( $count * 10 ); // Decrease height 10px from previous
-				$top = $count * 5; // Half the height reduction
-				$z_index = 5 - $count; // Stack downwards
-				$left = $count * ( $height + $top - 10 ); // Arbitrary formula
-
-				$style = "position: {$position}; width: auto; height: {$height}px; top: {$top}px; left: {$left}px; z-index: {$z_index}; border: 2px solid #fff; border-radius: 3px; box-shadow: 0 0 2px rgba(0,0,0,0.5);";
-
-				if ( ! empty( $slide['slide-image-thumbnail'] ) ) :
-					$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$style}\">";
-				endif;
-
-				$count++;
-			endforeach;
-
-			echo $output .= '</span>';
+			$width = 120 + ( $times * 40 );
 		endif;
+
+		$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
+
+		$count = 0;
+		foreach ( $slides as $slide ) :
+
+			// Show no more than three images
+			if ( $count > 2 ) continue;
+
+			// Need a thumbnail
+			if ( empty( $slide['slide-image-thumbnail'] ) ) continue;
+
+			// CSS styles. $count is 0 for first image.
+			$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
+			$height = 80 - ( $count * 10 ); // Height shrinks by 10 each stack
+			$width = round( $height * 1.5 );
+			$top = $count * 5; // Half the height reduction
+			$z_index = 5 - $count; // Stack downwards
+			$left = $count * ( $height + $top - 10 ); // Arbitrary formula
+
+			$inner_size = 200;
+			$inner_left = round( ( $inner_size - $width ) / 2 );
+			$inner_top = round( ( $inner_size - $height ) / 2 ) + 1;
+
+			// Similar styles as used on the edit screen (edit-slider.css)
+			$styles = array(
+				'wrap' => "
+					display: block;
+					position: {$position};
+					top: {$top}px;
+					left: {$left}px;
+					width: {$width}px;
+					height: {$height}px;
+					border: 2px solid #fff;
+					border-radius: 3px;
+					overflow: hidden;
+					background: #fff;
+					box-shadow: 0 0 2px rgba(0,0,0,0.5);
+					z-index: {$z_index};",
+
+				'wrap_inner' => "
+					display: block;
+					position: absolute;
+					width: {$inner_size}px;
+					height: {$inner_size}px;
+					line-height: {$inner_size}px;
+					left: -{$inner_left}px;
+					top: -{$inner_top}px;
+					text-align: center;",
+
+				'img' => "
+					display: inline-block;
+					max-width: {$width}px;
+					width: auto;
+					height: auto;
+					vertical-align: middle;"
+			);
+
+			// Remove line breaks and indentation
+			foreach ( $styles as $key => $style )
+				$styles[$key] = trim( preg_replace( '/[\R\s]+/', ' ', $styles[$key] ) );
+
+			$output .= "\n<span style=\"{$styles['wrap']}\">";
+			$output .= "<span style=\"{$styles['wrap_inner']}\">";
+			$output .= "<img src=\"{$slide['slide-image-thumbnail']}\" alt=\"\" style=\"{$styles['img']}\">";
+			$output .= '</span>';
+			$output .= '</span>';
+
+			$count++;
+		endforeach;
+
+		echo $output . '</span>';
 	}
 }
