@@ -21,17 +21,30 @@ class Lucid_Slider_Admin {
 	 * Constructor, add hooks.
 	 */
 	public function __construct() {
+		global $pagenow;
 		$basename = plugin_basename( Lucid_Slider_Core::$plugin_file );
+		$slider_post_type = Lucid_Slider_Core::get_post_type_name();
+		$current_post_type = ( ! empty( $_GET['post_type'] ) ) ? $_GET['post_type'] : '';
 
 		add_action( 'admin_notices', array( $this, 'toolbox_notice' ) );
-		add_filter( "plugin_action_links_{$basename}", array( $this, 'add_action_links' ) );
-		add_filter( 'plugin_row_meta', array( $this, 'add_meta_links' ), 10, 2 );
-
-		add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
-		add_filter( 'manage_edit-' . Lucid_Slider_Core::get_post_type_name() . '_columns', array( $this, 'admin_columns' ) );
-		add_action( 'manage_' . Lucid_Slider_Core::get_post_type_name() . '_posts_custom_column', array( $this, 'populate_columns' ), 10, 2 );
-		add_action( 'admin_head-edit.php', array( $this, 'column_style' ) );
 		add_action( 'save_post', array( $this, 'set_slide_meta' ) );
+
+		// Plugins page
+		if ( 'plugins.php' == $pagenow ) :
+			add_filter( "plugin_action_links_{$basename}", array( $this, 'add_action_links' ) );
+			add_filter( 'plugin_row_meta', array( $this, 'add_meta_links' ), 10, 2 );
+		endif;
+
+		// Post listing page
+		if ( 'edit.php' == $pagenow && $current_post_type == $slider_post_type ) :
+			add_filter( "manage_edit-{$slider_post_type}_columns", array( $this, 'admin_columns' ) );
+			add_action( "manage_{$slider_post_type}_posts_custom_column", array( $this, 'populate_columns' ), 10, 2 );
+			add_action( 'admin_head', array( $this, 'column_style' ) );
+		endif;
+
+		// Edit post page
+		if ( 'post.php' == $pagenow || 'post-new.php' == $pagenow )
+			add_action( 'admin_enqueue_scripts', array( $this, 'load_assets' ) );
 	}
 
 	/**
