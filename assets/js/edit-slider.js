@@ -24,7 +24,7 @@ var lucidSliderEditScreen = (function ( $, win, undefined ) {
 			tolerance: 'pointer',
 			placeholder: 'lsjl-placeholder',
 			forcePlaceholderSize: true,
-			stop: function() {
+			update: function() {
 				$('#lsjl-sort-message').css({ 'display': 'block' });
 			}
 		},
