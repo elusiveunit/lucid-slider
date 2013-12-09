@@ -4,9 +4,9 @@
  *
  * Plugin Name: Lucid Slider
  * Plugin URI: https://github.com/elusiveunit/lucid-slider
- * Description: A simple plugin for creating Flexslider structures.
+ * Description: A simple but extendable slider plugin.
  * Author: Jens Lindberg
- * Version: 1.5.1
+ * Version: 1.6.0
  * License: GPL-2.0+
  * Text Domain: lucid-slider
  * Domain Path: /assets/lang
@@ -27,7 +27,7 @@ elseif ( isset( $network_plugin ) )
 
 // Plugin constants
 if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
-	define( 'LUCID_SLIDER_VERSION', '1.5.1' );
+	define( 'LUCID_SLIDER_VERSION', '1.6.0' );
 
 if ( ! defined( 'LUCID_SLIDER_URL' ) )
 	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( $lucid_slider_plugin_file ) ) );

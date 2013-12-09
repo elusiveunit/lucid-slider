@@ -40,6 +40,26 @@
 <p>You are encouraged to reduce HTTP requests by bringing JavaScript and CSS into the regular theme files. The Flexslider initialization can be kept in the plugin without a performance hit, which can be useful if a UI for the options is desired. However, this only contains the options related to look and feel; callbacks, selector handling and the like will need to be handled in the theme/plugin. A full list of options can be viewed at the <a href="http://www.woothemes.com/flexslider/">Flexslider page</a>.</p>
 <h3>Hooks</h3>
 <p>There are a number of hooks available, for extending different parts of the plugin.</p>
+<h4>Global</h4>
+<h5>lsjl_templates</h5>
+<p>Add custom templates. The screenshot is optional, but recommended. The screenshot container has a size of 250x150 pixels. See the template section for more details.</p>
+<pre><code>/**
+ * Add a slider template.
+ *
+ * @param array $templates Templates to add.
+ * @return array
+ */
+function myprefix_add_slider_template( $templates ) {
+    $templates[&#39;unique_template_name&#39;] = array(
+        &#39;name&#39; =&gt; __( &#39;User-visible name&#39;, &#39;textdomain&#39; ),
+        &#39;path&#39; =&gt; &#39;path/to/template-display-file.php&#39;,
+        &#39;screenshot&#39; =&gt; &#39;URL/to/screenshot.jpg&#39;
+    );
+
+    return $templates;
+}
+add_filter( &#39;lsjl_templates&#39;, &#39;myprefix_add_slider_template&#39; );</code></pre>
+<hr>
 <h4>Frontend</h4>
 <h5>lsjl_js_options</h5>
 <p>Runs before adding the closing curly bracket to the JavaScript options object. Via <code>$options_added</code> one can determine if a comma is needed when adding to the object. If <code>$options_added</code> is 0 the object will not be echoed no matter the contents, so increase it if needed.</p>
@@ -50,33 +70,14 @@
  * @param int &amp;$options_added Number of options generated.
  * @return string New options.
  */
-function themename_slide_options( $js_options, &amp;$options_added ) {
+function myprefix_slide_options( $js_options, &amp;$options_added ) {
     // Modify options
 
     return $js_options;
 }
-add_filter( &#39;lsjl_js_options&#39;, &#39;themename_slide_options&#39;, 10, 2 );</code></pre>
+add_filter( &#39;lsjl_js_options&#39;, &#39;myprefix_slide_options&#39;, 10, 2 );</code></pre>
 <hr>
 <h4>Backend</h4>
-<h5>lsjl_templates</h5>
-<p>Add templates to select. The screenshot is optional, but recommended. The screenshot container has a size of 250x150 pixels. See the template section for more details.</p>
-<pre><code>/**
- * Add a slider template.
- *
- * @param array $templates Templates to add.
- * @return array
- */
-function themename_add_slider_template( $templates ) {
-    $templates[&#39;unique_template_name&#39;] = array(
-        &#39;name&#39; =&gt; __( &#39;User-visible name&#39;, &#39;textdomain&#39; ),
-        &#39;path&#39; =&gt; &#39;path/to/template-display-file.php&#39;,
-        &#39;screenshot&#39; =&gt; &#39;URL/to/screenshot.jpg&#39;
-    );
-
-    return $templates;
-}
-add_filter( &#39;lsjl_templates&#39;, &#39;themename_add_slider_template&#39; );</code></pre>
-<hr>
 <h5>lsjl_show_template_metabox</h5>
 <p>Whether to show the template selection metabox.</p>
 <p>Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with <code>lsjl_templates</code>, but there is always a default.</p>
@@ -88,110 +89,140 @@ add_filter( &#39;lsjl_templates&#39;, &#39;themename_add_slider_template&#39; );
 <pre><code>add_filter( &#39;lsjl_show_all_slide_fields&#39;, &#39;__return_true&#39; );</code></pre>
 <hr>
 <h5>lsjl_settings_tabs</h5>
-<p>Filters the tabs added to the settings screen.</p>
+<p>Filters the tabs added to the settings screen. Custom tabs can be added and/or the default ones can be removed.</p>
 <pre><code>/**
- * Add tabs to the Lucis Slider settings.
+ * Customize Lucis Slider tabs.
  *
- * @param array $tabs Default tab data.
- * @return array New tab data.
+ * @param array $tabs Tab data.
+ * @return array
  */
-function themename_lsjl_settings_tabs( $tabs ) {
-    $tabs[&#39;themename_lsjl_test_tab&#39;] = __( &#39;Test tab&#39;, &#39;themename&#39; );
+function myprefix_slider_settings_tabs( $tabs ) {
+    $tabs[&#39;myprefix_custom_tab&#39;] = __( &#39;My custom tab&#39;, &#39;myprefix&#39; );
 
     return $tabs;
 }
-add_filter( &#39;lsjl_settings_tabs&#39;, &#39;themename_lsjl_settings_tabs&#39; );</code></pre>
+add_filter( &#39;lsjl_settings_tabs&#39;, &#39;myprefix_slider_settings_tabs&#39; );</code></pre>
 <hr>
-<h5>lsjl_settings_sections</h5>
-<p>Filters the sections added to the settings screen.</p>
+<h5>lsjl_settings</h5>
+<p>Action that runs after the default settings have been added. The Lucid_Settings object is passed as an argument, see <a href="https://github.com/elusiveunit/lucid-toolbox">Lucid Toolbox</a> for documentation.</p>
 <pre><code>/**
- * Add sections to the Lucis Slider settings.
+ * Add custom Lucid Slider settings.
  *
- * @param array $sections Default section data.
- * @return array New section data.
+ * @param Lucid_Settings $settings Settings object.
  */
-function themename_lsjl_settings_sections( $sections ) {
-    $sections[&#39;themename_lsjl_test_section&#39;] = array(
-        &#39;heading&#39; =&gt; __( &#39;Test section&#39;, &#39;themename&#39; ),
-        &#39;tab&#39; =&gt; &#39;themename_lsjl_test_tab&#39;
-    );
+function myprefix_slider_settings( $settings ) {
+    $settings-&gt;section( &#39;myprefix_section&#39;, array(
+        &#39;heading&#39; =&gt; __( &#39;My custom settings section&#39;, &#39;myprefix&#39; ),
+        &#39;tab&#39; =&gt; &#39;myprefix_custom_tab&#39;
+    ) );
 
-    return $sections;
-}
-add_filter( &#39;lsjl_settings_sections&#39;, &#39;themename_lsjl_settings_sections&#39; );</code></pre>
-<hr>
-<h5>lsjl_settings_fields</h5>
-<p>Filters the fields added to the settings screen.</p>
-<pre><code>/**
- * Add fields to the Lucis Slider settings.
- *
- * @param array $fields Default field data.
- * @return array New field data.
- */
-function themename_lsjl_settings_fields( $fields ) {
-    $fields[&#39;themename_lsjl_test_field&#39;] = array(
-        &#39;label&#39; =&gt; __( &#39;Test field&#39;, &#39;themename&#39; ),
-        &#39;section&#39; =&gt; &#39;themename_lsjl_test_section&#39;
+    $settings-&gt;field(
+        &#39;myprefix-field&#39;,
+        __( &#39;My custom settings field&#39;, &#39;myprefix&#39; ),
+        array( [...] )
     );
-
-    return $fields;
 }
-add_filter( &#39;lsjl_settings_fields&#39;, &#39;themename_lsjl_settings_fields&#39; );</code></pre>
+add_action( &#39;lsjl_settings&#39;, &#39;myprefix_slider_settings&#39; );</code></pre>
 <hr>
 <h5>lsjl_slides_meta_start and lsjl_slides_meta_end</h5>
 <p>Runs at the start and the end, respectively, of the slides metabox. Can be used to add custom fields, or any other content, to the slider itself.</p>
 <pre><code>/**
  * Add slider meta field.
  *
- * @param object $metabox WPAlchemy metabox object.
+ * @param WPAlchemy $metabox Metabox object.
  */
-function themename_lsjl_slider_meta( &amp;$metabox ) {
-    $metabox-&gt;the_field( &#39;themename_field&#39; ); ?&gt;
+function myprefix_lsjl_slider_meta( $metabox ) {
+    $metabox-&gt;the_field( &#39;myprefix-field&#39; ); ?&gt;
     &lt;div class=&quot;lsjl-field-group&quot;&gt;
-        &lt;label for=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot;&gt;&lt;?php _e( &#39;Slider description:&#39;, &#39;themename&#39; ); ?&gt;&lt;/label&gt;
+        &lt;label for=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot;&gt;&lt;?php _e( &#39;Slider description:&#39;, &#39;myprefix&#39; ); ?&gt;&lt;/label&gt;
         &lt;input type=&quot;text&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; id=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;&lt;?php $metabox-&gt;the_value(); ?&gt;&quot;&gt;
     &lt;/div&gt;
 &lt;?php }
-add_action( &#39;lsjl_slides_meta_start&#39;, &#39;themename_lsjl_slider_meta&#39; );</code></pre>
+add_action( &#39;lsjl_slides_meta_start&#39;, &#39;myprefix_lsjl_slider_meta&#39; );</code></pre>
 <hr>
 <h5>lsjl_meta_fields_end</h5>
 <p>Runs after the default meta data fields for each slide on the slider edit screen.</p>
-<p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout, and add <code>lsjl-textarea-group</code> for label alignment when adding a textarea.</p>
+<p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout. Other alignment classes include:</p>
+<ul>
+<li><code>lsjl-top-label-group</code> will, obviously, align the label to the top, which is probably desired with textareas and other taller groups.</li>
+<li><code>lsjl-padded-group</code> will &#39;indent&#39; the group. Useful for checkboxes that don&#39;t have the left-aligned label for indentation.</li>
+<li>Speaking of labels, <code>lsjl-label</code> and <code>lsjl-field-wrap</code> can be used to treat any elements as a label + field combination. For example, a span as a label + a div wrapping a list of radio buttons, which of course have their own, real labels.</li>
+</ul>
+<!-- Don't include the code block in my list, markdown. -->
+
 <pre><code>/**
- * Add slide meta field.
+ * Add custom Lucid Slider slide fields.
  *
- * @param object $metabox WPAlchemy metabox object.
+ * @param WPAlchemy $metabox Metabox object.
  */
-function themename_lsjl_meta_after( &amp;$metabox ) {
-    $metabox-&gt;the_field( &#39;themename_field&#39; ); ?&gt;
+function myprefix_lsjl_meta_after( $metabox ) {
+    $metabox-&gt;the_field( &#39;myprefix-text&#39; ); ?&gt;
     &lt;div class=&quot;lsjl-field-group&quot;&gt;
-        &lt;label for=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot;&gt;&lt;?php _e( &#39;Label:&#39;, &#39;themename&#39; ); ?&gt;&lt;/label&gt;
+        &lt;label for=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot;&gt;&lt;?php _e( &#39;Label:&#39;, &#39;myprefix&#39; ); ?&gt;&lt;/label&gt;
         &lt;input type=&quot;text&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; id=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;&lt;?php $metabox-&gt;the_value(); ?&gt;&quot;&gt;
     &lt;/div&gt;
+
+    &lt;?php $metabox-&gt;the_field( &#39;myprefix-radio&#39; ); ?&gt;
+    &lt;div class=&quot;lsjl-field-group lsjl-top-label-group&quot;&gt;
+        &lt;p class=&quot;lsjl-label&quot;&gt;&lt;?php _e( &#39;Visibility:&#39;, &#39;myprefix&#39; ); ?&gt;&lt;/p&gt;
+        &lt;div class=&quot;lsjl-field-wrap&quot;&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;visible&quot; &lt;?php $metabox-&gt;the_radio_state( &#39;visible&#39; ); ?&gt;&gt;
+                &lt;?php _e( &#39;Visible&#39;, &#39;myprefix&#39; ); ?&gt;
+            &lt;/label&gt;
+            &lt;br&gt;
+            &lt;label&gt;
+                &lt;input type=&quot;radio&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;hidden&quot; &lt;?php $metabox-&gt;the_radio_state( &#39;hidden&#39; ); ?&gt;&gt;
+                &lt;?php _e( &#39;Hidden&#39;, &#39;myprefix&#39; ); ?&gt;
+            &lt;/label&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;?php }
-add_action( &#39;lsjl_meta_fields_end&#39;, &#39;themename_lsjl_meta_after&#39; );</code></pre>
+add_action( &#39;lsjl_meta_fields_end&#39;, &#39;myprefix_lsjl_meta_after&#39; );</code></pre>
 <hr>
 <h5>lsjl_slider_size_select</h5>
 <p>Used to add additional selectable image sizes to the slider size dropdown. The value should be the name of the size (first argument to <code>add_image_size</code>).</p>
 <pre><code>/**
  * Add selectable slider image sizes.
  *
- * @param object $metabox WPAlchemy metabox object.
+ * @param WPAlchemy $metabox Metabox object.
  */
-function themename_lsjl_extra_sizes( &amp;$metabox ) { ?&gt;
+function myprefix_lsjl_extra_sizes( $metabox ) { ?&gt;
     &lt;option value=&quot;image_size_name&quot;&lt;?php $metabox-&gt;the_select_state( &#39;image_size_name&#39; ); ?&gt;&gt;800&amp;times;300&lt;/option&gt;
 &lt;?php }
-add_action( &#39;lsjl_slider_size_select&#39;, &#39;themename_lsjl_extra_sizes&#39; );</code></pre>
+add_action( &#39;lsjl_slider_size_select&#39;, &#39;myprefix_lsjl_extra_sizes&#39; );</code></pre>
 <h2>Templates</h2>
 <p>The plugin currently only comes with the default flexslider template, more can be added with the <code>lsjl_templates</code> hook (see hooks section for code).</p>
 <p>The default template in the plugin can be used as a starting point for a custom one. It should contain a <code>&lt;div class=&quot;flexslider&quot;&gt;</code>, with the slides inside a <code>&lt;ul class=&quot;slides&quot;&gt;</code> (with <code>&lt;li&gt;</code>s, naturally) to function properly.</p>
 <p>In the template file (set with &#39;path&#39; in the hook callback array), there are some key variables available:</p>
 <ul>
+<li><code>$slider</code> is the slider object itself. The below variables are just some aliases for its properties.</li>
 <li><code>$slides</code> contains all the slides and their meta data. This will be looped over to display every slide. The keys <code>slide-image-thumbnail</code> and <code>slide-image-url</code> (which isn&#39;t a full URL anymore) are only saved for admin purposes.</li>
 <li><code>$options</code> has slider options, which at this time of writing is only the slider size.</li>
 <li><code>$slides_urls</code> has image URLs for every slide. Using these instead of grabbing the image with <code>Lucid_Slider_Utility::get_slide_image_src</code> saves database requests for every slide. Formatted as <code>slide_id =&gt; URL</code>.</li>
 </ul>
 <h2>Changelog</h2>
+<h3>1.6.0: Dec 09, 2013</h3>
+<p><strong>Contains backward incompatible tweaks (marked with BIT) and requires Lucid Toolbox 1.1.10+</strong></p>
+<ul>
+<li>New: Include some refreshed admin styling for WordPress 3.8.</li>
+<li>New: Custom settings can be added via the <code>lsjl_settings</code> action.</li>
+<li>Tweak (BIT): <code>lsjl_js_options</code> now filters the options as an array instead of the concatenated string, which makes it much easier to work with.</li>
+<li>Tweak: The FlexSlider options are now printed as a global LUCID_SLIDER_OPTIONS object. This is done in the footer before enqueued scripts are printed, so the options can be modified via JavaScript in addition to the above filter hook.</li>
+<li>Tweak (BIT): <code>lsjl_slides_meta_start/end</code>, <code>lsjl_meta_fields_end</code> and <code>lsjl_slider_size_select</code> actions no longer pass the metabox object by reference, so remove the ampersand from the parameter.</li>
+<li>Tweak/fix: Implemented some unofficial FlexSlider changes. Experimental, may revert.<ul>
+<li>Use unprefixed CSS transitions if available.</li>
+<li>Try a setTimeout workaround for iOS 7 freeze issue (<a href="https://github.com/woothemes/FlexSlider/pull/882">#882</a>).</li>
+<li>Fix vertical scrolling on Windows Phone 8 (<a href="https://github.com/woothemes/FlexSlider/pull/873">#873</a>).</li>
+<li>Fix mid transition freeze when scrolling (<a href="https://github.com/woothemes/FlexSlider/pull/889">#889</a>).</li>
+<li>Fix freeze after tap (<a href="https://github.com/woothemes/FlexSlider/pull/768">#768</a>).</li>
+<li>Ensure currentSlide is treated as an integer in getTarget (<a href="https://github.com/woothemes/FlexSlider/pull/933">#933</a>).</li>
+<li>Some minor cleanup.</li>
+</ul>
+</li>
+<li>Tweak: Generally optimize the admin a bit by limiting what runs where.</li>
+<li>Fix: Properly apply the <code>lsjl_settings_tabs</code> filter.</li>
+</ul>
 <h3>1.5.1: Oct 03, 2013</h3>
 <ul>
 <li>New: Add <code>lsjl_show_all_slide_fields</code> hook, to disable field collapsing. See backend hook section.</li>
