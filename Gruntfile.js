@@ -55,53 +55,48 @@ module.exports = function(grunt) {
 		// JavaScript concatenation and minification
 		uglify: {
 			editSlider: {
-				options: {
-					report: 'min',
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */\n'
-				},
-				files: [{src: ['assets/js/edit-slider.js'], dest: 'assets/js/edit-slider.min.js'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */\n'},
+				files: {'assets/js/edit-slider.min.js': ['assets/js/edit-slider.js']}
 			},
 			tinyMCE: {
-				options: {
-					report: 'min',
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */\n'
-				},
-				files: [{src: ['assets/js/tinymce-plugin.js'], dest: 'assets/js/tinymce-plugin.min.js'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE plugin */\n'},
+				files: {'assets/js/tinymce-plugin.min.js': ['assets/js/tinymce-plugin.js']}
+			},
+			flexslider: {
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider v2.2.0.lucid-1 | Copyright 2012 WooThemes | Contributing Author: Tyler Smith */\n'},
+				files: {'assets/js/jquery.flexslider.min.js': ['assets/js/jquery.flexslider.js']}
 			},
 			doc: {
-				options: {
-					report: 'min',
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme script */\n'
-				},
-				files: [{src: ['doc/assets/doc.js'], dest: 'doc/assets/doc.min.js'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme script */\n'},
+				files: {'doc/assets/doc.min.js': ['doc/assets/doc.js']}
 			}
 		},
 
 		// CSS concatenation and minification
 		cssmin: {
 			editSlider: {
-				options: {
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */'
-				},
-				files: [{src: ['assets/css/edit-slider.css'], dest: 'assets/css/edit-slider.min.css'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen */'},
+				files: {'assets/css/edit-slider.min.css': ['assets/css/edit-slider.css']}
+			},
+			editSliderNew: {
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - Slider edit screen for 3.8+ */'},
+				files: {'assets/css/edit-slider-new.min.css': ['assets/css/edit-slider-new.css']}
 			},
 			tinyMCE: {
-				options: {
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE button */'
-				},
-				files: [{src: ['assets/css/tinymce-plugin.css'], dest: 'assets/css/tinymce-plugin.min.css'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE plugin */'},
+				files: {'assets/css/tinymce-plugin.min.css': ['assets/css/tinymce-plugin.css']}
+			},
+			tinyMCENew: {
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE plugin for 3.8+ */'},
+				files: {'assets/css/tinymce-plugin-new.min.css': ['assets/css/tinymce-plugin-new.css']}
 			},
 			flexslider: {
-				options: {
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider, http://www.woothemes.com/flexslider/ */'
-				},
-				files: [{src: ['assets/css/flexslider.css'], dest: 'assets/css/flexslider.min.css'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider, http://www.woothemes.com/flexslider/ */'},
+				files: {'assets/css/flexslider.min.css': ['assets/css/flexslider.css']}
 			},
 			doc: {
-				options: {
-					banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme style */'
-				},
-				files: [{src: ['doc/assets/doc.css'], dest: 'doc/assets/doc.min.css'}]
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - Readme style */'},
+				files: {'doc/assets/doc.min.css': ['doc/assets/doc.css']}
 			}
 		},
 
