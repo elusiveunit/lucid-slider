@@ -101,6 +101,12 @@ class Lucid_Slider_Utility {
 				'screenshot' => LUCID_SLIDER_URL . 'templates/default/screenshot.jpg'
 			)
 		);
+
+		/**
+		 * Filter the available templates. Default can be overridden.
+		 *
+		 * @param array
+		 */
 		$user_templates = apply_filters( 'lsjl_templates', array() );
 
 		return array_merge( $default_templates, $user_templates );
@@ -160,7 +166,7 @@ class Lucid_Slider_Utility {
 			$src = wp_get_attachment_url( $slide_id );
 		else :
 			$src = wp_get_attachment_image_src( $slide_id, $size );
-			$src = $src[0];
+			$src = ( ! empty( $src[0] ) ) ? $src[0] : '';
 		endif;
 
 		return $src;
