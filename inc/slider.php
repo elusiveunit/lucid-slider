@@ -143,8 +143,8 @@ class Lucid_Slider {
 				if ( ! empty( $this->settings['load_js'] ) )
 					wp_enqueue_script( 'flexslider' );
 
-				// Low priority so footer scripts are added before
-				add_action( 'wp_footer', array( $this, 'slider_init' ), 999 );
+				add_action( 'wp_footer', array( $this, 'slider_options' ), 5 );
+				add_action( 'wp_footer', array( $this, 'slider_init' ), 500 );
 
 				ob_start();
 
@@ -178,15 +178,12 @@ class Lucid_Slider {
 	}
 
 	/**
-	 * Initialize the slider.
+	 * Print a global JavaScript object for the options.
 	 *
-	 * @see http://www.woothemes.com/flexslider/
+	 * @see http://www.woothemes.com/flexslider/ For available options.
 	 */
-	public function slider_init() {
+	public function slider_options() {
 		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;
-
-		// Only need a single JavaScript initialization.
-		self::$slider_active = true;
 
 		// Flexslider defaults, used if the option isn't passed
 		$default_options = array(
@@ -207,9 +204,7 @@ class Lucid_Slider {
 			's_touch' => 1,
 			's_video' => 0
 		);
-
-		$js_options = '{ ';
-		$options_added = 0;
+		$js_options = array();
 
 		// Build JavaScript object for settings
 		foreach ( $this->settings as $setting => $value ) :
@@ -220,36 +215,46 @@ class Lucid_Slider {
 			// Only add option to the object if it's different from the default
 			if ( $default_options[$setting] != $value ) :
 				$key = str_replace( 's_', '', $setting );
-
-				// Add comma after first option
-				if ( $options_added > 0 ) $js_options .= ', ';
-
-				// Object key
-				$js_options .= $key . ': ';
-
-				// Make the value format JavaScript friendly
-				if ( 1 === $value ) :
-					$js_options .= 'true';
-				elseif ( 0 === $value ) :
-					$js_options .= 'false';
-				elseif ( is_string( $value ) ) :
-					$js_options .= '"' . $value . '"';
-				else :
-					$js_options .= $value;
-				endif;
-
-				$options_added++;
+				$js_options[$key] = $value;
 			endif;
 		endforeach;
 
-		$js_options = apply_filters_ref_array( 'lsjl_js_options', array( $js_options, &$options_added ) );
+		/**
+		 * Filter the JavaScript options array.
+		 *
+		 * @param array $js_options
+		 */
+		$js_options = apply_filters( 'lsjl_js_options', $js_options );
 
-		$js_options .= ' }'; ?>
-		<script>
-		(function($){
-			$('.flexslider').flexslider(<?php if ( $options_added > 0 ) echo str_replace( "\n", '', $js_options ); ?>);
-		})(jQuery);
-		</script>
+		// Convert options to JavaScript object format
+		$options = array();
+		foreach ( $js_options as $key => $value ) :
+			if ( false === $value )
+				$options[] = "{$key}:0";
+			elseif ( 0 === strpos( $value, 'function' ) || ! is_string( $value ) )
+				$options[] = "{$key}:{$value}";
+			else
+				$options[] = "{$key}:'{$value}'";
+		endforeach;
+
+		$options = ( $options ) ? '{' . implode( ',', $options ) . '}' : '';
+
+		?>
+		<script>var LUCID_SLIDER_OPTIONS = <?php echo $options; ?>;</script>
+		<?php
+	}
+
+	/**
+	 * Initialize the slider.
+	 */
+	public function slider_init() {
+		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;
+
+		// Only need a single JavaScript initialization.
+		self::$slider_active = true;
+
+		?>
+		<script>jQuery(function($){var o='undefined'!==typeof LUCID_SLIDER_OPTIONS?LUCID_SLIDER_OPTIONS:{};$('.flexslider').flexslider(o)});</script>
 		<?php
 	}
 }
