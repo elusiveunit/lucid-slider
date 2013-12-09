@@ -446,6 +446,10 @@
                   }
                   slider.setProps(offset + dx, "setTouch");
                 }
+              } else {
+
+                // Gesture is not related to slider direction, ignore it
+                el.removeEventListener('touchmove', onTouchMove, false);
               }
             }
 
