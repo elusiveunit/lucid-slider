@@ -70,7 +70,9 @@ class Lucid_Slider_Tinymce {
 	 * Button and Thickbox content CSS.
 	 */
 	public function load_css() {
-		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . 'css/tinymce-plugin.min.css', false, null );
+		$style = ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) ? 'tinymce-plugin-new' : 'tinymce-plugin';
+
+		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . "css/{$style}.min.css", false, null );
 	}
 
 	/**
