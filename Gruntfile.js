@@ -154,14 +154,6 @@ module.exports = function(grunt) {
 		'rename:doc'
 	]);
 
-	// Watch: 'grunt w'
-	grunt.registerTask('w', [
-		'jshint:dist',
-		'uglify',
-		'cssmin',
-		'watch'
-	]);
-
 	// Gruntfile: 'grunt g'
 	grunt.registerTask('g', [
 		'jshint:grunt'
