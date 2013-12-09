@@ -3,8 +3,7 @@
 .lsjl-message-error,
 .lsjl-message-notice {
 	margin: 10px 0;
-	padding: 0 0.6em;
-	border-radius: 3px;
+	padding: 1px 12px;
 }
 .lsjl-message-error p,
 .lsjl-message-notice p {
@@ -12,12 +11,12 @@
 	padding: 2px;
 }
 .lsjl-message-error {
-	border: 1px solid #c00;
-	background: #ffebe8;
+	border: 1px solid #f2a9a9;
+	background: #fff7f5;
 }
 .lsjl-message-notice {
-	border: 1px solid #e6db55;
-	background: #ffffe0;
+	border: 1px solid #efe681;
+	background: #fffff0;
 }
 #lsjl-sort-message {display: none;}
 
@@ -69,25 +68,11 @@
 #lsjl-slides .wpa_group-slide-group {
 	border: 1px solid #dfdfdf;
 	border-top-color: #fff;
-	background: #f4f4f4;
+	background: #fafafa;
 }
 #lsjl-slides .lsjl-placeholder {
 	border: 1px dashed #ccc;
-	background: #ebebeb;
-}
-
-/* Blue color scheme */
-.admin-color-classic #lsjl-slides .wpa_loop-slide-group {
-	border-top: 1px solid #d1e5ee;
-}
-.admin-color-classic #lsjl-slides .wpa_group-slide-group {
-	border: 1px solid #d1e5ee;
-	border-top-color: #fff;
-	background: #eff8ff;
-}
-.admin-color-classic #lsjl-slides .lsjl-placeholder {
-	border: 1px dashed #cbdfe8;
-	background: #e7f0f7;
+	background: #f2f2f2;
 }
 
 /*---------- Thumbnail ----------*/
@@ -141,8 +126,8 @@
 	display: block;
 	width: 2px;
 	height: 20px;
-	border-left: 2px solid #aaa;
-	border-right: 6px double #aaa;
+	border-left: 2px solid #b1b1b1;
+	border-right: 6px double #b1b1b1;
 }
 #lsjl-slides .lsjl-move-handle:hover .lsjl-move-icon {
 	border-color: #888;
@@ -180,17 +165,18 @@
 /*---------- Remove slide ----------*/
 #lsjl-slides .lsjl-remove-slide {
 	position: absolute;
-	top: 10px;
-	right: 10px;
+	top: 5px;
+	right: 8px;
 	padding: 1px 2px;
-	border-bottom: 1px solid #f00;
-	color: #f00;
+	border-bottom: 1px solid #a00;
+	color: #a00;
 	line-height: 1.25;
 	text-decoration: none;
 }
 #lsjl-slides .lsjl-remove-slide:hover,
 #lsjl-slides .lsjl-remove-slide:focus {
-	background: #f00;
+	border-color: #e00;
+	background: #e00;
 	color: #fff;
 }
 
@@ -211,7 +197,14 @@
 	text-align: center;
 }
 #lsjl-slider-template label:hover,
+
+/* Default to WP logo blue, overwrite with color scheme colors */
 #lsjl-slider-template label.selected {border-color: #21759b;}
+.admin-color-fresh #lsjl-slider-template label.selected {border-color: #0074a2;}
+.admin-color-blue #lsjl-slider-template label.selected {border-color: #52accc;}
+.admin-color-light #lsjl-slider-template label.selected {border-color: #04a4cc;}
+.admin-color-midnight #lsjl-slider-template label.selected {border-color: #e14d43;}
+
 #lsjl-slider-template input[type="radio"] {
 	position: absolute;
 	top: -20px;
