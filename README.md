@@ -267,6 +267,7 @@ In the template file (set with 'path' in the hook callback array), there are som
 	* Ensure currentSlide is treated as an integer in getTarget ([#933](https://github.com/woothemes/FlexSlider/pull/933)).
 	* Some minor cleanup.
 * Tweak: Generally optimize the admin a bit by limiting what runs where.
+* Tweak/fix: Include [this](https://gist.github.com/aubreypwd/7828624) temporary workaround for the issue with `__FILE__` in symlinked plugins, see [trac ticket #16953](http://core.trac.wordpress.org/ticket/16953).
 * Fix: Properly apply the `lsjl_settings_tabs` filter.
 
 ### 1.5.1: Oct 03, 2013
