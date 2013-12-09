@@ -34,13 +34,18 @@ if ( true || ! empty( $opt['image_sizes'] ) ) :
 		foreach ( $sizes as $size ) :
 			$size_label = str_replace( 'x', '&times;', trim( $size ) );
 			$size_name = Lucid_Slider_Utility::get_image_size( $size );
+
 			if ( in_array( $size_name, $added_sizes ) ) : ?>
 				<option value="<?php echo $size_name; ?>"<?php $mb->the_select_state( $size_name ); ?>><?php echo $size_label; ?></option>
-		<?php endif;
+			<?php endif;
 		endforeach;
 
-		// Allow custom sizes to be added
-		do_action_ref_array( 'lsjl_slider_size_select', array( &$mb ) ); ?>
+		/**
+		 * Fires inside the size select; use to add custom sizes.
+		 *
+		 * @param WPAlchemy_MetaBox $mb Metabox object
+		 */
+		do_action( 'lsjl_slider_size_select', $mb ); ?>
 	</select>
 
 <?php // Warn if there are no sizes set
