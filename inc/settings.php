@@ -19,7 +19,13 @@ $lsjl_settings = new Lucid_Settings( 'lsjl_settings', __( 'Lucid Slider Settings
 
 $lsjl_settings->submenu( 'Lucid Slider', array(
 	'title' => __( 'Lucid Slider Settings', 'lucid-slider' ),
-	'tabs' => array(
+
+	/**
+	 * Filter settings tabs.
+	 *
+	 * @param array
+	 */
+	'tabs' => apply_filters( 'lsjl_settings_tabs', array(
 		'lsjl_general_settings' => _x( 'General', 'Settings tab', 'lucid-slider' ),
 		'lsjl_slider_settings' => _x( 'Slider', 'Settings tab', 'lucid-slider' )
 	)
