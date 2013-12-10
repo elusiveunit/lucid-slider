@@ -200,10 +200,14 @@
 
 /* Default to WP logo blue, overwrite with color scheme colors */
 #lsjl-slider-template label.selected {border-color: #21759b;}
-.admin-color-fresh #lsjl-slider-template label.selected {border-color: #0074a2;}
-.admin-color-blue #lsjl-slider-template label.selected {border-color: #52accc;}
-.admin-color-light #lsjl-slider-template label.selected {border-color: #04a4cc;}
-.admin-color-midnight #lsjl-slider-template label.selected {border-color: #e14d43;}
+.admin-color-fresh     #lsjl-slider-template label.selected {border-color: #0074a2;}
+.admin-color-light     #lsjl-slider-template label.selected {border-color: #04a4cc;}
+.admin-color-blue      #lsjl-slider-template label.selected {border-color: #52accc;}
+.admin-color-coffee    #lsjl-slider-template label.selected {border-color: #c7a589;}
+.admin-color-ectoplasm #lsjl-slider-template label.selected {border-color: #a3b745;}
+.admin-color-midnight  #lsjl-slider-template label.selected {border-color: #e14d43;}
+.admin-color-ocean     #lsjl-slider-template label.selected {border-color: #9ebaa0;}
+.admin-color-sunrise   #lsjl-slider-template label.selected {border-color: #dd823b;}
 
 #lsjl-slider-template input[type="radio"] {
 	position: absolute;
