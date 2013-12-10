@@ -26,7 +26,7 @@ Lucid Slider is currently available in the following languages:
 
 A standard slider setup is pretty simple:
 
-1. Image sizes must be entered in the settings. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin, by selecting the desired `lsjl_...` image.
+1. Add image sizes in the settings if needed. In an effort to keep everything as native-like as possible, sizes are added with `add_image_size` and cropped on upload, not on the fly. This most likely means previously uploaded images, and all images if changing sizes, won't have the correct dimensions. Images can be re-cropped with the [AJAX Thumbnail Rebuild](http://wordpress.org/extend/plugins/ajax-thumbnail-rebuild/) plugin, by selecting the desired `lsjl_...` image.
 2. As the slider page tells you, one of the added sizes (or full size) must be chosen for every slider.
 3. Simply add the desired slides and order them with drag-and-drop.
 4. Display the slider with the shortcode `[lucidslider id="123"]` (visual editor button available), the included widget (if activated), or the template tag `lucid_slider( 123 );`.
@@ -162,7 +162,7 @@ Runs at the start and the end, respectively, of the slides metabox. Can be used 
 	/**
 	 * Add slider meta field.
 	 *
-	 * @param WPAlchemy $metabox Metabox object.
+	 * @param WPAlchemy_Metabox $metabox Metabox object.
 	 */
 	function myprefix_lsjl_slider_meta( $metabox ) {
 		$metabox->the_field( 'myprefix-field' ); ?>
@@ -190,7 +190,7 @@ Be sure to keep the `lsjl-field-group` on the wrapping div for layout. Other ali
 	/**
 	 * Add custom Lucid Slider slide fields.
 	 *
-	 * @param WPAlchemy $metabox Metabox object.
+	 * @param WPAlchemy_Metabox $metabox Metabox object.
 	 */
 	function myprefix_lsjl_meta_after( $metabox ) {
 		$metabox->the_field( 'myprefix-text' ); ?>
@@ -226,7 +226,7 @@ Used to add additional selectable image sizes to the slider size dropdown. The v
 	/**
 	 * Add selectable slider image sizes.
 	 *
-	 * @param WPAlchemy $metabox Metabox object.
+	 * @param WPAlchemy_Metabox $metabox Metabox object.
 	 */
 	function myprefix_lsjl_extra_sizes( $metabox ) { ?>
 		<option value="image_size_name"<?php $metabox->the_select_state( 'image_size_name' ); ?>>800&times;300</option>
