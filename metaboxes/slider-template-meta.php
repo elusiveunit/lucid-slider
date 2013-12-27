@@ -2,8 +2,7 @@
 /**
  * Slider template selection metabox.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 $templates = Lucid_Slider_Utility::get_templates();

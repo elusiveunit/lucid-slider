@@ -2,8 +2,7 @@
 /**
  * Register settings page
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests

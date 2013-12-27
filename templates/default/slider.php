@@ -2,8 +2,7 @@
 /**
  * Default slider template.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 ?>
 <div class="flexslider">

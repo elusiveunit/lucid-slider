@@ -2,8 +2,7 @@
 /**
  * Fired when the plugin is uninstalled. Deletes options and slider posts.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Exit if the uninstall is not called from WordPress

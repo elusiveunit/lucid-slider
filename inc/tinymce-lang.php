@@ -3,9 +3,8 @@
  * Localization for the TinyMCE plugin.
  *
  * http://wordpress.stackexchange.com/questions/44785/how-to-provide-translations-for-a-wordpress-tinymce-plugin
- * 
- * @package Lucid
- * @subpackage Slider
+ *
+ * @package Lucid\Slider
  */
 
 // Block direct requests

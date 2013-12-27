@@ -2,8 +2,7 @@
 /**
  * Metabox generation.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -23,8 +22,7 @@ elseif ( ! class_exists( 'WPAlchemy_MetaBox' ) )
  *
  * @uses WPAlchemy_MetaBox
  * @see http://www.farinspace.com/wpalchemy-metabox/
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Metaboxes {
 

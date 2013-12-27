@@ -2,8 +2,7 @@
 /**
  * Frontend functionality.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Contains everything frontend related except slider displaying.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Frontend {
 

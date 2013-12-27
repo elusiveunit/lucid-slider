@@ -11,8 +11,7 @@
  * Text Domain: lucid-slider
  * Domain Path: /assets/lang
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests

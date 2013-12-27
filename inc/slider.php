@@ -2,8 +2,7 @@
 /**
  * Slider displaying.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Contains frontend logic related to the slider itself.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider {
 
@@ -180,7 +178,7 @@ class Lucid_Slider {
 	/**
 	 * Print a global JavaScript object for the options.
 	 *
-	 * @see http://www.woothemes.com/flexslider/ For available options.
+	 * @link http://www.woothemes.com/flexslider/ The available options.
 	 */
 	public function slider_options() {
 		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;

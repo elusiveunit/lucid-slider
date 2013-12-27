@@ -2,8 +2,7 @@
 /**
  * Core functionality and plugin setup.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Contains basic setup and utility functions.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Core {
 
@@ -84,6 +82,8 @@ class Lucid_Slider_Core {
 
 	/**
 	 * Load the rest of the plugin.
+	 *
+	 * @global string $pagenow Current admin page.
 	 */
 	public function load_plugin_parts() {
 

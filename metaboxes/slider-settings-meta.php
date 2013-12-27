@@ -2,8 +2,7 @@
 /**
  * Slider settings metabox.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 $opt = Lucid_Slider_Utility::get_settings();

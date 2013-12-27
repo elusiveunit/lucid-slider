@@ -2,8 +2,7 @@
 /**
  * Admin functionality.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,13 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Assets and UI configuration for the admin.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Admin {
 
 	/**
 	 * Constructor, add hooks.
+	 *
+	 * @global string $pagenow Current admin page.
 	 */
 	public function __construct() {
 		global $pagenow;
@@ -49,6 +49,8 @@ class Lucid_Slider_Admin {
 
 	/**
 	 * Show a notice if Lucid Toolbox isn't activated.
+	 *
+	 * @global string $pagenow Current admin page.
 	 */
 	public function toolbox_notice() {
 		global $pagenow;

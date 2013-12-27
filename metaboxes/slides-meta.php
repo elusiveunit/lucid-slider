@@ -2,8 +2,7 @@
 /**
  * Slider slide management metabox.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 ?>
 

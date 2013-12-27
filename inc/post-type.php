@@ -2,8 +2,7 @@
 /**
  * Register slider post type.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests

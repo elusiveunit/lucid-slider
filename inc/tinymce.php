@@ -2,8 +2,7 @@
 /**
  * TinyMCE plugin for easily inserting a shortcode.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Adds a button to the visual editor.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Tinymce {
 
@@ -27,6 +25,8 @@ class Lucid_Slider_Tinymce {
 
 	/**
 	 * Hook the button loading if on an edit screen and visual editing is active.
+	 *
+	 * @global string $pagenow Current admin page.
 	 */
 	public function add_editor_button() {
 		global $pagenow;

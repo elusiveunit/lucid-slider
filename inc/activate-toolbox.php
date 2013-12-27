@@ -2,8 +2,7 @@
 /**
  * Lucid Toolbox activation.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Tries to install and/or activate Lucid Toolbox if it's not available.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Activate_Toolbox {
 

@@ -2,8 +2,7 @@
 /**
  * Core functionality, always loaded.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Contains basic setup and utility functions.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Utility {
 
@@ -81,13 +79,11 @@ class Lucid_Slider_Utility {
 	 * Templates can be added with the lsjl_templates filter, simply by
 	 * mimicking the structure of:
 	 *
-	 * <code>
-	 * $user_templates['unique_template_name'] = array(
-	 * 	'name' => __( 'User-visible name', 'textdomain' ),
-	 * 	'path' => 'path/to/template-display-file.php',
-	 * 	'screenshot' => 'URL/to/screenshot.jpg'
-	 * )
-	 * </code>
+	 *     $user_templates['unique_template_name'] = array(
+	 *        'name' => __( 'User-visible name', 'textdomain' ),
+	 *        'path' => 'path/to/template-display-file.php',
+	 *        'screenshot' => 'URL/to/screenshot.jpg'
+	 *     )
 	 *
 	 * Screenshot container is 250x100 pixels.
 	 *

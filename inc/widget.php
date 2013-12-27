@@ -1,9 +1,8 @@
 <?php
 /**
  * Create a slider widget.
- * 
- * @package Lucid
- * @subpackage Slider
+ *
+ * @package Lucid\Slider
  */
 
 // Block direct requests
@@ -12,8 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 /**
  * Widget for choosing and displaying a slider.
  *
- * @package Lucid
- * @subpackage Slider
+ * @package Lucid\Slider
  */
 class Lucid_Slider_Widget extends WP_Widget {
 
@@ -46,7 +44,7 @@ class Lucid_Slider_Widget extends WP_Widget {
 
 		if ( ! empty( $title ) )
 			echo $before_title . $title . $after_title;
-		
+
 		lucid_slider( $slider );
 
 		echo $after_widget;
@@ -95,7 +93,7 @@ class Lucid_Slider_Widget extends WP_Widget {
 
 		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'lucid-slider' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>"></p>
-		
+
 		<p>
 			<label for="<?php echo $this->get_field_id( 'slider' ); ?>"><?php _e( 'Slider:', 'lucid-slider' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'slider' ); ?>" name="<?php echo $this->get_field_name( 'slider' ); ?>" class="widefat">
