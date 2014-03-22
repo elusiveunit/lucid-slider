@@ -61,7 +61,11 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function add_button( $plugins ) {
-		$plugins['lucidSlider'] = LUCID_SLIDER_ASSETS . 'js/tinymce-plugin.min.js';
+		$script = ( version_compare( $GLOBALS['wp_version'], '3.9-beta', '>' ) )
+			? 'tinymce-4-plugin'
+			: 'tinymce-plugin';
+
+		$plugins['lucidSlider'] = LUCID_SLIDER_ASSETS . "js/{$script}.min.js";
 
 		return $plugins;
 	}

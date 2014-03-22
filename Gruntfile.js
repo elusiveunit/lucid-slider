@@ -59,6 +59,10 @@ module.exports = function(grunt) {
 				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE plugin */\n'},
 				files: {'assets/js/tinymce-plugin.min.js': ['assets/js/tinymce-plugin.js']}
 			},
+			tinyMCE4: {
+				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - TinyMCE 4 plugin */\n'},
+				files: {'assets/js/tinymce-4-plugin.min.js': ['assets/js/tinymce-4-plugin.js']}
+			},
 			flexslider: {
 				options: {banner: '/*! <%= pkg.title %> <%= pkg.version %> - jQuery FlexSlider v2.2.0.lucid-1 | Copyright 2012 WooThemes | Contributing Author: Tyler Smith */\n'},
 				files: {'assets/js/jquery.flexslider.min.js': ['assets/js/jquery.flexslider.js']}

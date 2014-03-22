@@ -1,4 +1,8 @@
-span.mce_lucidSlider:before {content: '\f181' !important;}
+span.mce_lucidSlider:before,
+i.mce-i-lucidSlider:before {
+	font: 400 20px/1 dashicons !important;
+	content: '\f181' !important;
+}
 
 .lsjl-tb-labels-wrap {
 	margin-bottom: 1em;
