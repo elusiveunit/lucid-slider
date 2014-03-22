@@ -92,6 +92,19 @@ if ( $lsjl_settings->is_on_settings_page() ) :
 		)
 	);
 
+	$lsjl_settings->field(
+		'optimize_script_loading',
+		__( 'Optimize script loading', 'lucid-slider' ),
+		array(
+			'type' => 'checkbox',
+			'sanitize' => 'checkbox',
+			'section' => 'lsjl_integration_section',
+			'inline_label' => __( 'Only load the JavaScript if there is more than one slide', 'lucid-slider' ),
+			'description' => __( 'Any custom CSS must account for missing inline styles that are normally applied by the script.', 'lucid-slider' ),
+			'default' => 1
+		)
+	);
+
 	/* -Tools
 	--------------------------------------------------------------------------*/
 	$lsjl_settings->section( 'lsjl_tools_section', array(

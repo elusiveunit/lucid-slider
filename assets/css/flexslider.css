@@ -36,15 +36,19 @@
 
 /* Hide the slides before the JS is loaded. Avoids image jumping */
 .flexslider .slides > li {
-	-webkit-backface-visibility: hidden;
 	display: none;
 	position: relative;
 	margin: 0;
+	-webkit-backface-visibility: hidden;
+	        backface-visibility: hidden;
 }
 
 /* No JavaScript Fallback. If you are not using another script, such as
 Modernizr, make sure you include js that eliminates this class on page load. */
 .no-js .slides > li:first-child {display: block;}
+
+/* Single slide override for when the script isn't loaded */
+.flexslider-single .slides > li:first-child {display: block;}
 
 /*---------- FlexSlider Default Theme ----------*/
 .flexslider {
@@ -57,6 +61,7 @@ Modernizr, make sure you include js that eliminates this class on page load. */
 	-webkit-box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 	        box-shadow: 0 1px 4px rgba(0,0,0,0.2);
 }
+.flexslider-single {margin-bottom: 30px;}
 .flex-viewport {
 	max-height: 2000px;
 	-webkit-transition: all 1s ease;

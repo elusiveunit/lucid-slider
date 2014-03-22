@@ -4,8 +4,10 @@
  *
  * @package Lucid\Slider
  */
-?>
-<div class="flexslider">
+
+$single_slide_class = ( $is_single_slide ) ? ' flexslider-single' : ''; ?>
+
+<div class="flexslider<?php echo $single_slide_class; ?>">
 	<ul class="slides">
 	<?php foreach ( $slides as $index => $slide ) :
 		$slide_id = ( ! empty( $slide['slide-image-id'] ) ) ? $slide['slide-image-id'] : 0;

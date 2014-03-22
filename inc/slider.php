@@ -137,12 +137,16 @@ class Lucid_Slider {
 
 			// Then check if the template exists
 			if ( file_exists( $template_path ) ) :
+				$is_single_slide = ( 1 === count( $this->slides ) );
+				$skip_scripts = ( $is_single_slide && ! empty( $this->settings['optimize_script_loading'] ) );
 
-				if ( ! empty( $this->settings['load_js'] ) )
-					wp_enqueue_script( 'flexslider' );
+				if ( ! $skip_scripts ) :
+					if ( ! empty( $this->settings['load_js'] ) )
+						wp_enqueue_script( 'flexslider' );
 
-				add_action( 'wp_footer', array( $this, 'slider_options' ), 5 );
-				add_action( 'wp_footer', array( $this, 'slider_init' ), 500 );
+					add_action( 'wp_footer', array( $this, 'slider_options' ), 5 );
+					add_action( 'wp_footer', array( $this, 'slider_init' ), 500 );
+				endif;
 
 				ob_start();
 
