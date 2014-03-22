@@ -48,7 +48,6 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function register_button( $buttons ) {
-		$buttons[] = '|';
 		$buttons[] = 'lucidSlider';
 
 		return $buttons;
@@ -74,7 +73,9 @@ class Lucid_Slider_Tinymce {
 	 * Button and Thickbox content CSS.
 	 */
 	public function load_css() {
-		$style = ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) ? 'tinymce-plugin-new' : 'tinymce-plugin';
+		$style = ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) )
+			? 'tinymce-plugin-new'
+			: 'tinymce-plugin';
 
 		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . "css/{$style}.min.css", false, null );
 	}

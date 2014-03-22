@@ -8,20 +8,21 @@
 	'use strict';
 
 	tinymce.create('tinymce.plugins.lucidSlider', {
-		init : function(ed, url) {
+		init: function( editor, url ) {
 
-			ed.addButton('lucidSlider', {
-				title : ed.getLang( 'lucidSlider.title' ),
-				onclick : function() {
+			editor.addButton( 'lucidSlider', {
+				title: editor.getLang( 'lucidSlider.title' ),
+				onclick: function () {
 					tb_show( '', 'admin-ajax.php?action=lucid_slider_tinymce&width=640&height=545' );
 				}
 			});
 
 		},
 
-		createControl : function(n, cm) {
+		createControl: function( n, cm ) {
 			return null;
 		}
 	});
-	tinymce.PluginManager.add('lucidSlider', tinymce.plugins.lucidSlider);
+
+	tinymce.PluginManager.add( 'lucidSlider', tinymce.plugins.lucidSlider );
 })();
