@@ -251,8 +251,10 @@ class Lucid_Slider {
 		// Only need a single JavaScript initialization.
 		self::$slider_active = true;
 
+		$selector = apply_filters( 'lsjl_slider_selector', '.flexslider' );
+
 		?>
-		<script>jQuery(function($){var o='undefined'!==typeof LUCID_SLIDER_OPTIONS?LUCID_SLIDER_OPTIONS:{};$('.flexslider').flexslider(o)});</script>
+		<script>jQuery(function($){var o='undefined'!==typeof LUCID_SLIDER_OPTIONS?LUCID_SLIDER_OPTIONS:{};$('<?php echo $selector; ?>').flexslider(o)});</script>
 		<?php
 	}
 }
