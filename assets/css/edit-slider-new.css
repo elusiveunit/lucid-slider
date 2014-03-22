@@ -134,15 +134,38 @@
 }
 
 /*---------- input fields ----------*/
-#lsjl-slides .lsjl-field-group {min-height: 2em; margin-bottom: 0.3333em;}
+#lsjl-slides .lsjl-field-group {
+	min-height: 2em;
+	margin-bottom: 0.3333em;
+}
+#lsjl-slides .lsjl-field-group textarea {min-height: 6.5em;}
+
 #lsjl-slides .lsjl-field-group input,
 #lsjl-slides .lsjl-field-group select,
-#lsjl-slides .lsjl-field-group textarea {min-width: 250px;}
+#lsjl-slides .lsjl-field-group textarea {
+	min-width: 250px;
+}
+@media screen and (min-width: 1600px) {
+	#lsjl-slides .lsjl-field-group input,
+	#lsjl-slides .lsjl-field-group select,
+	#lsjl-slides .lsjl-field-group textarea {
+		min-width: 350px;
+	}
+}
+@media screen and (min-width: 1800px) {
+	#lsjl-slides .lsjl-field-group input,
+	#lsjl-slides .lsjl-field-group select,
+	#lsjl-slides .lsjl-field-group textarea {
+		min-width: 450px;
+	}
+}
+
 #lsjl-slides .lsjl-field-group input[type="radio"],
-#lsjl-slides .lsjl-field-group input[type="checkbox"] {min-width: 0;}
-#lsjl-slides .lsjl-field-group textarea {min-height: 6.5em;}
+#lsjl-slides .lsjl-field-group input[type="checkbox"],
 #lsjl-slides .lsjl-field-group input[type="submit"],
-#lsjl-slides .lsjl-field-group input[type="button"] {min-width: 0;}
+#lsjl-slides .lsjl-field-group input[type="button"] {
+	min-width: 0;
+}
 
 #lsjl-slides .lsjl-slide-url-field {background: #f4f4f4;}
 .admin-color-classic #lsjl-slides .lsjl-slide-url-field {background: #eff8ff;}
