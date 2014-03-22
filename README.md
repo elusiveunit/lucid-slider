@@ -71,21 +71,40 @@ Add custom templates. The screenshot is optional, but recommended. The screensho
 
 ##### lsjl\_js\_options
 
-Runs before adding the closing curly bracket to the JavaScript options object. Via `$options_added` one can determine if a comma is needed when adding to the object. If `$options_added` is 0 the object will not be echoed no matter the contents, so increase it if needed.
+Filter the JavaScript Flexslider options. Runs after the options from the plugin settings have been set to the variable.
 
 	/**
 	 * Manipulate JavaScript options.
 	 *
-	 * @param string $js_options Current options generated from the plugin.
-	 * @param int &$options_added Number of options generated.
-	 * @return string New options.
+	 * @param array $js_options Current options generated from the plugin.
+	 * @return array New options.
 	 */
-	function myprefix_slide_options( $js_options, &$options_added ) {
-		// Modify options
+	function myprefix_slide_options( $js_options ) {
+
+		// Super slideshow!
+		$js_options['slideshow'] = true;
+		$js_options['slideshowSpeed'] = 1000;
 
 		return $js_options;
 	}
-	add_filter( 'lsjl_js_options', 'myprefix_slide_options', 10, 2 );
+	add_filter( 'lsjl_js_options', 'myprefix_slide_options' );
+
+-----
+
+##### lsjl\_slider\_selector
+
+Change the jQuery selector used when initializing the slider (`.flexslider` by default).
+
+	/**
+	 * Change the Lucid Slider/Flexslider jQuery selector.
+	 *
+	 * @param string $selector The original selector.
+	 * @return string The new selector.
+	 */
+	function myprefix_slider_selector( $selector ) {
+		return '.my-slider';
+	}
+	add_filter( 'lsjl_slider_selector', 'myprefix_slider_selector' );
 
 -----
 
@@ -245,9 +264,18 @@ In the template file (set with 'path' in the hook callback array), there are som
 * `$slides` contains all the slides and their meta data. This will be looped over to display every slide. The keys `slide-image-thumbnail` and `slide-image-url` (which isn't a full URL anymore) are only saved for admin purposes.
 * `$options` has slider options, which at this time of writing is only the slider size.
 * `$slides_urls` has image URLs for every slide. Using these instead of grabbing the image with `Lucid_Slider_Utility::get_slide_image_src` saves database requests for every slide. Formatted as `slide_id => URL`.
+* `$is_single_slide` is self explanatory. It's primarily intended to be matched with the 'optimize script loading' option, so the first slide can be set to display in the CSS. See the default template.
 
 
 ## Changelog
+
+### 1.7.0: Mar 20, 2014
+
+* New: There is now an option to only load the JavaScript if there is more than one slide, since it's not actually needed otherwise. This must be manually activated on existing installs. As can now be seen in the default template, there is a new variable `$is_single_slide` that can be used to check for this case.
+* New: The jQuery selector used to initialize the slider can now be changed with the ` lsjl_slider_selector` filter.
+* New/fix: Add a new TinyMCE plugin for version 4, which is included in WordPress 3.9.
+* Tweak: Sprinkle some media queries on the slider edit screen's input fields, to widen them on larger screens.
+* Tweak: Add version flag to `wp_enqueue_script` and `wp_enqueue_style`.
 
 ### 1.6.0: Dec 09, 2013
 

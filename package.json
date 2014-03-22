@@ -1,8 +1,8 @@
 {
   "name": "lucid-slider",
   "title": "Lucid Slider",
-  "description": "A WordPress plugin for creating Flexslider structures.",
-  "version": "1.6.0",
+  "description": "A simple but extendable slider plugin.",
+  "version": "1.7.0",
   "author": "Jens Lindberg",
   "homepage": "https://github.com/elusiveunit/lucid-slider",
   "bugs": "https://github.com/elusiveunit/lucid-slider/issues",
