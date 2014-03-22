@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 				'curly  '  : true,
 				'eqeqeq'   : true,
 				'eqnull'   : true,
-				'esnext'   : false,
+				'es3'      : true,
 				'forin'    : true,
 				'immed'    : true,
 				'indent'   : false,
@@ -29,14 +29,11 @@ module.exports = function(grunt) {
 				'strict'   : true,
 				'trailing' : true,
 
-				// Due to a bunch of globals and plugin params used
-				'undef'    : false,
-				'unused'   : false,
-
 				'globals': {
-					'jQuery': true,
-					'alert': true
-				}
+					'jQuery': true
+				},
+
+				reporter: require('jshint-stylish')
 			},
 			dist: {
 				src: [
@@ -103,7 +100,6 @@ module.exports = function(grunt) {
 		// Compile markdown
 		markdown: {
 			doc: {
-				//files: ['README.md'],
 				files: [{
 					expand: true,
 					src: 'README.md',
