@@ -38,13 +38,13 @@ class Lucid_Slider_Frontend {
 	 * unecessary loading.
 	 */
 	public function register_script() {
-		wp_register_script( 'flexslider', LUCID_SLIDER_ASSETS . 'js/jquery.flexslider.min.js', array( 'jquery-core' ), null, true );
+		wp_register_script( 'flexslider', LUCID_SLIDER_ASSETS . 'js/jquery.flexslider.min.js', array( 'jquery-core' ), LUCID_SLIDER_VERSION, true );
 	}
 
 	/**
 	 * Enqueue FlexSlider CSS.
 	 */
 	public function load_style() {
-		wp_enqueue_style( 'flexslider', LUCID_SLIDER_ASSETS . 'css/flexslider.min.css', false, null );
+		wp_enqueue_style( 'flexslider', LUCID_SLIDER_ASSETS . 'css/flexslider.min.css', false, LUCID_SLIDER_VERSION );
 	}
 }
