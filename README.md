@@ -1,4 +1,4 @@
-# Lucid Slider
+# Lucid Slider [![devDependency Status](https://david-dm.org/elusiveunit/lucid-slider/dev-status.svg)](https://david-dm.org/elusiveunit/lucid-slider#info=devDependencies)
 
 Lucid Slider is a simple, lightweight slideshow plugin, with its primary function being an intuitive admin UI. Unlike many other slider plugins, this comes free of bloated options panels with settings galore that confuse novice users. It's primarily built for theme developers to integrate with and customize, to bring exactly what is needed for each individual site.
 
