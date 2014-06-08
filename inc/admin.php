@@ -126,7 +126,7 @@ class Lucid_Slider_Admin {
 			$style = ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) ) ? 'edit-slider-new' : 'edit-slider';
 
 			// Metabox style
-			wp_enqueue_style( 'lsjl-edit-slider', LUCID_SLIDER_ASSETS . "css/{$style}.css", false, LUCID_SLIDER_VERSION );
+			wp_enqueue_style( 'lsjl-edit-slider', LUCID_SLIDER_ASSETS . "css/{$style}.min.css", false, LUCID_SLIDER_VERSION );
 
 			// Media upload
 			wp_enqueue_media();
