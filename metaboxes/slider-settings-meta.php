@@ -16,7 +16,8 @@ $added_sizes = get_intermediate_image_sizes(); ?>
 if ( true || ! empty( $opt['image_sizes'] ) ) :
 
 	// Saved as '600x200<newline>'
-	$sizes = explode( "\n", trim( $opt['image_sizes'] ) );
+	$sizes = ( ! empty( $opt['image_sizes'] ) ) ? $opt['image_sizes'] : '';
+	$sizes = explode( "\n", trim( $sizes ) );
 
 	$mb->the_field( 'slider-size' );
 
