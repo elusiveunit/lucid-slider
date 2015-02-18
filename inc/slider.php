@@ -185,7 +185,7 @@ class Lucid_Slider {
 	 * @link http://www.woothemes.com/flexslider/ The available options.
 	 */
 	public function slider_options() {
-		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;
+		if ( self::$slider_active ) return;
 
 		// Flexslider defaults, used if the option isn't passed
 		$default_options = array(
