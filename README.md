@@ -271,6 +271,11 @@ In the template file (set with 'path' in the hook callback array), there are som
 
 ## Changelog
 
+### 1.7.1: Feb 18, 2015
+
+* Tweak: Always print JavaScript slider options object, even when the automatic init option is turned off. The options can be useful for greater developer control while still keeping them editable through the admin.
+* Remove: The workaround for `__FILE__` in symlinked plugins is no longer needed as of WordPress 3.9.
+
 ### 1.7.0: Mar 20, 2014
 
 * New: There is now an option to only load the JavaScript if there is more than one slide, since it's not actually needed otherwise. This must be manually activated on existing installs. As can now be seen in the default template, there is a new variable `$is_single_slide` that can be used to check for this case.
