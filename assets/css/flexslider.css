@@ -43,12 +43,12 @@
 	        backface-visibility: hidden;
 }
 
-/* Single slide override for when the script isn't loaded */
-.flexslider-single .slides > li {display: block;}
-
 /* No JavaScript Fallback. If you are not using another script, such as
 Modernizr, make sure you include js that eliminates this class on page load. */
 .no-js .slides > li:first-child {display: block;}
+
+/* Single slide override for when the script isn't loaded */
+.flexslider-single .slides > li:first-child {display: block;}
 
 /*---------- FlexSlider Default Theme ----------*/
 .flexslider {
