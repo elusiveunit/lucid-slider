@@ -51,7 +51,6 @@ class Lucid_Slider_Core {
 	public function __construct( $file ) {
 		self::$plugin_file = (string) $file;
 
-		$this->_load_toolbox();
 		$this->_settings = Lucid_Slider_Utility::get_settings();
 
 		add_shortcode( 'lucidslider', array( $this, 'slider_shortcode' ) );
@@ -59,18 +58,6 @@ class Lucid_Slider_Core {
 		add_action( 'init', array( $this, 'load_translation' ), 1 );
 		add_action( 'init', array( $this, 'load_plugin_parts' ), 1 ); // Need 1 for widget
 		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
-	}
-
-	/**
-	 * Activate Lucid Toolbox if needed.
-	 */
-	private function _load_toolbox() {
-
-		// Only load in admin.
-		if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) :
-			require LUCID_SLIDER_PATH . 'inc/activate-toolbox.php';
-			new Lucid_Slider_Activate_Toolbox( self::$plugin_file );
-		endif;
 	}
 
 	/**
