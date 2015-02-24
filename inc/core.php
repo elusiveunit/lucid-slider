@@ -58,6 +58,8 @@ class Lucid_Slider_Core {
 		add_action( 'init', array( $this, 'load_translation' ), 1 );
 		add_action( 'init', array( $this, 'load_plugin_parts' ), 1 ); // Need 1 for widget
 		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
+
+		register_activation_hook( self::$plugin_file, array( $this, 'activate_plugin' ) );
 	}
 
 	/**
@@ -65,6 +67,13 @@ class Lucid_Slider_Core {
 	 */
 	public function load_translation() {
 		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'assets/lang/' );
+	}
+
+	/**
+	 * Callback for when the plugin is activated.
+	 */
+	public function activate_plugin() {
+		flush_rewrite_rules();
 	}
 
 	/**
