@@ -19,9 +19,6 @@ elseif ( ! class_exists( 'Lucid_Post_Type' ) )
 \*===========================================================================*/
 
 $lucid_slider_post_type = new Lucid_Post_Type( Lucid_Slider_Core::get_post_type_name(), array(
-	'small_menu_icon_url' => LUCID_SLIDER_ASSETS . 'img/admin-icon-16.png',
-	'large_menu_icon_url' => LUCID_SLIDER_ASSETS . 'img/admin-icon-32.png',
-	'icon' => 'f181',
 	'post_type_args' => array(
 		'hierarchical' => true,
 		'labels' => array(
@@ -46,11 +43,11 @@ $lucid_slider_post_type = new Lucid_Post_Type( Lucid_Slider_Core::get_post_type_
 		'show_ui' => true,
 		'capability_type' => 'page',
 		'menu_position' => 25,
+		'menu_icon' => 'dashicons-slides',
 		'supports' => array(
 			'title'
 		),
-		'has_archive' => false,
-		'rewrite' => array( 'slug' => Lucid_Slider_Core::get_post_type_name(), 'with_front' => false ), // with_front false->/news/, true->/blog/news/
+		'rewrite' => false
 	),
 	'update_messages_no_links' => array(
 		'updated'   => __( 'Slider updated.', 'lucid-slider' ),
