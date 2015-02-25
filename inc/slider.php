@@ -101,7 +101,7 @@ class Lucid_Slider {
 		foreach ( $errors as $error ) :
 
 			// Display clear messages when developing
-			if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) ) :
+			if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) :
 				trigger_error( $error, E_USER_WARNING );
 
 			// Otherwise keep errors 'developer only' in the form of comments,
@@ -185,7 +185,8 @@ class Lucid_Slider {
 	 * @link http://www.woothemes.com/flexslider/ The available options.
 	 */
 	public function slider_options() {
-		if ( self::$slider_active ) return;
+		if ( self::$slider_active )
+			return;
 
 		// Flexslider defaults, used if the option isn't passed
 		$default_options = array(
@@ -242,7 +243,7 @@ class Lucid_Slider {
 		$options = ( $options ) ? '{' . implode( ',', $options ) . '}' : '';
 
 		?>
-		<script>var LUCID_SLIDER_OPTIONS = <?php echo $options; ?>;</script>
+		<script>var LUCID_SLIDER_OPTIONS=<?php echo $options; ?>;</script>
 		<?php
 	}
 
@@ -250,7 +251,8 @@ class Lucid_Slider {
 	 * Initialize the slider.
 	 */
 	public function slider_init() {
-		if ( self::$slider_active || empty( $this->settings['init_slider'] ) ) return;
+		if ( self::$slider_active || empty( $this->settings['init_slider'] ) )
+			return;
 
 		// Only need a single JavaScript initialization.
 		self::$slider_active = true;
@@ -280,5 +282,6 @@ function lucid_slider( $id ) {
  */
 function lucid_slider_get( $id ) {
 	$slider = new Lucid_Slider( $id );
+
 	return $slider->get_slider();
 }

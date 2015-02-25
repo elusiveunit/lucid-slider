@@ -31,13 +31,14 @@ class Lucid_Slider_Metaboxes {
 	 *
 	 * @var array
 	 */
-	public $metaboxes = array();
+	protected $_metaboxes = array();
 
 	/**
 	 * Constructor, do the registering.
 	 */
 	public function __construct() {
-		if ( ! defined( 'LUCID_TOOLBOX_VERSION' ) ) return;
+		if ( ! defined( 'LUCID_TOOLBOX_VERSION' ) )
+			return;
 
 		$this->register_metabox( 'slides', array(
 			'title' => __( 'Slides', 'lucid-slider' ),
@@ -73,16 +74,16 @@ class Lucid_Slider_Metaboxes {
 			'priority' => 'default' // high, core, default or low
 		), $args );
 
-		$this->metaboxes[$id] = new WPAlchemy_MetaBox( $args );
+		$this->_metaboxes[$id] = new WPAlchemy_MetaBox( $args );
 	}
 
 	/**
 	 * Get a WPAlchemy metabox object.
 	 *
 	 * @param string $id Metabox ID passed to register_metabox().
-	 * @return object
+	 * @return object|bool False if it doesn't exist.
 	 */
 	public function get_metabox( $id ) {
-		return ( ! empty( $this->metaboxes[$id] ) ) ? $this->metaboxes[$id] : false;
+		return ( ! empty( $this->_metaboxes[$id] ) ) ? $this->_metaboxes[$id] : false;
 	}
 }

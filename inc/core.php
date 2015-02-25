@@ -27,7 +27,7 @@ class Lucid_Slider_Core {
 	 *
 	 * @var string
 	 */
-	public static $post_type_name = 'lucidslider';
+	private static $_post_type_name = 'lucidslider';
 
 	/**
 	 * Plugin settings.
@@ -53,20 +53,13 @@ class Lucid_Slider_Core {
 
 		$this->_settings = Lucid_Slider_Utility::get_settings();
 
+		register_activation_hook( self::$plugin_file, array( $this, 'activate_plugin' ) );
+
 		add_shortcode( 'lucidslider', array( $this, 'slider_shortcode' ) );
 
 		add_action( 'init', array( $this, 'load_translation' ), 1 );
 		add_action( 'init', array( $this, 'load_plugin_parts' ), 1 ); // Need 1 for widget
 		add_action( 'after_setup_theme', array( $this, 'add_image_sizes' ) );
-
-		register_activation_hook( self::$plugin_file, array( $this, 'activate_plugin' ) );
-	}
-
-	/**
-	 * Load translation.
-	 */
-	public function load_translation() {
-		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'assets/lang/' );
 	}
 
 	/**
@@ -74,6 +67,13 @@ class Lucid_Slider_Core {
 	 */
 	public function activate_plugin() {
 		flush_rewrite_rules();
+	}
+
+	/**
+	 * Load translation.
+	 */
+	public function load_translation() {
+		load_plugin_textdomain( 'lucid-slider', false, trailingslashit( dirname( plugin_basename( self::$plugin_file ) ) ) . 'assets/lang/' );
 	}
 
 	/**
@@ -152,13 +152,11 @@ class Lucid_Slider_Core {
 	 * @return string
 	 */
 	public static function get_post_type_name() {
-		return self::$post_type_name;
+		return self::$_post_type_name;
 	}
 
 	/**
-	 * Add image sizes.
-	 *
-	 * Make sure there is always a thumbnail size for the slider edit screen.
+	 * Add image sizes set in the options.
 	 */
 	public function add_image_sizes() {
 		$opt = Lucid_Slider_Utility::get_settings();
