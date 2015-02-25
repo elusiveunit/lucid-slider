@@ -172,10 +172,11 @@ class Lucid_Slider_Utility {
 	 * Shows the first three images of a slider, in a stacked style.
 	 *
 	 * @param int $post_id Slider post ID.
+	 * @param int $base_size Base size of the stack. Width of the largest image.
 	 * @param bool $fixed_width Set a fixed width on the containing element no
 	 *    matter how many images are displayed. Default true.
 	 */
-	public static function slide_stack( $post_id, $fixed_width = true ) {
+	public static function slide_stack( $post_id, $base_size = 120, $fixed_width = true ) {
 		$slides = get_post_meta( (int) $post_id, '_lsjl-slides', true );
 
 		if ( empty( $slides['slide-group'] ) )
@@ -184,33 +185,48 @@ class Lucid_Slider_Utility {
 		$slides = $slides['slide-group'];
 
 		// Containing element width
-		$width = 240;
+		$width = round( $base_size * 1.9 );
 		if ( ! $fixed_width ) :
 			$times = 1;
 			if ( 2 == count( $slides ) ) $times = 2;
 			if ( 2 < count( $slides ) ) $times = 3;
 
-			$width = 120 + ( $times * 40 );
+			$width = $base_size + ( $times * 40 );
 		endif;
 
 		$output = "<span style=\"width: {$width}px; position: relative; display: inline-block;\">";
 
 		$count = 0;
+		$total_left = 0;
 		foreach ( $slides as $slide ) :
 
 			// Show no more than three images
-			if ( $count > 2 ) continue;
+			if ( $count > 2 )
+				continue;
 
 			// Need a thumbnail
-			if ( empty( $slide['slide-image-thumbnail'] ) ) continue;
+			if ( empty( $slide['slide-image-thumbnail'] ) )
+				continue;
 
 			// CSS styles. $count is 0 for first image.
-			$position = ( 0 === $count ) ? 'relative' : 'absolute'; // First is relative to prevent collapsing
-			$height = 80 - ( $count * 10 ); // Height shrinks by 10 each stack
+			// First is relative to prevent collapsing
+			$position = ( 0 === $count ) ? 'relative' : 'absolute';
+
+			// Height shrinks by 10 each stack
+			$height = round( $base_size * 0.6666 ) - ( $count * 10 );
 			$width = round( $height * 1.5 );
-			$top = $count * 5; // Half the height reduction
-			$z_index = 5 - $count; // Stack downwards
-			$left = $count * ( $height + $top - 10 ); // Arbitrary formula
+
+			// Half the height reduction
+			$top = $count * 5;
+
+			// Stack downwards
+			$z_index = 5 - $count;
+
+			// Starts at zero, set below
+			$left = $total_left;
+
+			// Increase for next iteration
+			$total_left += round( $width / 2 ) + round( 800 / $base_size ) + $count;
 
 			$inner_size = 200;
 			$inner_left = round( ( $inner_size - $width ) / 2 );
