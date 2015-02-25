@@ -20,7 +20,6 @@ class Lucid_Slider_Tinymce {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'add_editor_button' ) );
-		add_action( 'wp_ajax_lucid_slider_tinymce', array( 'Lucid_Slider_Tinymce', 'tinymce_popup' ) );
 	}
 
 	/**
@@ -36,7 +35,7 @@ class Lucid_Slider_Tinymce {
 			add_filter( 'mce_buttons', array( $this, 'register_button' ) );
 			add_filter( 'mce_external_plugins', array( $this, 'add_button' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'load_css' ) );
-			add_action( 'admin_footer', array( $this, 'popup_script' ) );
+			add_action( 'admin_footer', array( $this, 'popup_content' ) );
 			add_filter( 'mce_external_languages', array( $this, 'localization' ) );
 		endif;
 	}
@@ -48,7 +47,18 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function register_button( $buttons ) {
-		$buttons[] = 'lucidSlider';
+
+		// Insert before the kitchen sink toggle if it exists
+		if ( in_array( 'wp_adv', $buttons ) ) :
+			$pos = array_search( 'wp_adv', $buttons );
+			$val = array( 'lucidSlider' );
+			$buttons1 = array_slice( $buttons, 0, $pos );
+			$buttons1[] = 'lucidSlider';
+			$buttons2 = array_slice( $buttons, $pos, null );
+			$buttons = array_merge( $buttons1, $buttons2 );
+		else :
+			$buttons[] = 'lucidSlider';
+		endif;
 
 		return $buttons;
 	}
@@ -60,11 +70,7 @@ class Lucid_Slider_Tinymce {
 	 * @return array
 	 */
 	public function add_button( $plugins ) {
-		$script = ( version_compare( $GLOBALS['wp_version'], '3.9-beta', '>' ) )
-			? 'tinymce-4-plugin'
-			: 'tinymce-plugin';
-
-		$plugins['lucidSlider'] = LUCID_SLIDER_ASSETS . "js/{$script}.min.js";
+		$plugins['lucidSlider'] = LUCID_SLIDER_ASSETS . "js/tinymce-4-plugin.js";
 
 		return $plugins;
 	}
@@ -73,11 +79,7 @@ class Lucid_Slider_Tinymce {
 	 * Button and Thickbox content CSS.
 	 */
 	public function load_css() {
-		$style = ( version_compare( $GLOBALS['wp_version'], '3.8-alpha', '>' ) )
-			? 'tinymce-plugin-new'
-			: 'tinymce-plugin';
-
-		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . "css/{$style}.min.css", false, null );
+		wp_enqueue_style( 'lucid-slider-tinymce', LUCID_SLIDER_ASSETS . "css/tinymce-plugin.css", false, null );
 	}
 
 	/**
@@ -88,31 +90,14 @@ class Lucid_Slider_Tinymce {
 	 */
 	public function localization( $langs ) {
 		$langs[] = LUCID_SLIDER_PATH . 'inc/tinymce-lang.php';
+
 		return $langs;
 	}
 
 	/**
-	 * Script for getting the Thickbox radio value to the editor.
+	 * The content for the TinyMCE popup.
 	 */
-	public function popup_script() { ?>
-		<script>
-			(function($) {
-				$('body').on('click', '#lsjl-tb-submit', function() {
-					var $opt = $(this).prev().find('input:checked');
-
-					if ( 1 === $opt.length ) {
-						tinyMCE.activeEditor.execCommand('mceInsertContent', 0, '[lucidslider id="' + $opt.val() + '"]');
-						tb_remove();
-					}
-				});
-			})(jQuery);
-		</script>
-	<?php }
-
-	/**
-	 * AJAX callback for the TinyMCE Thickbox popup output.
-	 */
-	public static function tinymce_popup() {
+	public static function popup_content() {
 		$sliders = get_posts( array(
 			'post_type' => Lucid_Slider_Core::get_post_type_name(),
 			'numberposts' => -1,
@@ -120,32 +105,22 @@ class Lucid_Slider_Tinymce {
 			'order' => 'ASC'
 		) );
 
+		ob_start();
+
 		if ( ! empty( $sliders ) ) : ?>
 
-			<div id="lsjl-tb-select">
-				<h2><?php _e( 'Choose a slider', 'lucid-slider' ); ?></h2>
-				<div class="lsjl-tb-labels-wrap">
+			<div id="lsjl-t-select">
 				<?php foreach ( $sliders as $key => $data ) :
-					/*$opt = get_post_meta( (int) $data->ID, '_lsjl-slider-settings', true );
-					$size = ( ! empty( $opt['slider-size'] ) )
-						? ucfirst( $opt['slider-size'] )
-						: __( 'No size', 'lucid-slider' );*/ ?>
-
+					$checked = ( 0 === $key ) ? ' checked="checked"' : ''; ?>
 					<label for="lsjl-<?php echo $data->ID; ?>">
-						<span class="lsjl-tb-item-wrap">
-							<input type="radio" name="lsjl-slider-id" value="<?php echo $data->ID; ?>" id="lsjl-<?php echo $data->ID; ?>">
-							<?php Lucid_Slider_Utility::slide_stack( $data->ID ); ?>
-							<b class="lsjl-tb-title"><?php
-								//printf( '%s <span>(%s)</span>', $data->post_title, $size );
-								echo $data->post_title
-							?></b>
+						<input type="radio" name="lsjl-slider-id" value="<?php echo $data->ID; ?>" id="lsjl-<?php echo $data->ID; ?>"<?php echo $checked; ?>>
+						<span class="lsjl-t-item-wrap">
+							<span><?php Lucid_Slider_Utility::slide_stack( $data->ID, 100 ); ?></span>
+							<span><b class="lsjl-t-title"><?php echo $data->post_title ?></b></span>
 						</span>
 					</label>
 				<?php endforeach; ?>
-				</div>
 			</div>
-
-			<button id="lsjl-tb-submit" class="button button-primary"><?php _e( 'Insert slider', 'lucid-slider' ); ?></button>
 
 		<?php else : ?>
 
@@ -153,6 +128,8 @@ class Lucid_Slider_Tinymce {
 
 		<?php endif;
 
-		die();
-	}
+		$html = str_replace( array( "\n", "\t" ), '', ob_get_clean() ); ?>
+
+		<script type="text/html" id="lucid-slider-tinymce-content"><?php echo $html; ?></script>
+	<?php }
 }
