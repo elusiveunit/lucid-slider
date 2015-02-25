@@ -6,7 +6,7 @@
  * Plugin URI: https://github.com/elusiveunit/lucid-slider
  * Description: A simple but extendable slider plugin.
  * Author: Jens Lindberg
- * Version: 1.7.1
+ * Version: 1.7.2
  * License: GPL-2.0+
  * Text Domain: lucid-slider
  * Domain Path: /assets/lang
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) die( 'Nope' );
 
 // Plugin constants
 if ( ! defined( 'LUCID_SLIDER_VERSION' ) )
-	define( 'LUCID_SLIDER_VERSION', '1.7.1' );
+	define( 'LUCID_SLIDER_VERSION', '1.7.2' );
 
 if ( ! defined( 'LUCID_SLIDER_URL' ) )
 	define( 'LUCID_SLIDER_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );

@@ -271,6 +271,12 @@ In the template file (set with 'path' in the hook callback array), there are som
 
 ## Changelog
 
+### 1.7.2: Feb 25, 2015
+
+* New/tweak: Update TinyMCE plugin to use a `windowManager` popup instead of WordPress' ThickBox, for a faster and cleaner experience.
+* Tweak: Move slides inline on the edit screen.
+* Remove: Clean a bunch of legacy code.
+
 ### 1.7.1: Feb 18, 2015
 
 * Tweak: Always print JavaScript slider options object, even when the automatic init option is turned off. The options can be useful for greater developer control while still keeping them editable through the admin.
