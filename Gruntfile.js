@@ -49,71 +49,52 @@ module.exports = function(grunt) {
 			}
 		},
 
-		// JavaScript concatenation and minification
+		// Minify JavaScript
 		uglify: {
-			editSlider: {
-				files: {'assets/js/edit-slider.min.js': ['assets/js/edit-slider.js']}
-			},
-			tinyMCE: {
-				files: {'assets/js/tinymce-plugin.min.js': ['assets/js/tinymce-plugin.js']}
-			},
-			tinyMCE4: {
-				files: {'assets/js/tinymce-4-plugin.min.js': ['assets/js/tinymce-4-plugin.js']}
-			},
-			flexslider: {
-				files: {'assets/js/jquery.flexslider.min.js': ['assets/js/jquery.flexslider.js']}
-			},
 			doc: {
 				files: {'doc/assets/doc.min.js': ['doc/assets/doc.js']}
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: 'assets/js',
+					src: ['*.js', '!*.min.js'],
+					dest: 'assets/js',
+					ext: '.min.js',
+					extDot: 'last'
+				}],
 			}
 		},
 
-		// CSS concatenation and minification
+		// Minify CSS
 		cssmin: {
-			editSlider: {
-				files: {'assets/css/edit-slider.min.css': ['assets/css/edit-slider.css']}
-			},
-			editSliderNew: {
-				files: {'assets/css/edit-slider-new.min.css': ['assets/css/edit-slider-new.css']}
-			},
-			tinyMCE: {
-				files: {'assets/css/tinymce-plugin.min.css': ['assets/css/tinymce-plugin.css']}
-			},
-			tinyMCENew: {
-				files: {'assets/css/tinymce-plugin-new.min.css': ['assets/css/tinymce-plugin-new.css']}
-			},
-			flexslider: {
-				files: {'assets/css/flexslider.min.css': ['assets/css/flexslider.css']}
-			},
 			doc: {
 				files: {'doc/assets/doc.min.css': ['doc/assets/doc.css']}
+			},
+			dist: {
+				files: [{
+					expand: true,
+					cwd: 'assets/css',
+					src: ['*.css', '!*.min.css'],
+					dest: 'assets/css',
+					ext: '.min.css',
+					extDot: 'last'
+				}],
 			}
 		},
 
 		// Compile markdown
 		markdown: {
 			doc: {
-				files: [{
-					expand: true,
-					src: 'README.md',
-					dest: 'doc/',
-					ext: '.html'
-				}],
 				options: {
 					template: 'doc/assets/template.html',
 					gfm: false, // Github flavored markdown
-					highlight: function(code, lang) {
-						return code; // No code highlighting
-					}
-				}
-			}
-		},
-
-		// Rename files
-		rename: {
-			doc: {
-				src: 'doc/README.html',
-				dest: 'doc/index.html'
+					preCompile: function (src, context) {
+						// Remove David badge
+						return src.replace(/\[!\[devDependency.+Dependencies\)/, '');
+					},
+				},
+				files: {'doc/index.html': ['README.md']}
 			}
 		}
 
@@ -124,14 +105,13 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-cssmin');
 	grunt.loadNpmTasks('grunt-markdown');
-	grunt.loadNpmTasks('grunt-rename');
 
 	// Register tasks.
 	// Default: just 'grunt'
 	grunt.registerTask('default', [
 		'jshint:dist',
-		'uglify',
-		'cssmin'
+		'uglify:dist',
+		'cssmin:dist'
 	]);
 
 	// Documentation: 'grunt doc'
@@ -139,8 +119,7 @@ module.exports = function(grunt) {
 		'jshint:doc',
 		'uglify:doc',
 		'cssmin:doc',
-		'markdown:doc',
-		'rename:doc'
+		'markdown:doc'
 	]);
 
 	// Gruntfile: 'grunt g'

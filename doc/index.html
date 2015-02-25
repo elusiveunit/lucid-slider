@@ -58,8 +58,8 @@ function myprefix_add_slider_template( $templates ) {
 
     return $templates;
 }
-add_filter( &#39;lsjl_templates&#39;, &#39;myprefix_add_slider_template&#39; );</code></pre>
-<hr>
+add_filter( &#39;lsjl_templates&#39;, &#39;myprefix_add_slider_template&#39; );
+</code></pre><hr>
 <h4 id="frontend">Frontend</h4>
 <h5 id="lsjl-_js-_options">lsjl_js_options</h5>
 <p>Filter the JavaScript Flexslider options. Runs after the options from the plugin settings have been set to the variable.</p>
@@ -77,8 +77,8 @@ function myprefix_slide_options( $js_options ) {
 
     return $js_options;
 }
-add_filter( &#39;lsjl_js_options&#39;, &#39;myprefix_slide_options&#39; );</code></pre>
-<hr>
+add_filter( &#39;lsjl_js_options&#39;, &#39;myprefix_slide_options&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_slider-_selector">lsjl_slider_selector</h5>
 <p>Change the jQuery selector used when initializing the slider (<code>.flexslider</code> by default).</p>
 <pre><code>/**
@@ -90,19 +90,19 @@ add_filter( &#39;lsjl_js_options&#39;, &#39;myprefix_slide_options&#39; );</code
 function myprefix_slider_selector( $selector ) {
     return &#39;.my-slider&#39;;
 }
-add_filter( &#39;lsjl_slider_selector&#39;, &#39;myprefix_slider_selector&#39; );</code></pre>
-<hr>
+add_filter( &#39;lsjl_slider_selector&#39;, &#39;myprefix_slider_selector&#39; );
+</code></pre><hr>
 <h4 id="backend">Backend</h4>
 <h5 id="lsjl-_show-_template-_metabox">lsjl_show_template_metabox</h5>
 <p>Whether to show the template selection metabox.</p>
 <p>Hiding it still means any previously saved values are there. If no template is set, the default is loaded. The default template can be overridden with <code>lsjl_templates</code>, but there is always a default.</p>
-<pre><code>add_filter( &#39;lsjl_show_template_metabox&#39;, &#39;__return_false&#39; );</code></pre>
-<hr>
+<pre><code>add_filter( &#39;lsjl_show_template_metabox&#39;, &#39;__return_false&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_show-_all-_slide-_fields">lsjl_show_all_slide_fields</h5>
 <p>Whether to show all the meta data fields for slides.</p>
 <p>By default, any extra fields are hidden and toggled with an anchor. This stops slide items from growing tall and making sorting difficult. It doesn&#39;t make much sense when only a single extra field is added though, so toggling can be disabled with this hook.</p>
-<pre><code>add_filter( &#39;lsjl_show_all_slide_fields&#39;, &#39;__return_true&#39; );</code></pre>
-<hr>
+<pre><code>add_filter( &#39;lsjl_show_all_slide_fields&#39;, &#39;__return_true&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_settings-_tabs">lsjl_settings_tabs</h5>
 <p>Filters the tabs added to the settings screen. Custom tabs can be added and/or the default ones can be removed.</p>
 <pre><code>/**
@@ -116,8 +116,8 @@ function myprefix_slider_settings_tabs( $tabs ) {
 
     return $tabs;
 }
-add_filter( &#39;lsjl_settings_tabs&#39;, &#39;myprefix_slider_settings_tabs&#39; );</code></pre>
-<hr>
+add_filter( &#39;lsjl_settings_tabs&#39;, &#39;myprefix_slider_settings_tabs&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_settings">lsjl_settings</h5>
 <p>Action that runs after the default settings have been added. The Lucid_Settings object is passed as an argument, see <a href="https://github.com/elusiveunit/lucid-toolbox">Lucid Toolbox</a> for documentation.</p>
 <pre><code>/**
@@ -137,8 +137,8 @@ function myprefix_slider_settings( $settings ) {
         array( [...] )
     );
 }
-add_action( &#39;lsjl_settings&#39;, &#39;myprefix_slider_settings&#39; );</code></pre>
-<hr>
+add_action( &#39;lsjl_settings&#39;, &#39;myprefix_slider_settings&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_slides-_meta-_start-and-lsjl-_slides-_meta-_end">lsjl_slides_meta_start and lsjl_slides_meta_end</h5>
 <p>Runs at the start and the end, respectively, of the slides metabox. Can be used to add custom fields, or any other content, to the slider itself.</p>
 <pre><code>/**
@@ -153,8 +153,8 @@ function myprefix_lsjl_slider_meta( $metabox ) {
         &lt;input type=&quot;text&quot; name=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; id=&quot;&lt;?php $metabox-&gt;the_name(); ?&gt;&quot; value=&quot;&lt;?php $metabox-&gt;the_value(); ?&gt;&quot;&gt;
     &lt;/div&gt;
 &lt;?php }
-add_action( &#39;lsjl_slides_meta_start&#39;, &#39;myprefix_lsjl_slider_meta&#39; );</code></pre>
-<hr>
+add_action( &#39;lsjl_slides_meta_start&#39;, &#39;myprefix_lsjl_slider_meta&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_meta-_fields-_end">lsjl_meta_fields_end</h5>
 <p>Runs after the default meta data fields for each slide on the slider edit screen.</p>
 <p>Be sure to keep the <code>lsjl-field-group</code> on the wrapping div for layout. Other alignment classes include:</p>
@@ -164,7 +164,6 @@ add_action( &#39;lsjl_slides_meta_start&#39;, &#39;myprefix_lsjl_slider_meta&#39
 <li>Speaking of labels, <code>lsjl-label</code> and <code>lsjl-field-wrap</code> can be used to treat any elements as a label + field combination. For example, a span as a label + a div wrapping a list of radio buttons, which of course have their own, real labels.</li>
 </ul>
 <!-- Don't include the code block in my list, markdown. -->
-
 <pre><code>/**
  * Add custom Lucid Slider slide fields.
  *
@@ -193,8 +192,8 @@ function myprefix_lsjl_meta_after( $metabox ) {
         &lt;/div&gt;
     &lt;/div&gt;
 &lt;?php }
-add_action( &#39;lsjl_meta_fields_end&#39;, &#39;myprefix_lsjl_meta_after&#39; );</code></pre>
-<hr>
+add_action( &#39;lsjl_meta_fields_end&#39;, &#39;myprefix_lsjl_meta_after&#39; );
+</code></pre><hr>
 <h5 id="lsjl-_slider-_size-_select">lsjl_slider_size_select</h5>
 <p>Used to add additional selectable image sizes to the slider size dropdown. The value should be the name of the size (first argument to <code>add_image_size</code>).</p>
 <pre><code>/**
@@ -205,8 +204,8 @@ add_action( &#39;lsjl_meta_fields_end&#39;, &#39;myprefix_lsjl_meta_after&#39; )
 function myprefix_lsjl_extra_sizes( $metabox ) { ?&gt;
     &lt;option value=&quot;image_size_name&quot;&lt;?php $metabox-&gt;the_select_state( &#39;image_size_name&#39; ); ?&gt;&gt;800&amp;times;300&lt;/option&gt;
 &lt;?php }
-add_action( &#39;lsjl_slider_size_select&#39;, &#39;myprefix_lsjl_extra_sizes&#39; );</code></pre>
-<h2 id="templates">Templates</h2>
+add_action( &#39;lsjl_slider_size_select&#39;, &#39;myprefix_lsjl_extra_sizes&#39; );
+</code></pre><h2 id="templates">Templates</h2>
 <p>The plugin currently only comes with the default flexslider template, more can be added with the <code>lsjl_templates</code> hook (see hooks section for code).</p>
 <p>The default template in the plugin can be used as a starting point for a custom one. It should contain a <code>&lt;div class=&quot;flexslider&quot;&gt;</code>, with the slides inside a <code>&lt;ul class=&quot;slides&quot;&gt;</code> (with <code>&lt;li&gt;</code>s, naturally) to function properly.</p>
 <p>In the template file (set with &#39;path&#39; in the hook callback array), there are some key variables available:</p>
@@ -218,6 +217,17 @@ add_action( &#39;lsjl_slider_size_select&#39;, &#39;myprefix_lsjl_extra_sizes&#3
 <li><code>$is_single_slide</code> is self explanatory. It&#39;s primarily intended to be matched with the &#39;optimize script loading&#39; option, so the first slide can be set to display in the CSS. See the default template.</li>
 </ul>
 <h2 id="changelog">Changelog</h2>
+<h3 id="1-7-2-feb-25-2015">1.7.2: Feb 25, 2015</h3>
+<ul>
+<li>New/tweak: Update TinyMCE plugin to use a <code>windowManager</code> popup instead of WordPress&#39; ThickBox, for a faster and cleaner experience.</li>
+<li>Tweak: Move slides inline on the edit screen.</li>
+<li>Remove: Clean a bunch of legacy code.</li>
+</ul>
+<h3 id="1-7-1-feb-18-2015">1.7.1: Feb 18, 2015</h3>
+<ul>
+<li>Tweak: Always print JavaScript slider options object, even when the automatic init option is turned off. The options can be useful for greater developer control while still keeping them editable through the admin.</li>
+<li>Remove: The workaround for <code>__FILE__</code> in symlinked plugins is no longer needed as of WordPress 3.9.</li>
+</ul>
 <h3 id="1-7-0-mar-20-2014">1.7.0: Mar 20, 2014</h3>
 <ul>
 <li>New: There is now an option to only load the JavaScript if there is more than one slide, since it&#39;s not actually needed otherwise. This must be manually activated on existing installs. As can now be seen in the default template, there is a new variable <code>$is_single_slide</code> that can be used to check for this case.</li>
