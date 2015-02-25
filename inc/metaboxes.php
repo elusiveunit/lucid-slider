@@ -41,7 +41,7 @@ class Lucid_Slider_Metaboxes {
 
 		$this->register_metabox( 'slides', array(
 			'title' => __( 'Slides', 'lucid-slider' ),
-			'context' => 'normal'
+			'area' => 'after_title'
 		) );
 
 		$this->register_metabox( 'slider-settings', array(
