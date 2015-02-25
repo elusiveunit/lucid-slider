@@ -142,7 +142,7 @@ class Lucid_Slider {
 
 				if ( ! $skip_scripts ) :
 					if ( ! empty( $this->settings['load_js'] ) )
-						wp_enqueue_script( 'flexslider' );
+						wp_enqueue_script( 'lucidslider-flexslider' );
 
 					add_action( 'wp_footer', array( $this, 'slider_options' ), 5 );
 					add_action( 'wp_footer', array( $this, 'slider_init' ), 500 );
